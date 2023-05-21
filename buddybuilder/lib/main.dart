@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:buddybuilder/pages/home-page/home-page-view.dart';
-import 'package:buddybuilder/material-theme/color_schemes.g.dart';
+import 'package:buddybuilder/pages/home_page/home_page_view.dart';
+import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 void main() async {
   runApp(await buildApp());
