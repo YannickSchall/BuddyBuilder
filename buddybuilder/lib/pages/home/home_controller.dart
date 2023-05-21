@@ -1,5 +1,5 @@
-import 'package:myapp/htwg-app/mvc_riverpod/home/home_model.dart';
-import 'package:myapp/htwg-app/mvc_riverpod/home/home_view.dart';
+import 'package:buddybuilder/pages/home/home_model.dart';
+import 'package:buddybuilder/pages/home/home_view.dart';
 
 class HomeControllerImplmentation extends HomeController {
   HomeControllerImplmentation({

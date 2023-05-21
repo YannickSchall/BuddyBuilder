@@ -31,3 +31,18 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+    # To add assets to your application, add an assets section, like this:
+  assets:
+     - resources/icons/checkmark.png
+     - resources/icons/gymplan.png
+     - resources/icons/settings.png
+
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: resources/fonts/Roboto-Regular.ttf
+        - asset: resources/fonts/Roboto-Bold.ttf
+          weight: 700
+

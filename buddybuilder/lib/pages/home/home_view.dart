@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/htwg-app/mvc_riverpod/common/providers.dart';
-import 'package:myapp/htwg-app/mvc_riverpod/home/home_model.dart';
-import 'package:myapp/htwg-app/mvc_riverpod/ui-kit/htwg_text.dart';
+import 'package:buddybuilder/common/providers.dart';
+import 'package:buddybuilder/pages/home/home_model.dart';
+import 'package:buddybuilder/pages/home/ui-kit/htwg_text.dart';
+import 'package:buddybuilder/components/appbar.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -20,8 +21,13 @@ class HomeView extends ConsumerWidget {
     final HomeModel model = ref.watch(providers.homeControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Flutter App'),
+      appBar: GymAppBar(
+        customdata: 'BUDDY\nBUILDER',
+        titlealignment: Alignment.centerRight,
+        showBackButton: false,
+        showOkButton: false,
+        onBackButtonPressed: () {},
+        onOkButtonPressed: () {},
       ),
       body: Center(
         child: Column(
