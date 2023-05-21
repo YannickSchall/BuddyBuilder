@@ -9,5 +9,5 @@ class Providers {
   final StateNotifierProvider<HomePageController, HomePageModel>
       homePageControllerProvider =
       StateNotifierProvider<HomePageController, HomePageModel>(
-          (StateNotifierProviderRef ref) => HomePageControllerImplmentation());
+          (StateNotifierProviderRef ref) => HomePageControllerImplementation());
 }

@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      //theme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      //darkTheme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      home: HomePageView(),
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      home: const HomePageView(),
     );
   }
 }
