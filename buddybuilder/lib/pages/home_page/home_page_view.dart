@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:buddybuilder/pages/homepage/home_page_controller.dart';
-import 'package:buddybuilder/pages/home-page/home_page_model.dart';
-import '../../common/providers.dart';
+import 'package:buddybuilder/pages/home_page/home_page_controller.dart';
+import 'package:buddybuilder/pages/home_page/home_page_model.dart';
+import 'package:buddybuilder/common/providers.dart';
 
 class HomePageView extends ConsumerWidget {
   const HomePageView({Key? key}) : super(key: key);
