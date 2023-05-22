@@ -22,10 +22,10 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        customdata: 'BUDDY\nBUILDER',
+        customdata: 'BUILD SET',
         titlealignment: Alignment.centerRight,
-        showBackButton: false,
-        showOkButton: false,
+        showBackButton: true,
+        showOkButton: true,
         onBackButtonPressed: () {},
         onOkButtonPressed: () {},
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GymAppBar({
@@ -19,30 +20,38 @@ class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Alignment titlealignment;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(100.0);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Align(alignment: titlealignment, child: Text(customdata)),
+      title: Container(
+        //height: 100, // Adjust the vertical padding as needed
+        padding: EdgeInsets.zero,
+        child: Align(
+          alignment: titlealignment,
+          child: Text(customdata),
+        ),
+      ),
+      toolbarHeight: double.infinity,
+      backgroundColor: const Color.fromRGBO(183, 206, 183, 1),
       titleTextStyle: const TextStyle(
-          color: Colors.green,
+          color: Colors.black,
           fontFamily: 'Roboto',
           fontSize: 36,
           fontWeight: FontWeight.bold),
       leading: showBackButton
           ? IconButton(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               icon: const Icon(Icons.arrow_back),
               onPressed: onBackButtonPressed,
-            )
+              color: const Color.fromRGBO(0, 0, 0, 1))
           : null,
       actions: [
         if (showOkButton)
           IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: onOkButtonPressed,
-          ),
+              icon: const Icon(Icons.check),
+              onPressed: onOkButtonPressed,
+              color: const Color.fromRGBO(0, 0, 0, 1)),
       ],
     );
   }
