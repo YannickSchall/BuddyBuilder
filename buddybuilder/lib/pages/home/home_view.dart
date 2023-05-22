@@ -4,6 +4,8 @@ import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
 import 'package:buddybuilder/pages/home/ui-kit/htwg_text.dart';
 import 'package:buddybuilder/components/appbar.dart';
+import 'package:buddybuilder/components/pillbutton.dart';
+import 'package:buddybuilder/components/containerbutton.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,10 +24,10 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        customdata: 'BUILD SET',
+        customdata: 'BUDDY\nBUILDER',
         titlealignment: Alignment.centerRight,
         showBackButton: true,
-        showOkButton: true,
+        showOkButton: false,
         onBackButtonPressed: () {},
         onOkButtonPressed: () {},
       ),
@@ -33,12 +35,21 @@ class HomeView extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            model.switchTree ? firstTree : secondTree,
+            //model.switchTree ? firstTree : secondTree,
             const SizedBox(height: 30),
+
+            /*
             ElevatedButton(
               onPressed: () => controller.switchtTree(),
               child: const Text('Switch Tree'),
+            ),*/
+            PillButtonWidget(onPressed: () {}, text: 'Calender'),
+            ContainerButtonWidget(
+              onPressed: () {},
+              text: 'Start Training',
             ),
+            PillButtonWidget(onPressed: () {}, text: 'Settings'),
+            PillButtonWidget(onPressed: () {}, text: 'Build Plan'),
           ],
         ),
       ),
