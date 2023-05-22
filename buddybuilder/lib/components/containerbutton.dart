@@ -45,9 +45,9 @@ class ContainerButtonWidget extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: PillButtonWidget(
                   onPressed: onPressed,
-                  text: 'text',
-                  buttonheight: 70,
-                  buttonwidth: 250.0,
+                  text: text,
+                  buttonHeight: 70,
+                  buttonWidth: 250.0,
                 ),
               ),
             ),

@@ -6,6 +6,8 @@ import 'package:buddybuilder/pages/home/ui-kit/htwg_text.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/containerbutton.dart';
+import 'package:buddybuilder/material_theme/customicon.dart';
+import 'package:buddybuilder/components/datewidget.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -43,13 +45,25 @@ class HomeView extends ConsumerWidget {
               onPressed: () => controller.switchtTree(),
               child: const Text('Switch Tree'),
             ),*/
-            PillButtonWidget(onPressed: () {}, text: 'Calender'),
+            //DayMonthWidget(),
+            PillButtonWidget(
+              onPressed: () {},
+              text: '',
+              dateWidget: const DayMonthWidget(),
+            ),
             ContainerButtonWidget(
               onPressed: () {},
-              text: 'Start Training',
+              text:
+                  'PULL', // TODO: add method to switch training according to day
             ),
-            PillButtonWidget(onPressed: () {}, text: 'Settings'),
-            PillButtonWidget(onPressed: () {}, text: 'Build Plan'),
+            PillButtonWidget(
+                onPressed: () {},
+                text: 'SETTINGS',
+                icon: const Icon(Icons.settings)),
+            PillButtonWidget(
+                onPressed: () {},
+                text: 'BUILD PLAN',
+                icon: const Icon(CustomIcons.gymplan)),
           ],
         ),
       ),
