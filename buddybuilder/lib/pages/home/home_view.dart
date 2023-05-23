@@ -50,6 +50,7 @@ class HomeView extends ConsumerWidget {
               onPressed: () {},
               text: '',
               dateWidget: const DayMonthWidget(),
+              buttonHeight: 120.0,
             ),
             ContainerButtonWidget(
               onPressed: () {},

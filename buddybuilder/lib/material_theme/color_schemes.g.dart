@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
-  primary: Color(0xFF5C675C),
-  onPrimary: Color(0xFFFFFFFF),
-  primaryContainer: Color(0xFF5C675C), // modified mint to my needs
+  primary: Color(0xFF5C675C), // pillbuttoncolor 0xFFB7CEB7
+  onPrimary: Color(0xFFFFFFFF), // schrift 0xFF5C675C
+  primaryContainer: Color(0xFF5C675C), // pillbuttonrand
   onPrimaryContainer: Color(0xFF00210C),
   secondary: Color(0xFF506352),
   onSecondary: Color(0xFFFFFFFF),
-  secondaryContainer: Color(0xFFD3E8D2),
+  secondaryContainer: Color(0xFFB7CEB7), // containerbutton
   onSecondaryContainer: Color(0xFF0E1F12),
   tertiary: Color(0xFF3A656E),
   onTertiary: Color(0xFFFFFFFF),
@@ -18,7 +18,8 @@ const lightColorScheme = ColorScheme(
   errorContainer: Color(0xFFFFDAD6),
   onError: Color(0xFFFFFFFF),
   onErrorContainer: Color(0xFF410002),
-  background: Color(0xFFFCFDF7),
+
+  background: Color(0xFFFFFFF7),
   onBackground: Color(0xFF191C19),
   surface: Color(0xFFFCFDF7),
   onSurface: Color(0xFF191C19),
@@ -37,12 +38,12 @@ const lightColorScheme = ColorScheme(
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFFB7CEB7),
-  onPrimary: Color(0xFF003918),
-  primaryContainer: Color(0xFF005226),
+  onPrimary: Color(0xFF000000),
+  primaryContainer: Color(0xFF003918),
   onPrimaryContainer: Color(0xFFB7CEB7),
   secondary: Color(0xFFB7CCB7),
   onSecondary: Color(0xFF233426),
-  secondaryContainer: Color(0xFF394B3B),
+  secondaryContainer: Color(0xFF394B3B), // containerbutton
   onSecondaryContainer: Color(0xFFD3E8D2),
   tertiary: Color(0xFFA2CED8),
   onTertiary: Color(0xFF01363E),
@@ -55,7 +56,7 @@ const darkColorScheme = ColorScheme(
   background: Color(0xFF191C19),
   onBackground: Color(0xFFE2E3DE),
   surface: Color(0xFF191C19),
-  onSurface: Color(0xFFE2E3DE),
+  onSurface: Color(0xFF11E3DE),
   surfaceVariant: Color(0xFF414941),
   onSurfaceVariant: Color(0xFFC1C9BF),
   outline: Color(0xFF8B938A),

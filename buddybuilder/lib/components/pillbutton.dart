@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/material_theme/buddy_colors.dart';
 import 'package:buddybuilder/components/datewidget.dart';
+import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class PillButtonWidget extends StatelessWidget {
   const PillButtonWidget({
@@ -31,15 +32,18 @@ class PillButtonWidget extends StatelessWidget {
         width: buttonWidth,
         height: buttonHeight,
         decoration: BoxDecoration(
-          border: Border.all(
-            color: mint,
-            width: 2.0,
-          ),
+          //border: Border.all(
+          //  color: Theme.of(context).colorScheme.primaryContainer,
+          //  width: 2.0,
+          //),
           borderRadius: BorderRadius.circular(25.0),
         ),
         child: CupertinoButton(
           onPressed: onPressed,
+          color: Theme.of(context).colorScheme.primary,
+          pressedOpacity: 0.3,
           padding: EdgeInsets.zero,
+          borderRadius: BorderRadius.circular(24.0),
           child: Stack(
             children: [
               if (icon != null) // Check if an icon is provided
@@ -49,7 +53,7 @@ class PillButtonWidget extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.0),
                       color: Colors.grey.withOpacity(0.3),
                     ),
                     child: icon,

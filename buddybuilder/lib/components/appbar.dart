@@ -34,9 +34,9 @@ class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       toolbarHeight: double.infinity,
-      backgroundColor: const Color.fromRGBO(183, 206, 183, 1),
-      titleTextStyle: const TextStyle(
-          color: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+      titleTextStyle: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
           fontFamily: 'Roboto',
           fontSize: 36,
           fontWeight: FontWeight.bold),
@@ -44,14 +44,14 @@ class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: onBackButtonPressed,
-              color: const Color.fromRGBO(0, 0, 0, 1))
+              color: Theme.of(context).colorScheme.primary)
           : null,
       actions: [
         if (showOkButton)
           IconButton(
               icon: const Icon(Icons.check),
               onPressed: onOkButtonPressed,
-              color: const Color.fromRGBO(0, 0, 0, 1)),
+              color: Theme.of(context).colorScheme.primary),
       ],
     );
   }

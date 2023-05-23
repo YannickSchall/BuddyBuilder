@@ -32,10 +32,12 @@ class ContainerButtonWidget extends StatelessWidget {
         width: outerWidth,
         height: outerHeight,
         decoration: BoxDecoration(
-          color: Colors.black, // Set the background color
-          border: Border.all(
-            width: 2.0,
-          ),
+          color: Theme.of(context)
+              .colorScheme
+              .secondaryContainer, // Set the background color
+          //border: Border.all(
+          //  width: 2.0,
+          //),
           borderRadius: BorderRadius.circular(innerHeight / 2),
         ),
         child: Column(
