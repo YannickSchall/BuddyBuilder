@@ -46,21 +46,20 @@ class PillButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(24.0),
           child: Stack(
             children: [
-              if (icon != null) // Check if an icon is provided
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                    child: icon,
-                  ),
-                ),
-              if (text == "") // Check if an icon is provided
-                Container(child: dateWidget),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 16.0),
+                child: ((icon != null) || (dateWidget != null))
+                    ? Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.3),
+                        ),
+                        child: (dateWidget != null) ? dateWidget : icon,
+                      )
+                    : Container(),
+              ),
               Container(
                 alignment: Alignment.center,
                 child: Text(

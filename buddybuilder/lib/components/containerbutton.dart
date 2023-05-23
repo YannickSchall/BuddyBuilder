@@ -8,6 +8,7 @@ class ContainerButtonWidget extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.icon,
+    required this.containerIcon,
     this.outerWidth = 300.0,
     this.outerHeight = 200.0,
     this.innerWidth = 200.0,
@@ -18,6 +19,7 @@ class ContainerButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final Icon? icon;
+  final Icon containerIcon;
   final double outerWidth;
   final double outerHeight;
   final double innerWidth;
@@ -54,7 +56,12 @@ class ContainerButtonWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(), // Add an empty container for the lower row
+              child: Align(
+                  alignment: Alignment.topCenter,
+                  child: IconButton(
+                      onPressed: onPressed,
+                      icon:
+                          containerIcon)), // Add an empty container for the lower row
             ),
           ],
         ),

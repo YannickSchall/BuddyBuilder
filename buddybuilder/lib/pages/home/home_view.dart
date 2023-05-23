@@ -48,7 +48,7 @@ class HomeView extends ConsumerWidget {
             //DayMonthWidget(),
             PillButtonWidget(
               onPressed: () {},
-              text: '',
+              text: 'CALENDAR',
               dateWidget: const DayMonthWidget(),
               buttonHeight: 120.0,
             ),
@@ -56,6 +56,7 @@ class HomeView extends ConsumerWidget {
               onPressed: () {},
               text:
                   'PULL', // TODO: add method to switch training according to day
+              containerIcon: const Icon(Icons.more_horiz),
             ),
             PillButtonWidget(
                 onPressed: () {},

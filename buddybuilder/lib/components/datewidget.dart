@@ -24,36 +24,26 @@ class DayMonthWidget extends StatelessWidget {
     //final currentMonth = getMonthName(now.month); // Format month as name
     final currentWeekday = getDayName(DateTime.now().weekday);
 
-    return Container(
-      width: 150,
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Container(
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey.withOpacity(0.3),
-        ),
-        child: Column(
-          children: [
-            Container(
-              //alignment: Alignment.centerLeft,
-              //padding: const EdgeInsets.only(left: 16.0),
-              child: Text(currentWeekday),
+    return SizedBox(
+      width: 60,
+      height: 60,
+      child: Column(
+        children: [
+          Container(
+            child: Text(
+              currentWeekday,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            Container(
-              //alignment: Alignment.centerLeft,
-              child: Text(currentDay),
+          ),
+          Container(
+            child: Text(
+              currentDay,
+              textAlign: TextAlign.left,
+              style: const TextStyle(fontSize: 25),
             ),
-            //SizedBox(height: 8.0, width: 32),
-            //SizedBox(height: 8.0, width: 32),
-            Container(
-              //alignment: Alignment.centerLeft,
-              child: Icon(Icons.calendar_month),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
