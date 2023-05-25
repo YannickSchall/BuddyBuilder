@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
-import 'package:buddybuilder/pages/home/ui-kit/htwg_text.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/containerbutton.dart';
@@ -12,12 +11,13 @@ import 'package:buddybuilder/components/datewidget.dart';
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
 
+/*
   Widget get firstTree =>
       const HTWGText('SommerSemester 2022', 'HTWG-First-App');
 
   Widget get secondTree =>
       const HTWGText('WinterSemester 2022/2023', 'HTWG-First-App');
-
+*/
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeController controller =
@@ -38,7 +38,7 @@ class HomeView extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //model.switchTree ? firstTree : secondTree,
-            const SizedBox(height: 30),
+            //const SizedBox(height: 30),
 
             /*
             ElevatedButton(

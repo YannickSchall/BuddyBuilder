@@ -32,14 +32,12 @@ class DayMonthWidget extends StatelessWidget {
           Container(
             child: Text(
               currentWeekday,
-              textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           Container(
             child: Text(
               currentDay,
-              textAlign: TextAlign.left,
               style: const TextStyle(fontSize: 25),
             ),
           ),

@@ -26,55 +26,60 @@ mixin _$HomeModel {
 /// @nodoc
 abstract class $HomeModelCopyWith<$Res> {
   factory $HomeModelCopyWith(HomeModel value, $Res Function(HomeModel) then) =
-      _$HomeModelCopyWithImpl<$Res>;
+      _$HomeModelCopyWithImpl<$Res, HomeModel>;
+  @useResult
   $Res call({bool switchTree});
 }
 
 /// @nodoc
-class _$HomeModelCopyWithImpl<$Res> implements $HomeModelCopyWith<$Res> {
+class _$HomeModelCopyWithImpl<$Res, $Val extends HomeModel>
+    implements $HomeModelCopyWith<$Res> {
   _$HomeModelCopyWithImpl(this._value, this._then);
 
-  final HomeModel _value;
   // ignore: unused_field
-  final $Res Function(HomeModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? switchTree = freezed,
+    Object? switchTree = null,
   }) {
     return _then(_value.copyWith(
-      switchTree: switchTree == freezed
+      switchTree: null == switchTree
           ? _value.switchTree
           : switchTree // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$HomeModelCopyWith<$Res> implements $HomeModelCopyWith<$Res> {
-  factory _$HomeModelCopyWith(
-          _HomeModel value, $Res Function(_HomeModel) then) =
-      __$HomeModelCopyWithImpl<$Res>;
+abstract class _$$_HomeModelCopyWith<$Res> implements $HomeModelCopyWith<$Res> {
+  factory _$$_HomeModelCopyWith(
+          _$_HomeModel value, $Res Function(_$_HomeModel) then) =
+      __$$_HomeModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool switchTree});
 }
 
 /// @nodoc
-class __$HomeModelCopyWithImpl<$Res> extends _$HomeModelCopyWithImpl<$Res>
-    implements _$HomeModelCopyWith<$Res> {
-  __$HomeModelCopyWithImpl(_HomeModel _value, $Res Function(_HomeModel) _then)
-      : super(_value, (v) => _then(v as _HomeModel));
+class __$$_HomeModelCopyWithImpl<$Res>
+    extends _$HomeModelCopyWithImpl<$Res, _$_HomeModel>
+    implements _$$_HomeModelCopyWith<$Res> {
+  __$$_HomeModelCopyWithImpl(
+      _$_HomeModel _value, $Res Function(_$_HomeModel) _then)
+      : super(_value, _then);
 
-  @override
-  _HomeModel get _value => super._value as _HomeModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? switchTree = freezed,
+    Object? switchTree = null,
   }) {
-    return _then(_HomeModel(
-      switchTree: switchTree == freezed
+    return _then(_$_HomeModel(
+      switchTree: null == switchTree
           ? _value.switchTree
           : switchTree // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -99,28 +104,28 @@ class _$_HomeModel implements _HomeModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _HomeModel &&
-            const DeepCollectionEquality()
-                .equals(other.switchTree, switchTree));
+            other is _$_HomeModel &&
+            (identical(other.switchTree, switchTree) ||
+                other.switchTree == switchTree));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(switchTree));
+  int get hashCode => Object.hash(runtimeType, switchTree);
 
   @JsonKey(ignore: true)
   @override
-  _$HomeModelCopyWith<_HomeModel> get copyWith =>
-      __$HomeModelCopyWithImpl<_HomeModel>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_HomeModelCopyWith<_$_HomeModel> get copyWith =>
+      __$$_HomeModelCopyWithImpl<_$_HomeModel>(this, _$identity);
 }
 
 abstract class _HomeModel implements HomeModel {
   const factory _HomeModel({required final bool switchTree}) = _$_HomeModel;
 
   @override
-  bool get switchTree => throw _privateConstructorUsedError;
+  bool get switchTree;
   @override
   @JsonKey(ignore: true)
-  _$HomeModelCopyWith<_HomeModel> get copyWith =>
+  _$$_HomeModelCopyWith<_$_HomeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
