@@ -4,6 +4,7 @@ import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/exercise.dart';
+import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class TrainingView extends ConsumerWidget {
   const TrainingView({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class TrainingView extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //model.switchTree ? firstTree : secondTree,
-            const SizedBox(height: 30),
+            //const SizedBox(height: 30),
             ExerciseWidget(),
           ],
         ),

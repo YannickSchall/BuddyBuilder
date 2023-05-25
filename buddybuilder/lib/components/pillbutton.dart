@@ -40,7 +40,7 @@ class PillButtonWidget extends StatelessWidget {
         ),
         child: CupertinoButton(
           onPressed: onPressed,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.primaryContainer,
           pressedOpacity: 0.3,
           padding: EdgeInsets.zero,
           borderRadius: BorderRadius.circular(24.0),
@@ -64,6 +64,8 @@ class PillButtonWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   text,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer),
                   textAlign: TextAlign.center,
                 ),
               ),

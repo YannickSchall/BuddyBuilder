@@ -19,29 +19,24 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         });
       },
       child: Container(
-        decoration: BoxDecoration(),
-        padding: EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
         child: Column(
           children: [
             Row(
               children: [
-                Expanded(
+                Flexible(
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
                         expanded = !expanded;
                       });
                     },
-                    child: Flexible(
-                      child: Container(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        child: const Text(
-                          'Latpulldown',
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    child: Text(
+                      'Single Arm Latpull Down Seilzug Reverse Incline Angle',
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                   ),
@@ -50,10 +45,11 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         '5x5',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       IconButton(
@@ -62,6 +58,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                               ? Icons.check_circle
                               : Icons.check_circle_outline,
                         ),
+                        color: Theme.of(context).colorScheme.onPrimary,
                         onPressed: () {
                           setState(() {
                             completed = !completed;
@@ -83,8 +80,9 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   Expanded(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [Container(child: Text('1x12'))])),
+                          children: const [Text('1x12')])),
                   IconButton(
+                    color: Theme.of(context).colorScheme.onPrimary,
                     icon: Icon(
                       innerCompleted
                           ? Icons.check_circle
@@ -99,10 +97,8 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                 ],
               ),
             const Divider(
-              //height: 20,
               thickness: 1,
-              //indent: 20,
-              endIndent: 0,
+              height: 10,
               color: Colors.black,
             ),
           ],

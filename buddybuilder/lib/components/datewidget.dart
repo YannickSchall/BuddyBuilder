@@ -32,13 +32,17 @@ class DayMonthWidget extends StatelessWidget {
           Container(
             child: Text(
               currentWeekday,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer),
             ),
           ),
           Container(
             child: Text(
               currentDay,
-              style: const TextStyle(fontSize: 25),
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer),
             ),
           ),
         ],

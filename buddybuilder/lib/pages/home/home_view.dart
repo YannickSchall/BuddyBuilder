@@ -56,16 +56,19 @@ class HomeView extends ConsumerWidget {
               onPressed: () {},
               text:
                   'PULL', // TODO: add method to switch training according to day
-              containerIcon: const Icon(Icons.more_horiz),
+              containerIcon: Icon(Icons.more_horiz,
+                  color: Theme.of(context).colorScheme.primary),
             ),
             PillButtonWidget(
                 onPressed: () {},
                 text: 'SETTINGS',
-                icon: const Icon(Icons.settings)),
+                icon: Icon(Icons.settings,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
             PillButtonWidget(
                 onPressed: () {},
                 text: 'BUILD PLAN',
-                icon: const Icon(CustomIcons.gymplan)),
+                icon: Icon(CustomIcons.gymplan,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
           ],
         ),
       ),
