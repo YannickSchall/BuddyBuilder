@@ -7,7 +7,9 @@ import 'package:buddybuilder/components/exercise.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class TrainingView extends ConsumerWidget {
-  const TrainingView({Key? key}) : super(key: key);
+  const TrainingView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,21 +19,30 @@ class TrainingView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        customdata: 'BUDDY\nBUILDER',
-        titlealignment: Alignment.centerRight,
+        //title: 'BUDDY\nBUILDER',
+        //excerciseTitle: 'QUADS &Längerrrrweg',
+        subTitle: 'Specify Split',
+        titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,
         onBackButtonPressed: () {},
         onOkButtonPressed: () {},
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //model.switchTree ? firstTree : secondTree,
-            //const SizedBox(height: 30),
-            ExerciseWidget(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //model.switchTree ? firstTree : secondTree,
+              //const SizedBox(height: 30),
+              ExerciseWidget(),
+              ExerciseWidget(),
+              ExerciseWidget(),
+              ExerciseWidget(),
+              ExerciseWidget(),
+              ExerciseWidget(),
+            ],
+          ),
         ),
       ),
     );

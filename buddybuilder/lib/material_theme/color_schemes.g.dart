@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 const lightColorScheme = ColorScheme(
   // primary = theme for home
   brightness: Brightness.light,
-  primary: Color(0xFF5C675C), // pillbuttoncolor 0xFFB7CEB7
-  onPrimary: Color(0xFF5C675C), // schrift allgemein
+  primary: Color(0xFF394B3B), // pillbuttoncolor 0xFFB7CEB7
+  onPrimary: Color(0xFF191C19), // schrift allgemein
   primaryContainer: Color(0xFF5C675C), // pillbuttoncolor
-  onPrimaryContainer: Color(0xFFDDE5DA), // pillbuttonschrift
+  onPrimaryContainer: Color(0xFFFCFDF7), // pillbuttonschrift
 
   //
   secondary: Color(0xFF506352),
@@ -41,12 +41,12 @@ const lightColorScheme = ColorScheme(
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFFB7CEB7),
-  onPrimary: Color(0xFFB7CEB7), //
+  onPrimary: Color(0xFFFCFDF7), //
   primaryContainer: Color(0xFFB7CEB7), // pillbutton
   onPrimaryContainer: Color(0xFF191C19), // pillbuttonschrift
-  secondary: Color(0xFFB7CCB7),
+  secondary: Color(0xFFB7CCB7), // überschrift
   onSecondary: Color(0xFF233426),
-  secondaryContainer: Color(0xFF394B3B), // containerbutton
+  secondaryContainer: Color(0xFF394B3B), // containerbutton, appbarhintergrund
   onSecondaryContainer: Color(0xFFD3E8D2),
   tertiary: Color(0xFFA2CED8),
   onTertiary: Color(0xFF01363E),
@@ -56,7 +56,7 @@ const darkColorScheme = ColorScheme(
   errorContainer: Color(0xFF93000A),
   onError: Color(0xFF690005),
   onErrorContainer: Color(0xFFFFDAD6),
-  background: Color(0xFF191C19),
+  background: Color(0xFF191C19), // background
   onBackground: Color(0xFFE2E3DE),
   surface: Color(0xFF191C19),
   onSurface: Color(0xFF11E3DE),

@@ -5,4 +5,12 @@ class TrainingControllerImplementation extends TrainingController {
   TrainingControllerImplementation({
     TrainingModel? model,
   }) : super(model ?? const TrainingModel());
+
+  String calculateTotalReps() {
+    return "";
+  }
+
+  String calculateSetCount() {
+    return "";
+  }
 }

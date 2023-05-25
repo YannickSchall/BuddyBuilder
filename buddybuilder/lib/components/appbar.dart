@@ -1,23 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
+import 'package:buddybuilder/components/datewidget.dart';
 
 class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GymAppBar({
     Key? key,
-    required this.customdata,
-    required this.titlealignment,
+    this.title,
+    this.excerciseTitle,
+    this.subTitle,
+    this.date,
+    required this.titleAlignment,
     required this.showBackButton,
     required this.showOkButton,
     required this.onBackButtonPressed,
     required this.onOkButtonPressed,
   }) : super(key: key);
 
-  final String customdata;
+  final String? title;
+  final String? excerciseTitle;
+  final String? subTitle;
+  final String? date;
   final bool showBackButton;
   final bool showOkButton;
   final VoidCallback onBackButtonPressed;
   final VoidCallback onOkButtonPressed;
-  final Alignment titlealignment;
+  final Alignment titleAlignment;
+  final dateWidget = const DayMonthWidget();
 
   @override
   Size get preferredSize => const Size.fromHeight(100.0);
@@ -25,14 +35,34 @@ class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Container(
-        //height: 100, // Adjust the vertical padding as needed
-        padding: EdgeInsets.zero,
-        child: Align(
-          alignment: titlealignment,
-          child: Text(customdata),
+      title: Column(children: [
+        Container(
+          alignment: Alignment.centerRight,
+          child: excerciseTitle == null
+              ? title != null
+                  ? Text(title!)
+                  : Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        subTitle!,
+                        textAlign: TextAlign.center,
+                      ))
+              : Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  Text(
+                    excerciseTitle!,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textWidthBasis: TextWidthBasis.longestLine,
+                  ),
+                  Text(
+                      dateWidget.getDayName(DateTime.now().weekday) +
+                          " " +
+                          DateTime.now().day.toString(),
+                      style: const TextStyle(
+                          fontSize: 27, fontWeight: FontWeight.normal))
+                ]),
         ),
-      ),
+      ]),
       toolbarHeight: double.infinity,
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       titleTextStyle: TextStyle(
@@ -47,11 +77,15 @@ class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Theme.of(context).colorScheme.primary)
           : null,
       actions: [
-        if (showOkButton)
-          IconButton(
-              icon: const Icon(Icons.check),
-              onPressed: onOkButtonPressed,
-              color: Theme.of(context).colorScheme.primary),
+        showOkButton
+            ? IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: onOkButtonPressed,
+                color: Theme.of(context).colorScheme.primary)
+            : IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: onOkButtonPressed,
+                color: Theme.of(context).colorScheme.secondaryContainer),
       ],
     );
   }

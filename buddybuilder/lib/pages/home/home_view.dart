@@ -26,8 +26,8 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        customdata: 'BUDDY\nBUILDER',
-        titlealignment: Alignment.centerRight,
+        title: 'BUDDY\nBUILDER',
+        titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,
         onBackButtonPressed: () {},

@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ExerciseWidget extends StatefulWidget {
+  const ExerciseWidget({
+    Key? key,
+    this.setCount,
+    this.totalCount,
+    this.icon,
+  }) : super(key: key);
+
+  final String? setCount;
+  final String? totalCount;
+  final Icon? icon;
+
   @override
   _ExerciseWidgetState createState() => _ExerciseWidgetState();
 }
@@ -76,11 +87,23 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   Expanded(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [Text('Set 1')])),
+                          children: [
+                        Text(
+                          'Set 1',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        ),
+                      ])),
                   Expanded(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [Text('1x12')])),
+                          children: [
+                        Text(
+                          '1x12',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        ),
+                      ])),
                   IconButton(
                     color: Theme.of(context).colorScheme.onPrimary,
                     icon: Icon(
@@ -96,10 +119,10 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   ),
                 ],
               ),
-            const Divider(
+            Divider(
               thickness: 1,
               height: 10,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ],
         ),
