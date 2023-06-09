@@ -51,7 +51,7 @@ class HomeView extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.primary),
             ),
             PillButtonWidget(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/plan'),
                 text: 'BUILD PLAN',
                 icon: Icon(CustomIcons.gymplan,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),

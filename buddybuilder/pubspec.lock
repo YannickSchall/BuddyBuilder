@@ -231,7 +231,7 @@ packages:
     source: hosted
     version: "1.0.4"
   flutter_neat_and_clean_calendar:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_neat_and_clean_calendar
       sha256: "953f41d55d91df9df19e04cd381e57e6645a3c15bd830d90252939406975cd4b"

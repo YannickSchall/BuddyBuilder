@@ -105,7 +105,10 @@ class _PlanViewState extends State<PlanView> {
               Column(
                 children: pillButtons.map((buttonText) {
                   return PillButtonWidget(
-                      onPressed: createNewPillButton, text: buttonText);
+                    onPressed: createNewPillButton,
+                    text: buttonText,
+                    swipeToDelete: true,
+                  );
                 }).toList(),
               ),
             ],

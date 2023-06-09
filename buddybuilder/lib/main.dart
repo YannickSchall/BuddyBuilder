@@ -36,11 +36,14 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
-            } else if (routeParams.name == '/plan') {
-              return MaterialPageRoute(builder: (context) => const PlanView());
+            } else if (routeParams.name == '/calendar') {
+              return MaterialPageRoute(
+                  builder: (context) => const CalendarView());
             } else if (routeParams.name == '/training') {
               return MaterialPageRoute(
                   builder: (context) => const TrainingView());
+            } else if (routeParams.name == '/plan') {
+              return MaterialPageRoute(builder: (context) => const PlanView());
             }
           },
           onPopPage: (route, result) {

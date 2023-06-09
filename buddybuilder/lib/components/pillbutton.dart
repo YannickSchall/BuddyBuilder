@@ -14,6 +14,8 @@ class PillButtonWidget extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 8.0),
     this.icon,
     this.dateWidget,
+    this.swipeToDelete = false,
+    this.onDismissed,
   }) : super(key: key);
 
   final VoidCallback onPressed;
@@ -23,19 +25,43 @@ class PillButtonWidget extends StatelessWidget {
   final double buttonWidth;
   final Icon? icon;
   final DayMonthWidget? dateWidget;
+  final bool swipeToDelete;
+  final VoidCallback? onDismissed;
 
   @override
   Widget build(BuildContext context) {
+    if (swipeToDelete) {
+      return Dismissible(
+        key: const ValueKey('dissmiss'),
+        direction: DismissDirection.startToEnd,
+        onDismissed: (direction) {
+          if (direction == DismissDirection.startToEnd) {
+            onDismissed?.call();
+          }
+        },
+        background: Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: 16.0),
+          color: Colors.red, // Customize the delete background color
+          child: Icon(
+            Icons.delete,
+            color: Colors.white, // Customize the delete icon color
+          ),
+        ),
+        child: buildPillButton(context),
+      );
+    } else {
+      return buildPillButton(context);
+    }
+  }
+
+  Widget buildPillButton(BuildContext context) {
     return Padding(
       padding: padding,
       child: Container(
         width: buttonWidth,
         height: buttonHeight,
         decoration: BoxDecoration(
-          //border: Border.all(
-          //  color: Theme.of(context).colorScheme.primaryContainer,
-          //  width: 2.0,
-          //),
           borderRadius: BorderRadius.circular(25.0),
         ),
         child: CupertinoButton(

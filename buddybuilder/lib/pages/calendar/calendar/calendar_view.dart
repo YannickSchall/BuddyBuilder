@@ -7,7 +7,6 @@ import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
 
-
 class CalendarView extends ConsumerWidget {
   const CalendarView({
     Key? key,
@@ -28,7 +27,7 @@ class CalendarView extends ConsumerWidget {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,
-        onBackButtonPressed: () {},
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
         onOkButtonPressed: () {},
       ),
       body: SafeArea(
