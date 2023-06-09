@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_view.dart';
+import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 void main() async {
@@ -24,11 +25,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //theme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      theme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       //home: const TrainingView(),
       //home: const HomeView(),
-      home: const PlanView(),
+      //home: const PlanView(),
+      home: const CalendarView(),
     );
   }
 }

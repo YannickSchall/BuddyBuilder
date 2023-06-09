@@ -10,4 +10,7 @@ class HomeControllerImplementation extends HomeController {
   void switchtTree() {
     state = state.copyWith(switchTree: !state.switchTree);
   }
+
+  @override
+  void createPlan() {}
 }

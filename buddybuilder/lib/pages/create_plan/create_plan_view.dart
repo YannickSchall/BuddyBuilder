@@ -108,6 +108,7 @@ class _PlanViewState extends State<PlanView> {
                       onPressed: createNewPillButton, text: buttonText);
                 }).toList(),
               ),
+            
             ],
           ),
         ),
