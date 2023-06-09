@@ -59,7 +59,7 @@ class _PlanViewState extends State<PlanView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter Button Text'),
+          title: Text('Enter plan title'),
           content: TextField(
             controller: textController,
           ),
@@ -88,7 +88,7 @@ class _PlanViewState extends State<PlanView> {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,
-        onBackButtonPressed: () {},
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
         onOkButtonPressed: () {},
       ),
       body: SingleChildScrollView(
@@ -98,7 +98,7 @@ class _PlanViewState extends State<PlanView> {
             children: [
               PillButtonWidget(
                 onPressed: createNewPillButton,
-                text: 'CUSTOM',
+                text: 'Create new plan',
                 icon: Icon(Icons.add),
               ),
               SizedBox(height: 20),
@@ -108,7 +108,6 @@ class _PlanViewState extends State<PlanView> {
                       onPressed: createNewPillButton, text: buttonText);
                 }).toList(),
               ),
-            
             ],
           ),
         ),

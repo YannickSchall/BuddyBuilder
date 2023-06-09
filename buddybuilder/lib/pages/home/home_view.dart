@@ -37,23 +37,14 @@ class HomeView extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //model.switchTree ? firstTree : secondTree,
-            //const SizedBox(height: 30),
-
-            /*
-            ElevatedButton(
-              onPressed: () => controller.switchtTree(),
-              child: const Text('Switch Tree'),
-            ),*/
-            //DayMonthWidget(),
             PillButtonWidget(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/calendar'),
               text: 'CALENDAR',
               dateWidget: const DayMonthWidget(),
               buttonHeight: 120.0,
             ),
             ContainerButtonWidget(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/training'),
               text:
                   'PULL', // TODO: add method to switch training according to day
               containerIcon: Icon(Icons.more_horiz,
@@ -61,13 +52,13 @@ class HomeView extends ConsumerWidget {
             ),
             PillButtonWidget(
                 onPressed: () {},
-                text: 'SETTINGS',
-                icon: Icon(Icons.settings,
+                text: 'BUILD PLAN',
+                icon: Icon(CustomIcons.gymplan,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
             PillButtonWidget(
                 onPressed: () {},
-                text: 'BUILD PLAN',
-                icon: Icon(CustomIcons.gymplan,
+                text: 'SETTINGS',
+                icon: Icon(Icons.settings,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
           ],
         ),

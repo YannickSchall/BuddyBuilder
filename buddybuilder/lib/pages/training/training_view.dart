@@ -25,7 +25,7 @@ class TrainingView extends ConsumerWidget {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,
-        onBackButtonPressed: () {},
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
         onOkButtonPressed: () {},
       ),
       body: SingleChildScrollView(

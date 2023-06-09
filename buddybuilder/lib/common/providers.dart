@@ -8,9 +8,9 @@ import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_controller.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_model.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_view.dart';
-import 'package:buddybuilder/pages/calendar/calendar_controller.dart';
-import 'package:buddybuilder/pages/calendar/calendar_model.dart';
-import 'package:buddybuilder/pages/calendar/calendar_view.dart';
+import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
+import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
+import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
 
 final Providers providers = Providers();
 
