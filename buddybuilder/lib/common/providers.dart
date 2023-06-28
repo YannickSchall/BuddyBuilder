@@ -8,6 +8,9 @@ import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_controller.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_model.dart';
 import 'package:buddybuilder/pages/create_plan/create_plan_view.dart';
+import 'package:buddybuilder/pages/splits/weekly/weekly_controller.dart';
+import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
+import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
 
 final Providers providers = Providers();
 
@@ -22,7 +25,11 @@ class Providers {
           (StateNotifierProviderRef ref) => TrainingControllerImplementation());
 
   final StateNotifierProvider<PlanController, PlanModel>
-      planControllerProvider =
-      StateNotifierProvider<PlanController, PlanModel>(
+      planControllerProvider = StateNotifierProvider<PlanController, PlanModel>(
           (StateNotifierProviderRef ref) => PlanControllerImplementation());
+
+  final StateNotifierProvider<WeeklyController, WeeklyModel>
+      weeklyControllerProvider =
+      StateNotifierProvider<WeeklyController, WeeklyModel>(
+          (StateNotifierProviderRef ref) => WeeklyControllerImplementation());
 }
