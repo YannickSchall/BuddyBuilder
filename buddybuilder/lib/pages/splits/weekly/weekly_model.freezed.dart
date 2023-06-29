@@ -15,13 +15,21 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$WeeklyModel {}
+mixin _$WeeklyModel {
+  List<dynamic> get splits => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $WeeklyModelCopyWith<WeeklyModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $WeeklyModelCopyWith<$Res> {
   factory $WeeklyModelCopyWith(
           WeeklyModel value, $Res Function(WeeklyModel) then) =
       _$WeeklyModelCopyWithImpl<$Res, WeeklyModel>;
+  @useResult
+  $Res call({List<dynamic> splits});
 }
 
 /// @nodoc
@@ -33,13 +41,30 @@ class _$WeeklyModelCopyWithImpl<$Res, $Val extends WeeklyModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? splits = null,
+  }) {
+    return _then(_value.copyWith(
+      splits: null == splits
+          ? _value.splits
+          : splits // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_WeeklyModelCopyWith<$Res> {
+abstract class _$$_WeeklyModelCopyWith<$Res>
+    implements $WeeklyModelCopyWith<$Res> {
   factory _$$_WeeklyModelCopyWith(
           _$_WeeklyModel value, $Res Function(_$_WeeklyModel) then) =
       __$$_WeeklyModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<dynamic> splits});
 }
 
 /// @nodoc
@@ -49,28 +74,66 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
   __$$_WeeklyModelCopyWithImpl(
       _$_WeeklyModel _value, $Res Function(_$_WeeklyModel) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? splits = null,
+  }) {
+    return _then(_$_WeeklyModel(
+      splits: null == splits
+          ? _value._splits
+          : splits // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_WeeklyModel implements _WeeklyModel {
-  const _$_WeeklyModel();
+  const _$_WeeklyModel({required final List<dynamic> splits})
+      : _splits = splits;
+
+  final List<dynamic> _splits;
+  @override
+  List<dynamic> get splits {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_splits);
+  }
 
   @override
   String toString() {
-    return 'WeeklyModel()';
+    return 'WeeklyModel(splits: $splits)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_WeeklyModel);
+        (other.runtimeType == runtimeType &&
+            other is _$_WeeklyModel &&
+            const DeepCollectionEquality().equals(other._splits, _splits));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_splits));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_WeeklyModelCopyWith<_$_WeeklyModel> get copyWith =>
+      __$$_WeeklyModelCopyWithImpl<_$_WeeklyModel>(this, _$identity);
 }
 
 abstract class _WeeklyModel implements WeeklyModel {
-  const factory _WeeklyModel() = _$_WeeklyModel;
+  const factory _WeeklyModel({required final List<dynamic> splits}) =
+      _$_WeeklyModel;
+
+  @override
+  List<dynamic> get splits;
+  @override
+  @JsonKey(ignore: true)
+  _$$_WeeklyModelCopyWith<_$_WeeklyModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }

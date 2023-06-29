@@ -6,5 +6,7 @@ part 'weekly_model.freezed.dart';
 
 @freezed
 class WeeklyModel with _$WeeklyModel {
-  const factory WeeklyModel() = _WeeklyModel;
+  const factory WeeklyModel({
+    required List splits,
+  }) = _WeeklyModel;
 }

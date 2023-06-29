@@ -1,3 +1,4 @@
+import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/weekselector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +9,7 @@ import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/circle.dart';
 import 'package:buddybuilder/components/weekdayselector.dart';
 import 'package:buddybuilder/components/weekselector.dart';
+import 'package:buddybuilder/components/searchbar.dart';
 
 class WeeklyView extends ConsumerWidget {
   const WeeklyView({
@@ -22,6 +24,8 @@ class WeeklyView extends ConsumerWidget {
     DateTime _selectedDay =
         DateTime.now(); // Add this line to declare _selectedDay
     DateTime _2ndselectedDay = DateTime.now();
+    var x;
+    var y;
 
     return Scaffold(
       appBar: GymAppBar(
@@ -40,7 +44,7 @@ class WeeklyView extends ConsumerWidget {
               crossAxisAlignment:
                   CrossAxisAlignment.start, // Align text to left
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'week',
@@ -50,8 +54,8 @@ class WeeklyView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                WeekSelector(),
-                Align(
+                const WeekSelector(),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -64,8 +68,15 @@ class WeeklyView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                WeekDaySelector(),
-                // Add any other widgets you want to display
+                const WeekDaySelector(),
+                MySearchBar(
+                  onChanged: (query) {
+                    x = controller.findMatch(query);
+                    y = query;
+                  },
+                ),
+                // ignore: avoid_print
+                if (x == true) PillButtonWidget(onPressed: () {}, text: 'split')
               ],
             ),
           ),
@@ -79,4 +90,5 @@ class WeeklyView extends ConsumerWidget {
 
 abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   WeeklyController(WeeklyModel state) : super(state);
+  bool findMatch(String input);
 }
