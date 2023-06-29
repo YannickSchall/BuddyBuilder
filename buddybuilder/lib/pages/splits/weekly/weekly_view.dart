@@ -39,6 +39,13 @@ class WeeklyView extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text(
+                    'week',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.pink,
+                    ),
+                  ),
                   CircleWidget(
                     onPressed: () {
                       // Handle button press
@@ -48,31 +55,18 @@ class WeeklyView extends ConsumerWidget {
                     width: 60,
                     height: 60,
                   ),
-                  Text(
-                    'week',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pink,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.one_k_plus_outlined),
-                    onPressed: () {},
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.two_k_rounded),
-                    onPressed: () {},
-                    color: Theme.of(context).colorScheme.primary,
+                  CircleWidget(
+                    onPressed: () {
+                      // Handle button press
+                      print('Button pressed');
+                    },
+                    text: '1',
+                    width: 60,
+                    height: 60,
                   ),
                 ],
               ),
-              WeeklyDatePicker(
-                selectedDay: _selectedDay,
-                changeDay: (value) => setState(() {
-                  _selectedDay = value;
-                }),
-              ),
+
               // Add any other widgets you want to display
             ],
           ),
