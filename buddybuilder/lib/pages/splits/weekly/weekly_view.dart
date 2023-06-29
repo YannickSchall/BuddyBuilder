@@ -10,6 +10,8 @@ import 'package:buddybuilder/components/circle.dart';
 import 'package:buddybuilder/components/weekdayselector.dart';
 import 'package:buddybuilder/components/weekselector.dart';
 import 'package:buddybuilder/components/searchbar.dart';
+import 'package:buddybuilder/components/searchbox.dart';
+import 'package:buddybuilder/components/pillbutton.dart';
 
 class WeeklyView extends ConsumerWidget {
   const WeeklyView({
@@ -21,8 +23,7 @@ class WeeklyView extends ConsumerWidget {
     final WeeklyController controller =
         ref.read(providers.weeklyControllerProvider.notifier);
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
-    DateTime _selectedDay =
-        DateTime.now(); // Add this line to declare _selectedDay
+    DateTime _selectedDay = DateTime.now();
     DateTime _2ndselectedDay = DateTime.now();
     var x;
     var y;
@@ -38,24 +39,23 @@ class WeeklyView extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0), // Add left padding
+          padding: const EdgeInsets.only(left: 16.0),
           child: Center(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Align text to left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'week',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.pink,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                 ),
                 const WeekSelector(),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -63,20 +63,36 @@ class WeeklyView extends ConsumerWidget {
                       'days',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                     ),
                   ),
                 ),
                 const WeekDaySelector(),
+
                 MySearchBar(
                   onChanged: (query) {
-                    x = controller.findMatch(query);
                     y = query;
                   },
                 ),
-                // ignore: avoid_print
-                if (x == true) PillButtonWidget(onPressed: () {}, text: 'split')
+                /*
+                SearchWidget(
+                  value: model.query,
+                  onPressed: () {
+                    controller.findMatch(model.query);
+                  },
+                ),*/
+                Column(
+                  children: [
+                    if (controller.findMatch('x'))
+                      PillButtonWidget(
+                          buttonHeight: 40,
+                          buttonWidth: 100,
+                          text: 'PULL',
+                          onPressed: () {}),
+                  ],
+                ),
+                // Rest of the widgets
               ],
             ),
           ),

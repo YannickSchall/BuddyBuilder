@@ -10,18 +10,21 @@ class MySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: TextField(
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search',
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+        Padding(
+          padding: EdgeInsets.all(8.0), // Add padding around all edges
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: TextField(
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search',
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+              ),
             ),
           ),
         ),

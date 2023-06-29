@@ -8,5 +8,6 @@ part 'weekly_model.freezed.dart';
 class WeeklyModel with _$WeeklyModel {
   const factory WeeklyModel({
     required List splits,
+    required String query,
   }) = _WeeklyModel;
 }

@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$WeeklyModel {
   List<dynamic> get splits => throw _privateConstructorUsedError;
+  String get query => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WeeklyModelCopyWith<WeeklyModel> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $WeeklyModelCopyWith<$Res> {
           WeeklyModel value, $Res Function(WeeklyModel) then) =
       _$WeeklyModelCopyWithImpl<$Res, WeeklyModel>;
   @useResult
-  $Res call({List<dynamic> splits});
+  $Res call({List<dynamic> splits, String query});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$WeeklyModelCopyWithImpl<$Res, $Val extends WeeklyModel>
   @override
   $Res call({
     Object? splits = null,
+    Object? query = null,
   }) {
     return _then(_value.copyWith(
       splits: null == splits
           ? _value.splits
           : splits // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_WeeklyModelCopyWith<$Res>
       __$$_WeeklyModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<dynamic> splits});
+  $Res call({List<dynamic> splits, String query});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? splits = null,
+    Object? query = null,
   }) {
     return _then(_$_WeeklyModel(
       splits: null == splits
           ? _value._splits
           : splits // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -92,7 +103,8 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_WeeklyModel implements _WeeklyModel {
-  const _$_WeeklyModel({required final List<dynamic> splits})
+  const _$_WeeklyModel(
+      {required final List<dynamic> splits, required this.query})
       : _splits = splits;
 
   final List<dynamic> _splits;
@@ -103,8 +115,11 @@ class _$_WeeklyModel implements _WeeklyModel {
   }
 
   @override
+  final String query;
+
+  @override
   String toString() {
-    return 'WeeklyModel(splits: $splits)';
+    return 'WeeklyModel(splits: $splits, query: $query)';
   }
 
   @override
@@ -112,12 +127,13 @@ class _$_WeeklyModel implements _WeeklyModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WeeklyModel &&
-            const DeepCollectionEquality().equals(other._splits, _splits));
+            const DeepCollectionEquality().equals(other._splits, _splits) &&
+            (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_splits));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_splits), query);
 
   @JsonKey(ignore: true)
   @override
@@ -127,11 +143,14 @@ class _$_WeeklyModel implements _WeeklyModel {
 }
 
 abstract class _WeeklyModel implements WeeklyModel {
-  const factory _WeeklyModel({required final List<dynamic> splits}) =
-      _$_WeeklyModel;
+  const factory _WeeklyModel(
+      {required final List<dynamic> splits,
+      required final String query}) = _$_WeeklyModel;
 
   @override
   List<dynamic> get splits;
+  @override
+  String get query;
   @override
   @JsonKey(ignore: true)
   _$$_WeeklyModelCopyWith<_$_WeeklyModel> get copyWith =>
