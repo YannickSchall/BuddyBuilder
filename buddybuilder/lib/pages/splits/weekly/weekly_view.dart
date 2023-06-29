@@ -1,12 +1,13 @@
+import 'package:buddybuilder/components/weekselector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
-import 'package:buddybuilder/components/exercise.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'package:buddybuilder/components/circle.dart';
+import 'package:buddybuilder/components/weekdayselector.dart';
+import 'package:buddybuilder/components/weekselector.dart';
 
 class WeeklyView extends ConsumerWidget {
   const WeeklyView({
@@ -24,7 +25,7 @@ class WeeklyView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'Weekly Spit',
+        subTitle: 'Weekly Split',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -32,43 +33,41 @@ class WeeklyView extends ConsumerWidget {
         onOkButtonPressed: () {},
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0), // Add left padding
+          child: Center(
+            child: Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Align text to left
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
                     'week',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.pink,
                     ),
                   ),
-                  CircleWidget(
-                    onPressed: () {
-                      // Handle button press
-                      print('Button pressed');
-                    },
-                    text: '1',
-                    width: 60,
-                    height: 60,
+                ),
+                WeekSelector(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'days',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pink,
+                      ),
+                    ),
                   ),
-                  CircleWidget(
-                    onPressed: () {
-                      // Handle button press
-                      print('Button pressed');
-                    },
-                    text: '1',
-                    width: 60,
-                    height: 60,
-                  ),
-                ],
-              ),
-
-              // Add any other widgets you want to display
-            ],
+                ),
+                WeekDaySelector(),
+                // Add any other widgets you want to display
+              ],
+            ),
           ),
         ),
       ),

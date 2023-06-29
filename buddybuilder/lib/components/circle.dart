@@ -9,8 +9,8 @@ class CircleWidget extends StatefulWidget {
     required this.text,
     this.icon,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-    this.width = 10,
-    this.height = 10,
+    this.width = 60,
+    this.height = 60,
   }) : super(key: key);
 
   final VoidCallback onPressed;
