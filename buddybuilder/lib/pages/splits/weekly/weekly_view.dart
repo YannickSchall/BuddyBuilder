@@ -10,7 +10,7 @@ import 'package:buddybuilder/components/circle.dart';
 import 'package:buddybuilder/components/weekdayselector.dart';
 import 'package:buddybuilder/components/weekselector.dart';
 import 'package:buddybuilder/components/searchbar.dart';
-
+import 'package:buddybuilder/components/searchbox.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 
 class WeeklyView extends ConsumerWidget {
