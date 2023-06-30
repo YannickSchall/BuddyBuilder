@@ -11,6 +11,8 @@ import 'package:buddybuilder/components/weekdayselector.dart';
 import 'package:buddybuilder/components/weekselector.dart';
 import 'package:buddybuilder/components/searchbar.dart';
 
+import 'package:buddybuilder/components/pillbutton.dart';
+
 class WeeklyView extends ConsumerWidget {
   const WeeklyView({
     Key? key,
@@ -21,11 +23,30 @@ class WeeklyView extends ConsumerWidget {
     final WeeklyController controller =
         ref.read(providers.weeklyControllerProvider.notifier);
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
-    DateTime _selectedDay =
-        DateTime.now(); // Add this line to declare _selectedDay
+    DateTime _selectedDay = DateTime.now();
     DateTime _2ndselectedDay = DateTime.now();
     var x;
     var y;
+    List<String> list = ["pull", "push", "legs"];
+
+    void showSuccessDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Successfully Added'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: GymAppBar(
@@ -38,24 +59,25 @@ class WeeklyView extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0), // Add left padding
+          padding: const EdgeInsets.only(left: 16.0),
           child: Center(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Align text to left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'week',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.pink,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                 ),
-                const WeekSelector(),
-                const Align(
+                //const WeekSelector(),
+
+                WeekSelector(),
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -63,20 +85,30 @@ class WeeklyView extends ConsumerWidget {
                       'days',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                     ),
                   ),
                 ),
                 const WeekDaySelector(),
+
                 MySearchBar(
                   onChanged: (query) {
-                    x = controller.findMatch(query);
-                    y = query;
+                    ref
+                        .read(providers.weeklyControllerProvider.notifier)
+                        .updateQuery(
+                            query); // Update the query in the controller
                   },
                 ),
-                // ignore: avoid_print
-                if (x == true) PillButtonWidget(onPressed: () {}, text: 'split')
+                if (list.contains(model
+                    .query)) // Condition to check if model.query is in the list
+                  PillButtonWidget(
+                    buttonHeight: 40,
+                    buttonWidth: 100,
+                    text: model.query,
+                    onPressed: showSuccessDialog,
+                  ),
+                // Rest of the widgets
               ],
             ),
           ),
@@ -84,11 +116,12 @@ class WeeklyView extends ConsumerWidget {
       ),
     );
   }
-
-  setState(Null Function() param0) {}
 }
 
 abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   WeeklyController(WeeklyModel state) : super(state);
   bool findMatch(String input);
+  String getInput();
+  void updateQuery(String query);
+  void updateWeekSelector();
 }
