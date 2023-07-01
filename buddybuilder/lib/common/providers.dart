@@ -23,6 +23,9 @@ import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_controller.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_controller.dart';
 
 final Providers providers = Providers();
 
@@ -64,4 +67,9 @@ class Providers {
       weeklyControllerProvider =
       StateNotifierProvider<WeeklyController, WeeklyModel>(
           (StateNotifierProviderRef ref) => WeeklyControllerImplementation());
+
+  final StateNotifierProvider<NewSplitController, NewSplitModel>
+      newsplitControllerProvider =
+      StateNotifierProvider<NewSplitController, NewSplitModel>(
+          (StateNotifierProviderRef ref) => NewSplitControllerImplementation());
 }

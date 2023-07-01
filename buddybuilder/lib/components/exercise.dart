@@ -57,7 +57,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '5x5',
+                        '',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onPrimary,
@@ -89,7 +89,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                         Text(
-                          'Set 1',
+                          ' ',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary),
                         ),
@@ -99,7 +99,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                         Text(
-                          '1x12',
+                          '',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary),
                         ),
