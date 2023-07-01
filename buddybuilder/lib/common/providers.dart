@@ -23,13 +23,16 @@ import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_controller.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
+import 'package:buddybuilder/db/isar_database.dart';
 
 final Providers providers = Providers();
+final isar = IsarDatabase.instance.isar;
 
 class Providers {
   final StateNotifierProvider<HomeController, HomeModel>
       homeControllerProvider = StateNotifierProvider<HomeController, HomeModel>(
-          (StateNotifierProviderRef ref) => HomeControllerImplementation());
+          (StateNotifierProviderRef ref) =>
+              HomeControllerImplementation(isar: isar));
 
   final StateNotifierProvider<TrainingController, TrainingModel>
       trainingControllerProvider =
