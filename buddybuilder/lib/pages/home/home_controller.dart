@@ -4,10 +4,14 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 class HomeControllerImplementation extends HomeController {
   HomeControllerImplementation({
     HomeModel? model,
-  }) : super(model ?? const HomeModel(switchTree: false));
+  }) : super(model ?? HomeModel(isDarkModeEnabled: false));
 
   @override
-  void switchtTree() {
-    state = state.copyWith(switchTree: !state.switchTree);
+  void createPlan() {}
+
+  @override
+  void switchTheme(bool isDarkModeEnabled) {
+    // Update the theme in the state
+    state = state.copyWith(isDarkModeEnabled: isDarkModeEnabled);
   }
 }

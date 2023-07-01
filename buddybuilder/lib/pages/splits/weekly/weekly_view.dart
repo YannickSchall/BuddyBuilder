@@ -54,8 +54,8 @@ class WeeklyView extends ConsumerWidget {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
-        onBackButtonPressed: () {},
-        onOkButtonPressed: () {},
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/workout'),
+        onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
         child: Padding(

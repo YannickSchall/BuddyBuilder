@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeModel {
-  bool get switchTree => throw _privateConstructorUsedError;
+  bool get isDarkModeEnabled => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeModelCopyWith<HomeModel> get copyWith =>
@@ -28,7 +28,7 @@ abstract class $HomeModelCopyWith<$Res> {
   factory $HomeModelCopyWith(HomeModel value, $Res Function(HomeModel) then) =
       _$HomeModelCopyWithImpl<$Res, HomeModel>;
   @useResult
-  $Res call({bool switchTree});
+  $Res call({bool isDarkModeEnabled});
 }
 
 /// @nodoc
@@ -44,12 +44,12 @@ class _$HomeModelCopyWithImpl<$Res, $Val extends HomeModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? switchTree = null,
+    Object? isDarkModeEnabled = null,
   }) {
     return _then(_value.copyWith(
-      switchTree: null == switchTree
-          ? _value.switchTree
-          : switchTree // ignore: cast_nullable_to_non_nullable
+      isDarkModeEnabled: null == isDarkModeEnabled
+          ? _value.isDarkModeEnabled
+          : isDarkModeEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -62,7 +62,7 @@ abstract class _$$_HomeModelCopyWith<$Res> implements $HomeModelCopyWith<$Res> {
       __$$_HomeModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool switchTree});
+  $Res call({bool isDarkModeEnabled});
 }
 
 /// @nodoc
@@ -76,12 +76,12 @@ class __$$_HomeModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? switchTree = null,
+    Object? isDarkModeEnabled = null,
   }) {
     return _then(_$_HomeModel(
-      switchTree: null == switchTree
-          ? _value.switchTree
-          : switchTree // ignore: cast_nullable_to_non_nullable
+      isDarkModeEnabled: null == isDarkModeEnabled
+          ? _value.isDarkModeEnabled
+          : isDarkModeEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -90,14 +90,14 @@ class __$$_HomeModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_HomeModel implements _HomeModel {
-  const _$_HomeModel({required this.switchTree});
+  _$_HomeModel({required this.isDarkModeEnabled});
 
   @override
-  final bool switchTree;
+  final bool isDarkModeEnabled;
 
   @override
   String toString() {
-    return 'HomeModel(switchTree: $switchTree)';
+    return 'HomeModel(isDarkModeEnabled: $isDarkModeEnabled)';
   }
 
   @override
@@ -105,12 +105,12 @@ class _$_HomeModel implements _HomeModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HomeModel &&
-            (identical(other.switchTree, switchTree) ||
-                other.switchTree == switchTree));
+            (identical(other.isDarkModeEnabled, isDarkModeEnabled) ||
+                other.isDarkModeEnabled == isDarkModeEnabled));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, switchTree);
+  int get hashCode => Object.hash(runtimeType, isDarkModeEnabled);
 
   @JsonKey(ignore: true)
   @override
@@ -120,10 +120,10 @@ class _$_HomeModel implements _HomeModel {
 }
 
 abstract class _HomeModel implements HomeModel {
-  const factory _HomeModel({required final bool switchTree}) = _$_HomeModel;
+  factory _HomeModel({required final bool isDarkModeEnabled}) = _$_HomeModel;
 
   @override
-  bool get switchTree;
+  bool get isDarkModeEnabled;
   @override
   @JsonKey(ignore: true)
   _$$_HomeModelCopyWith<_$_HomeModel> get copyWith =>

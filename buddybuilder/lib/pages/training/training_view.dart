@@ -21,12 +21,12 @@ class TrainingView extends ConsumerWidget {
       appBar: GymAppBar(
         //title: 'BUDDY\nBUILDER',
         //excerciseTitle: 'QUADS &Längerrrrweg',
-        subTitle: 'Specify Split',
+        subTitle: 'PULL',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
-        showOkButton: false,
-        onBackButtonPressed: () {},
-        onOkButtonPressed: () {},
+        showOkButton: true,
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
+        onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
         child: Center(
