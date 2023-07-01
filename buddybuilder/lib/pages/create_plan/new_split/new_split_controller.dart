@@ -17,6 +17,9 @@ class NewSplitControllerImplementation extends NewSplitController {
             ], workoutTitle: ''));
 
   void addWorkout(String name) {
-    state = state.copyWith(workoutList: [...state.workoutList, name]);
+    print('clicked');
+    Future.delayed(Duration(seconds: 10), () {
+      state = state.copyWith(workoutList: [...state.workoutList, name]);
+    });
   }
 }

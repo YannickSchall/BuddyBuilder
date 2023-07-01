@@ -6,6 +6,7 @@ import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/components/searchbar.dart';
+import 'package:buddybuilder/components/setwidget.dart';
 
 class NewSplitView extends ConsumerWidget {
   const NewSplitView({
@@ -65,20 +66,22 @@ class NewSplitView extends ConsumerWidget {
                     child: ListView(
                       shrinkWrap: true,
                       children: [
+                        // for schleife und items aus liste anzeigen
+
                         ExerciseWidget(
                           name: model.workoutTitle,
                           onPressed: controller.addWorkout,
                         ),
                         ExerciseWidget(
-                          name: 'name',
+                          name: model.workoutTitle,
                           onPressed: controller.addWorkout,
                         ),
                         ExerciseWidget(
-                          name: 'name',
+                          name: model.workoutTitle,
                           onPressed: controller.addWorkout,
                         ),
                         ExerciseWidget(
-                          name: 'name',
+                          name: model.workoutTitle,
                           onPressed: controller.addWorkout,
                         ),
                       ],
@@ -125,6 +128,11 @@ class NewSplitView extends ConsumerWidget {
                   },
                   text: 'add workout',
                 ),
+                SetWidget(
+                    setTitle: 'Legs',
+                    setNumber: 1,
+                    kgValue: '1',
+                    repsValue: '1')
               ],
             ),
           ),

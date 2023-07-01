@@ -14,7 +14,6 @@ class ExerciseWidget extends StatefulWidget {
 }
 
 class _ExerciseWidgetState extends State<ExerciseWidget> {
-  bool expanded = false;
   bool completed = false;
 
   @override
@@ -43,7 +42,11 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: widget.icon,
+                        icon: Icon(
+                          completed
+                              ? Icons.check_circle
+                              : Icons.check_circle_outline,
+                        ),
                         color: Theme.of(context).colorScheme.onPrimary,
                         onPressed: widget.onPressed(widget.name),
                       ),
