@@ -71,8 +71,7 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/set') {
               return MaterialPageRoute(builder: (context) => const SetView());
             } else if (routeParams.name == '/new') {
-              return MaterialPageRoute(
-                  builder: (context) => const NewSplitView());
+              return MaterialPageRoute(builder: (context) => NewSplitView());
             }
           },
           onPopPage: (route, result) {

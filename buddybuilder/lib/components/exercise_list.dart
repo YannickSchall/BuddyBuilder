@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ExerciseWidget extends StatefulWidget {
-  const ExerciseWidget(
-      {Key? key, this.icon, required this.onPressed, required this.name})
+  ExerciseWidget(
+      {Key? key,
+      this.icon,
+      required this.onPressed,
+      required this.name,
+      required this.id})
       : super(key: key);
 
   final Icon? icon;
-  final Function(String) onPressed;
+  final Function(int) onPressed;
   final String name;
+  int id;
 
   @override
   _ExerciseWidgetState createState() => _ExerciseWidgetState();
@@ -48,7 +53,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                               : Icons.check_circle_outline,
                         ),
                         color: Theme.of(context).colorScheme.onPrimary,
-                        onPressed: widget.onPressed(widget.name),
+                        onPressed: () => widget.onPressed(widget.id),
                       ),
                     ],
                   ),
