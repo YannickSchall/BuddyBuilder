@@ -1,4 +1,4 @@
-import 'package:buddybuilder/db/book.dart';
+import 'package:buddybuilder/services/db/book.dart';
 import 'package:isar/isar.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';

@@ -1,3 +1,5 @@
+import 'package:buddybuilder/services/api/api_service.dart';
+import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_controller.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
@@ -23,16 +25,18 @@ import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_controller.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
-import 'package:buddybuilder/db/isar_database.dart';
+import 'package:buddybuilder/services/db/isar_database.dart';
 
 final Providers providers = Providers();
 final isar = IsarDatabase.instance.isar;
+final db = DBService(isar: isar);
+final api = APIService();
 
 class Providers {
   final StateNotifierProvider<HomeController, HomeModel>
       homeControllerProvider = StateNotifierProvider<HomeController, HomeModel>(
           (StateNotifierProviderRef ref) =>
-              HomeControllerImplementation(isar: isar));
+              HomeControllerImplementation(db: db, api: api));
 
   final StateNotifierProvider<TrainingController, TrainingModel>
       trainingControllerProvider =

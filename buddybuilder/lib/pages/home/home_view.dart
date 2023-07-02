@@ -1,6 +1,6 @@
 //import 'package:buddybuilder/db/book_model.dart';
-import 'package:buddybuilder/db/book.dart';
-import 'package:buddybuilder/db/isar_database.dart';
+import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/isar_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
