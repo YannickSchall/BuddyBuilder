@@ -59,12 +59,12 @@ class ChooseSplitView extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             PillButtonWidget(
-              onPressed: () => Navigator.pushNamed(context, '/weekly'),
+              onPressed: () => Navigator.pushNamed(context, '/home'),
               text: 'ROTATION',
             ),
             const SizedBox(height: 10),
             PillButtonWidget(
-              onPressed: () => Navigator.pushNamed(context, '/weekly'),
+              onPressed: () => Navigator.pushNamed(context, '/home'),
               text: 'WEEKLY',
             ),
             IconButton(

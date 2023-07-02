@@ -8,8 +8,8 @@ import 'package:buddybuilder/pages/rotation/rotation_model.dart';
 
 import 'package:buddybuilder/components/pillbutton.dart';
 
-class WeeklyView extends ConsumerWidget {
-  const WeeklyView({
+class RotationView extends ConsumerWidget {
+  const RotationView({
     Key? key,
   }) : super(key: key);
 
