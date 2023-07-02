@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const lightColorScheme = ColorScheme(
   // primary = theme for home
   brightness: Brightness.light,
-  primary: Color(0xFF394B3B), // pillbuttoncolor 0xFFB7CEB7
+  primary: Color(0xFF5C675C), // pillbuttoncolor 0xFFB7CEB7
   onPrimary: Color(0xFF191C19), // schrift allgemein
   primaryContainer: Color(0xFF5C675C), // pillbuttoncolor
   onPrimaryContainer: Color(0xFFFCFDF7), // pillbuttonschrift
@@ -59,7 +59,7 @@ const darkColorScheme = ColorScheme(
   background: Color(0xFF191C19), // background
   onBackground: Color(0xFFE2E3DE),
   surface: Color(0xFF191C19),
-  onSurface: Color(0xFF11E3DE),
+  onSurface: Color(0xFFFCFDF7), // color for calander pop up
   surfaceVariant: Color(0xFF414941),
   onSurfaceVariant: Color(0xFFC1C9BF),
   outline: Color(0xFF8B938A),
