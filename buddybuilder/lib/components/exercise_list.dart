@@ -53,7 +53,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                               : Icons.check_circle_outline,
                         ),
                         color: Theme.of(context).colorScheme.onPrimary,
-                        onPressed: widget.onPressed(widget.id),
+                        onPressed: () => widget.onPressed(widget.id),
                       ),
                     ],
                   ),

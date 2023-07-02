@@ -38,8 +38,6 @@ flutter:
 
     # To add assets to your application, add an assets section, like this:
 
-
-
   fonts:
     - family: Roboto
       fonts:
@@ -50,3 +48,8 @@ flutter:
       fonts:
       - asset: resources/icons/gymboard.ttf
 
+dependency_overrides:
+  macos_ui:
+    git:
+      url: https://github.com/Mayb3Nots/macos_ui.git
+      ref: dev

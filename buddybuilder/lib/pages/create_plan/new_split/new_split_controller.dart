@@ -35,12 +35,12 @@ class NewSplitControllerImplementation extends NewSplitController {
     });
     
   }*/
+
   @override
   void addWorkout(int id) {
     print('clicked');
-    Future.delayed(Duration(seconds: 10), () {
-      state = state.copyWith(workoutList: [...state.workoutList, id]);
-    });
+
+    state = state.copyWith(workoutList: [...state.workoutList, id]);
 
     // Trigger rebuild
   }
