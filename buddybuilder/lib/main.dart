@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/rotate',
+          initialRoute: '/new',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
@@ -66,8 +66,7 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/set') {
               return MaterialPageRoute(builder: (context) => const SetView());
             } else if (routeParams.name == '/new') {
-              return MaterialPageRoute(
-                  builder: (context) => const NewSplitView());
+              return MaterialPageRoute(builder: (context) => NewSplitView());
             }
           },
           onPopPage: (route, result) {

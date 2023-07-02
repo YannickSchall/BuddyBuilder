@@ -1,3 +1,4 @@
+import 'package:buddybuilder/components/setwidget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_controller.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
@@ -80,4 +81,18 @@ class Providers {
       rotationControllerProvider =
       StateNotifierProvider<RotationController, RotationModel>(
           (StateNotifierProviderRef ref) => RotationControllerImplementation());
+
+  final gymProvider = Provider.family<int, int>((ref, id) {
+    return id;
+  });
+
+  final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
+    return SetWidget(
+      setTitle: 'Set $id',
+      kgValue: '1',
+      repsValue: '1',
+      onPressed:
+          ref.read(providers.newsplitControllerProvider.notifier).removeWorkout,
+    );
+  });
 }

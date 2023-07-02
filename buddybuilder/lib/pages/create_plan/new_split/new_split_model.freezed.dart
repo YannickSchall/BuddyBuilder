@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NewSplitModel {
   List<dynamic> get workoutList => throw _privateConstructorUsedError;
   String get workoutTitle => throw _privateConstructorUsedError;
+  List<dynamic> get widgetList => throw _privateConstructorUsedError;
+  int get setId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NewSplitModelCopyWith<NewSplitModel> get copyWith =>
@@ -30,7 +32,11 @@ abstract class $NewSplitModelCopyWith<$Res> {
           NewSplitModel value, $Res Function(NewSplitModel) then) =
       _$NewSplitModelCopyWithImpl<$Res, NewSplitModel>;
   @useResult
-  $Res call({List<dynamic> workoutList, String workoutTitle});
+  $Res call(
+      {List<dynamic> workoutList,
+      String workoutTitle,
+      List<dynamic> widgetList,
+      int setId});
 }
 
 /// @nodoc
@@ -48,6 +54,8 @@ class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
   $Res call({
     Object? workoutList = null,
     Object? workoutTitle = null,
+    Object? widgetList = null,
+    Object? setId = null,
   }) {
     return _then(_value.copyWith(
       workoutList: null == workoutList
@@ -58,6 +66,14 @@ class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
           ? _value.workoutTitle
           : workoutTitle // ignore: cast_nullable_to_non_nullable
               as String,
+      widgetList: null == widgetList
+          ? _value.widgetList
+          : widgetList // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      setId: null == setId
+          ? _value.setId
+          : setId // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -70,7 +86,11 @@ abstract class _$$_NewSplitModelCopyWith<$Res>
       __$$_NewSplitModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<dynamic> workoutList, String workoutTitle});
+  $Res call(
+      {List<dynamic> workoutList,
+      String workoutTitle,
+      List<dynamic> widgetList,
+      int setId});
 }
 
 /// @nodoc
@@ -86,6 +106,8 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
   $Res call({
     Object? workoutList = null,
     Object? workoutTitle = null,
+    Object? widgetList = null,
+    Object? setId = null,
   }) {
     return _then(_$_NewSplitModel(
       workoutList: null == workoutList
@@ -96,6 +118,14 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
           ? _value.workoutTitle
           : workoutTitle // ignore: cast_nullable_to_non_nullable
               as String,
+      widgetList: null == widgetList
+          ? _value._widgetList
+          : widgetList // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      setId: null == setId
+          ? _value.setId
+          : setId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -104,8 +134,12 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
 
 class _$_NewSplitModel implements _NewSplitModel {
   const _$_NewSplitModel(
-      {required final List<dynamic> workoutList, required this.workoutTitle})
-      : _workoutList = workoutList;
+      {required final List<dynamic> workoutList,
+      required this.workoutTitle,
+      required final List<dynamic> widgetList,
+      required this.setId})
+      : _workoutList = workoutList,
+        _widgetList = widgetList;
 
   final List<dynamic> _workoutList;
   @override
@@ -116,10 +150,19 @@ class _$_NewSplitModel implements _NewSplitModel {
 
   @override
   final String workoutTitle;
+  final List<dynamic> _widgetList;
+  @override
+  List<dynamic> get widgetList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_widgetList);
+  }
+
+  @override
+  final int setId;
 
   @override
   String toString() {
-    return 'NewSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle)';
+    return 'NewSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle, widgetList: $widgetList, setId: $setId)';
   }
 
   @override
@@ -130,12 +173,19 @@ class _$_NewSplitModel implements _NewSplitModel {
             const DeepCollectionEquality()
                 .equals(other._workoutList, _workoutList) &&
             (identical(other.workoutTitle, workoutTitle) ||
-                other.workoutTitle == workoutTitle));
+                other.workoutTitle == workoutTitle) &&
+            const DeepCollectionEquality()
+                .equals(other._widgetList, _widgetList) &&
+            (identical(other.setId, setId) || other.setId == setId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_workoutList), workoutTitle);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_workoutList),
+      workoutTitle,
+      const DeepCollectionEquality().hash(_widgetList),
+      setId);
 
   @JsonKey(ignore: true)
   @override
@@ -147,12 +197,18 @@ class _$_NewSplitModel implements _NewSplitModel {
 abstract class _NewSplitModel implements NewSplitModel {
   const factory _NewSplitModel(
       {required final List<dynamic> workoutList,
-      required final String workoutTitle}) = _$_NewSplitModel;
+      required final String workoutTitle,
+      required final List<dynamic> widgetList,
+      required final int setId}) = _$_NewSplitModel;
 
   @override
   List<dynamic> get workoutList;
   @override
   String get workoutTitle;
+  @override
+  List<dynamic> get widgetList;
+  @override
+  int get setId;
   @override
   @JsonKey(ignore: true)
   _$$_NewSplitModelCopyWith<_$_NewSplitModel> get copyWith =>

@@ -76,4 +76,5 @@ abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
 
   void switchTheme(bool switchTheme);
+  void createPlan();
 }

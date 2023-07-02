@@ -9,5 +9,7 @@ class NewSplitModel with _$NewSplitModel {
   const factory NewSplitModel({
     required List workoutList,
     required String workoutTitle,
+    required List widgetList,
+    required int setId,
   }) = _NewSplitModel;
 }

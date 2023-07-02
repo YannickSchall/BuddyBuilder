@@ -8,15 +8,18 @@ class SetWidget extends StatefulWidget {
     this.setNumber = 0,
     required this.kgValue,
     required this.repsValue,
+    required this.onPressed,
   }) : super(key: key);
 
   final String setTitle;
   int setNumber;
+  int _setId = 0;
   final String kgValue;
   final String repsValue;
+  final Function(int) onPressed;
 
   @override
-  _SetWidgetState createState() => _SetWidgetState();
+  State<StatefulWidget> createState() => _SetWidgetState();
 }
 
 class _SetWidgetState extends State<SetWidget> {
@@ -24,6 +27,16 @@ class _SetWidgetState extends State<SetWidget> {
   List<bool> setCompleted = []; // Track completion status of each set
   bool expanded = false;
   int nextSet = 1;
+
+  static int _lastId = 0; // Variable to store the last assigned ID
+  // ID of the current instance
+
+  @override
+  void initState() {
+    super.initState();
+    _lastId++; // Increment the last ID
+    widget._setId = _lastId; // Assign the new ID to the current instance
+  }
 
   void addSet() {
     setState(() {
@@ -200,7 +213,8 @@ class _SetWidgetState extends State<SetWidget> {
                     ),
                     SizedBox(width: 8),
                     PillButtonWidget(
-                      onPressed: deleteAll, // Using the provided callback
+                      onPressed: () => widget.onPressed(
+                          widget._setId), // Using the provided callback
                       text: 'Delete Exercise',
                       buttonHeight: 20,
                       buttonWidth: 200,
