@@ -20,12 +20,15 @@ import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
-import 'package:buddybuilder/pages/splits/weekly/weekly_controller.dart';
-import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
-import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
+import 'package:buddybuilder/pages/weekLY/weekly_controller.dart';
+import 'package:buddybuilder/pages/weekly/weekly_model.dart';
+import 'package:buddybuilder/pages/weekly/weekly_view.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_controller.dart';
+import 'package:buddybuilder/pages/rotation/rotation_model.dart';
+import 'package:buddybuilder/pages/rotation/rotation_view.dart';
+import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 
 final Providers providers = Providers();
 
@@ -72,4 +75,9 @@ class Providers {
       newsplitControllerProvider =
       StateNotifierProvider<NewSplitController, NewSplitModel>(
           (StateNotifierProviderRef ref) => NewSplitControllerImplementation());
+
+  final StateNotifierProvider<RotationController, RotationModel>
+      rotationControllerProvider =
+      StateNotifierProvider<RotationController, RotationModel>(
+          (StateNotifierProviderRef ref) => RotationControllerImplementation());
 }

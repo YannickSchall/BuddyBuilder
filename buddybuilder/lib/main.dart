@@ -1,10 +1,11 @@
 import 'package:buddybuilder/pages/create_plan/01_plans/plans_view.dart';
 import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
+import 'package:buddybuilder/pages/rotation/rotation_view.dart';
 import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
 import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
-import 'package:buddybuilder/pages/splits/weekly/weekly_view.dart';
+import 'package:buddybuilder/pages/weekly/weekly_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_view.dart';
@@ -50,10 +51,9 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                   builder: (context) => const TrainingView());
             } else if (routeParams.name == '/plan') {
-              return MaterialPageRoute(builder: (context) => const PlanView());
+              return MaterialPageRoute(builder: (context) => const HomeView());
             } else if (routeParams.name == '/rotate') {
-              return MaterialPageRoute(
-                  builder: (context) => const WeeklyView());
+              return MaterialPageRoute(builder: (context) => const HomeView());
             } else if (routeParams.name == '/weekly') {
               return MaterialPageRoute(
                   builder: (context) => const ChooseSplitView());

@@ -21,6 +21,8 @@ class SetWidget extends StatefulWidget {
 
 class _SetWidgetState extends State<SetWidget> {
   List<Widget> additionalSets = [];
+  List<bool> setCompleted = []; // Track completion status of each set
+  bool expanded = false;
 
   void addSet() {
     setState(() {
@@ -49,14 +51,33 @@ class _SetWidgetState extends State<SetWidget> {
             ),
             SizedBox(width: 8),
             IconButton(
-              icon: Icon(Icons.check),
+              icon: Icon(
+                setCompleted.length > nextSetNumber &&
+                        setCompleted[nextSetNumber]
+                    ? Icons.check_circle
+                    : Icons.check_circle_outline,
+              ),
+              color: Theme.of(context).colorScheme.onPrimary,
               onPressed: () {
-                // Handle onPressed action
+                setState(() {
+                  if (setCompleted.length > nextSetNumber) {
+                    setCompleted[nextSetNumber] = !setCompleted[nextSetNumber];
+                  } else {
+                    setCompleted.add(true);
+                  }
+                });
               },
             ),
           ],
         ),
       );
+      setCompleted.add(false);
+    });
+  }
+
+  void toggleExpanded() {
+    setState(() {
+      expanded = !expanded;
     });
   }
 
@@ -64,66 +85,110 @@ class _SetWidgetState extends State<SetWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.setTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: toggleExpanded,
+          child: Container(
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: expanded
+                            ? TextButton(
+                                onPressed: toggleExpanded,
+                                child: Text(
+                                  widget.setTitle,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              )
+                            : TextButton(
+                                onPressed: toggleExpanded,
+                                child: Text(
+                                  widget.setTitle,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        expanded ? Icons.expand_less : Icons.expand_more,
+                      ),
+                      onPressed: toggleExpanded,
+                    ),
+                  ],
+                ),
+                if (!expanded)
+                  Container(
+                    color: Colors.grey, // Separator line color
+                    height: 1, // Separator line height
                   ),
-                ),
+              ],
+            ),
+          ),
+        ),
+        if (expanded)
+          Column(
+            children: [
+              Row(
+                children: [
+                  Text('Set ${widget.setNumber}:'),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Reps',
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Weight',
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      setCompleted.length > widget.setNumber &&
+                              setCompleted[widget.setNumber]
+                          ? Icons.check_circle
+                          : Icons.check_circle_outline,
+                    ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    onPressed: () {
+                      setState(() {
+                        if (setCompleted.length > widget.setNumber) {
+                          setCompleted[widget.setNumber] =
+                              !setCompleted[widget.setNumber];
+                        } else {
+                          setCompleted.add(true);
+                        }
+                      });
+                    },
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text('Sets - '),
-            Text('kg - '),
-            Text('reps -'),
-            Icon(Icons.check, color: Colors.green),
-          ],
-        ),
-        Row(
-          children: [
-            Text('Set ${widget.setNumber}:'),
-            Spacer(),
-            Expanded(
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Reps',
-                ),
+              SizedBox(height: 8),
+              ...additionalSets,
+              PillButtonWidget(
+                onPressed: addSet,
+                text: 'Add Set',
+                buttonHeight: 20,
+                buttonWidth: 100,
               ),
-            ),
-            Spacer(),
-            Expanded(
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Weight',
-                ),
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.check),
-              onPressed: () {
-                // Handle onPressed action
-              },
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        ...additionalSets,
-        PillButtonWidget(
-          onPressed: addSet,
-          text: 'Add Set',
-          buttonHeight: 20,
-          buttonWidth: 100,
-        ),
+            ],
+          ),
       ],
     );
   }

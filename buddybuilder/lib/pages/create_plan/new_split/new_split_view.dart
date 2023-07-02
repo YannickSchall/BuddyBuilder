@@ -7,6 +7,7 @@ import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/components/searchbar.dart';
 import 'package:buddybuilder/components/setwidget.dart';
+import 'package:buddybuilder/components/draggable.dart';
 
 class NewSplitView extends ConsumerWidget {
   const NewSplitView({
@@ -129,10 +130,17 @@ class NewSplitView extends ConsumerWidget {
                   text: 'add workout',
                 ),
                 SetWidget(
-                    setTitle: 'Legs',
+                    setTitle: 'Beinpresse',
                     setNumber: 1,
                     kgValue: '1',
-                    repsValue: '1')
+                    repsValue: '1'),
+                //DraggableButtonRow(),
+
+                SetWidget(
+                    setTitle: 'Beinstrecker',
+                    setNumber: 1,
+                    kgValue: '1',
+                    repsValue: '1'),
               ],
             ),
           ),

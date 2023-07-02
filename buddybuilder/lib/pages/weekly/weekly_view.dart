@@ -3,7 +3,7 @@ import 'package:buddybuilder/components/weekselector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
-import 'package:buddybuilder/pages/splits/weekly/weekly_model.dart';
+import 'package:buddybuilder/pages/weekly/weekly_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/circle.dart';
