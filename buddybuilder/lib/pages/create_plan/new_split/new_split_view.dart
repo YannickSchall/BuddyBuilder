@@ -127,20 +127,20 @@ class NewSplitView extends ConsumerWidget {
                     // Open full-screen popup dialog here
                     showSuccessDialog();
                   },
-                  text: 'add workout',
+                  text: 'Add Workout',
                 ),
                 SetWidget(
-                    setTitle: 'Beinpresse',
-                    setNumber: 1,
-                    kgValue: '1',
-                    repsValue: '1'),
+                  setTitle: 'Beinpresse',
+                  kgValue: '1',
+                  repsValue: '1',
+                ),
                 //DraggableButtonRow(),
 
                 SetWidget(
-                    setTitle: 'Beinstrecker',
-                    setNumber: 1,
-                    kgValue: '1',
-                    repsValue: '1'),
+                  setTitle: 'Beinstrecker',
+                  kgValue: '1',
+                  repsValue: '1',
+                ),
               ],
             ),
           ),
@@ -153,4 +153,5 @@ class NewSplitView extends ConsumerWidget {
 abstract class NewSplitController extends StateNotifier<NewSplitModel> {
   NewSplitController(NewSplitModel state) : super(state);
   void addWorkout(String name);
+  //void removeAllSets();
 }

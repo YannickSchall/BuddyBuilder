@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 
 class SetWidget extends StatefulWidget {
-  const SetWidget({
+  SetWidget({
     Key? key,
     required this.setTitle,
-    required this.setNumber,
+    this.setNumber = 0,
     required this.kgValue,
     required this.repsValue,
   }) : super(key: key);
 
   final String setTitle;
-  final int setNumber;
+  int setNumber;
   final String kgValue;
   final String repsValue;
 
@@ -23,15 +23,17 @@ class _SetWidgetState extends State<SetWidget> {
   List<Widget> additionalSets = [];
   List<bool> setCompleted = []; // Track completion status of each set
   bool expanded = false;
+  int nextSet = 1;
 
   void addSet() {
     setState(() {
-      final nextSetNumber = widget.setNumber + 1;
+      nextSet += 1;
+
       additionalSets.add(
         Row(
           children: [
-            Text('Set $nextSetNumber:'),
-            SizedBox(width: 8),
+            Text('Set $nextSet'),
+            SizedBox(width: 12),
             Expanded(
               child: TextFormField(
                 keyboardType: TextInputType.number,
@@ -40,7 +42,7 @@ class _SetWidgetState extends State<SetWidget> {
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: 12),
             Expanded(
               child: TextFormField(
                 keyboardType: TextInputType.number,
@@ -52,19 +54,13 @@ class _SetWidgetState extends State<SetWidget> {
             SizedBox(width: 8),
             IconButton(
               icon: Icon(
-                setCompleted.length > nextSetNumber &&
-                        setCompleted[nextSetNumber]
-                    ? Icons.check_circle
-                    : Icons.check_circle_outline,
+                Icons.close,
+                color: Colors.red,
               ),
-              color: Theme.of(context).colorScheme.onPrimary,
               onPressed: () {
                 setState(() {
-                  if (setCompleted.length > nextSetNumber) {
-                    setCompleted[nextSetNumber] = !setCompleted[nextSetNumber];
-                  } else {
-                    setCompleted.add(true);
-                  }
+                  additionalSets.removeLast();
+                  setCompleted.removeLast();
                 });
               },
             ),
@@ -78,6 +74,12 @@ class _SetWidgetState extends State<SetWidget> {
   void toggleExpanded() {
     setState(() {
       expanded = !expanded;
+    });
+  }
+
+  void deleteAll() {
+    setState(() {
+      additionalSets.clear();
     });
   }
 
@@ -102,8 +104,9 @@ class _SetWidgetState extends State<SetWidget> {
                                 child: Text(
                                   widget.setTitle,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
                                 ),
                               )
                             : TextButton(
@@ -111,8 +114,9 @@ class _SetWidgetState extends State<SetWidget> {
                                 child: Text(
                                   widget.setTitle,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
                                 ),
                               ),
                       ),
@@ -139,8 +143,8 @@ class _SetWidgetState extends State<SetWidget> {
             children: [
               Row(
                 children: [
-                  Text('Set ${widget.setNumber}:'),
-                  SizedBox(width: 8),
+                  Text('Set ${widget.setNumber + 1}'),
+                  SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -149,7 +153,7 @@ class _SetWidgetState extends State<SetWidget> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -158,34 +162,51 @@ class _SetWidgetState extends State<SetWidget> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      setCompleted.length > widget.setNumber &&
-                              setCompleted[widget.setNumber]
-                          ? Icons.check_circle
-                          : Icons.check_circle_outline,
+                  if (widget.setNumber > 1)
+                    IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          additionalSets.removeAt(widget.setNumber - 2);
+                          setCompleted.removeAt(widget.setNumber - 2);
+                        });
+                      },
+                    )
+                  else
+                    IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.transparent,
+                      ),
+                      onPressed: () {},
                     ),
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    onPressed: () {
-                      setState(() {
-                        if (setCompleted.length > widget.setNumber) {
-                          setCompleted[widget.setNumber] =
-                              !setCompleted[widget.setNumber];
-                        } else {
-                          setCompleted.add(true);
-                        }
-                      });
-                    },
-                  ),
                 ],
               ),
               SizedBox(height: 8),
               ...additionalSets,
-              PillButtonWidget(
-                onPressed: addSet,
-                text: 'Add Set',
-                buttonHeight: 20,
-                buttonWidth: 100,
+              Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PillButtonWidget(
+                      onPressed: addSet,
+                      text: 'Add Set',
+                      buttonHeight: 20,
+                      buttonWidth: 100,
+                    ),
+                    SizedBox(width: 8),
+                    PillButtonWidget(
+                      onPressed: deleteAll, // Using the provided callback
+                      text: 'Delete Exercise',
+                      buttonHeight: 20,
+                      buttonWidth: 200,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

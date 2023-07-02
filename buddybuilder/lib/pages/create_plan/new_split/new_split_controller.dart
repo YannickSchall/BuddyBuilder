@@ -21,5 +21,10 @@ class NewSplitControllerImplementation extends NewSplitController {
     Future.delayed(Duration(seconds: 10), () {
       state = state.copyWith(workoutList: [...state.workoutList, name]);
     });
+
+    void removeAllSets() {
+      // Remove the last exercise (adjust this logic as per your requirement)
+      state = state.copyWith(workoutList: []);
+    }
   }
 }
