@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
@@ -7,17 +8,11 @@ import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/containerbutton.dart';
 import 'package:buddybuilder/material_theme/customicon.dart';
 import 'package:buddybuilder/components/datewidget.dart';
+import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
 
-/*
-  Widget get firstTree =>
-      const HTWGText('SommerSemester 2022', 'HTWG-First-App');
-
-  Widget get secondTree =>
-      const HTWGText('WinterSemester 2022/2023', 'HTWG-First-App');
-*/
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeController controller =
@@ -28,7 +23,7 @@ class HomeView extends ConsumerWidget {
       appBar: GymAppBar(
         title: 'BUDDY\nBUILDER',
         titleAlignment: Alignment.centerRight,
-        showBackButton: true,
+        showBackButton: false,
         showOkButton: false,
         onBackButtonPressed: () {},
         onOkButtonPressed: () {},
@@ -55,11 +50,21 @@ class HomeView extends ConsumerWidget {
                 text: 'BUILD PLAN',
                 icon: Icon(CustomIcons.gymplan,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
+            /*
             PillButtonWidget(
                 onPressed: () {},
                 text: 'SETTINGS',
                 icon: Icon(Icons.settings,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
+            */
+            CupertinoSwitch(
+              value: model.isDarkModeEnabled,
+              activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
+              onChanged: (value) {
+                // Update the state when the switch is toggled
+                controller.switchTheme(value);
+              },
+            )
           ],
         ),
       ),
@@ -70,5 +75,5 @@ class HomeView extends ConsumerWidget {
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
 
-  void switchtTree();
+  void switchTheme(bool switchTheme);
 }

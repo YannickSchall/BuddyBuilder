@@ -32,7 +32,7 @@ class PillButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (swipeToDelete) {
       return Dismissible(
-        key: const ValueKey('dissmiss'),
+        key: UniqueKey(),
         direction: DismissDirection.startToEnd,
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {

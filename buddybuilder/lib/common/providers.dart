@@ -5,12 +5,30 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_controller.dart';
 import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
-import 'package:buddybuilder/pages/create_plan/create_plan_controller.dart';
-import 'package:buddybuilder/pages/create_plan/create_plan_model.dart';
-import 'package:buddybuilder/pages/create_plan/create_plan_view.dart';
+import 'package:buddybuilder/pages/create_plan/01_plans/plans_controller.dart';
+import 'package:buddybuilder/pages/create_plan/01_plans/plans_model.dart';
+import 'package:buddybuilder/pages/create_plan/01_plans/plans_view.dart';
+import 'package:buddybuilder/pages/create_plan/02_split/split_controller.dart';
+import 'package:buddybuilder/pages/create_plan/02_split/split_model.dart';
+import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
+import 'package:buddybuilder/pages/create_plan/03_workout/workout_controller.dart';
+import 'package:buddybuilder/pages/create_plan/03_workout/workout_model.dart';
+import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
+import 'package:buddybuilder/pages/create_plan/04_set/set_controller.dart';
+import 'package:buddybuilder/pages/create_plan/04_set/set_model.dart';
+import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
+import 'package:buddybuilder/pages/weekLY/weekly_controller.dart';
+import 'package:buddybuilder/pages/weekly/weekly_model.dart';
+import 'package:buddybuilder/pages/weekly/weekly_view.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
+import 'package:buddybuilder/pages/create_plan/new_split/new_split_controller.dart';
+import 'package:buddybuilder/pages/rotation/rotation_model.dart';
+import 'package:buddybuilder/pages/rotation/rotation_view.dart';
+import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 
 final Providers providers = Providers();
 
@@ -24,27 +42,42 @@ class Providers {
       StateNotifierProvider<TrainingController, TrainingModel>(
           (StateNotifierProviderRef ref) => TrainingControllerImplementation());
 
-  final StateNotifierProvider<PlanController, PlanModel>
-      planControllerProvider = StateNotifierProvider<PlanController, PlanModel>(
+  final StateNotifierProvider<PlanController, TrainingPlan>
+      planControllerProvider =
+      StateNotifierProvider<PlanController, TrainingPlan>(
           (StateNotifierProviderRef ref) => PlanControllerImplementation());
+
+  final StateNotifierProvider<SplitController, TrainingSplit>
+      splitControllerProvider =
+      StateNotifierProvider<SplitController, TrainingSplit>(
+          (StateNotifierProviderRef ref) => SplitControllerImplementation());
+
+  final StateNotifierProvider<WorkoutController, Workout>
+      workoutControllerProvider =
+      StateNotifierProvider<WorkoutController, Workout>(
+          (StateNotifierProviderRef ref) => WorkoutControllerImplementation());
+
+  final StateNotifierProvider<SetController, ExerciseSet>
+      setControllerProvider = StateNotifierProvider<SetController, ExerciseSet>(
+          (StateNotifierProviderRef ref) => SetControllerImplementation());
 
   final StateNotifierProvider<CalendarController, CalendarModel>
       calendarControllerProvider =
       StateNotifierProvider<CalendarController, CalendarModel>(
           (StateNotifierProviderRef ref) => CalendarControllerImplementation());
 
-  final Provider<String> simpleProvider =
-      Provider<String>((_) => "hello world");
+  final StateNotifierProvider<WeeklyController, WeeklyModel>
+      weeklyControllerProvider =
+      StateNotifierProvider<WeeklyController, WeeklyModel>(
+          (StateNotifierProviderRef ref) => WeeklyControllerImplementation());
 
-/*
-  final AutoDisposeStateNotifierProviderFamily<PlanController, PlanModel,
-          String> planDetailControllerAutoDisposeFamilyProvider =
-      StateNotifierProvider.autoDispose
-          .family<PlanController, PlanModel, String>(
-              (AutoDisposeStateNotifierProviderRef ref, String id) =>
-                  PlanControllerImplementation(
-                    id: id,
-                  ));
+  final StateNotifierProvider<NewSplitController, NewSplitModel>
+      newsplitControllerProvider =
+      StateNotifierProvider<NewSplitController, NewSplitModel>(
+          (StateNotifierProviderRef ref) => NewSplitControllerImplementation());
 
-                  */
+  final StateNotifierProvider<RotationController, RotationModel>
+      rotationControllerProvider =
+      StateNotifierProvider<RotationController, RotationModel>(
+          (StateNotifierProviderRef ref) => RotationControllerImplementation());
 }

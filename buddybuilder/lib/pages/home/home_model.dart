@@ -6,7 +6,7 @@ part 'home_model.freezed.dart';
 
 @freezed
 class HomeModel with _$HomeModel {
-  const factory HomeModel({
-    required bool switchTree,
+  factory HomeModel({
+    required bool isDarkModeEnabled,
   }) = _HomeModel;
 }
