@@ -99,8 +99,7 @@ class NewSplitView extends ConsumerWidget {
                                       onPressed: (id) {
                                         // Handle workout selection
                                         controller.addWorkout(id);
-                                        Navigator.pop(
-                                            context); // Close the dialog
+                                        // Close the dialog
                                       },
                                       id: i,
                                     ),

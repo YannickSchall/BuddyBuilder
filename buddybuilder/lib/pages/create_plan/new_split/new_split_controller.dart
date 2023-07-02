@@ -47,8 +47,7 @@ class NewSplitControllerImplementation extends NewSplitController {
 
   @override
   void removeWorkout(int id) {
-    state.widgetList.remove(id);
-    state = state.copyWith(); // Trigger rebuild
+    state = state.copyWith(workoutList: [...state.workoutList]..remove(id));
   }
 
   @override
