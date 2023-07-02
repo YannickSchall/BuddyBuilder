@@ -1,6 +1,7 @@
 import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_controller.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
@@ -82,7 +83,8 @@ class Providers {
   final StateNotifierProvider<NewSplitController, NewSplitModel>
       newsplitControllerProvider =
       StateNotifierProvider<NewSplitController, NewSplitModel>(
-          (StateNotifierProviderRef ref) => NewSplitControllerImplementation());
+          (StateNotifierProviderRef ref) =>
+              NewSplitControllerImplementation(db: db));
 
   final StateNotifierProvider<RotationController, RotationModel>
       rotationControllerProvider =
@@ -95,7 +97,7 @@ class Providers {
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
     return SetWidget(
-      setTitle: 'Set $id',
+      setTitle: 'HALLÖ',
       kgValue: '1',
       repsValue: '1',
       onPressed:

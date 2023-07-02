@@ -1,12 +1,17 @@
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
+import 'package:buddybuilder/services/db/db_service.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 
 class NewSplitControllerImplementation extends NewSplitController {
   NewSplitControllerImplementation({
+    required this.db,
     NewSplitModel? model,
   }) : super(model ??
             NewSplitModel(
                 workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
+
+  DBService db;
 /*
   @override
   void addWorkout(String name) {
@@ -37,10 +42,15 @@ class NewSplitControllerImplementation extends NewSplitController {
   }*/
 
   @override
-  void addWorkout(int id) {
-    print('clicked');
+  Future<List<Exercise>> getExerciseList() async {
+    final reponse = db.getExercises();
+    return reponse;
+  }
 
-    state = state.copyWith(workoutList: [...state.workoutList, id]);
+  @override
+  void addWorkout(int id, String name) {
+    state = state
+        .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
 
     // Trigger rebuild
   }

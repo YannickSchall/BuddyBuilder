@@ -1,3 +1,4 @@
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
@@ -8,16 +9,6 @@ import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/components/searchbar.dart';
 import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/components/draggable.dart';
-
-final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-  return SetWidget(
-    setTitle: 'Set $id',
-    kgValue: '1',
-    repsValue: '1',
-    onPressed:
-        ref.read(providers.newsplitControllerProvider.notifier).removeWorkout,
-  );
-});
 
 class NewSplitView extends ConsumerWidget {
   NewSplitView({
@@ -32,19 +23,18 @@ class NewSplitView extends ConsumerWidget {
         ref.read(providers.newsplitControllerProvider.notifier);
     final NewSplitModel model = ref.watch(providers.newsplitControllerProvider);
 
+    final exercisesProvider = FutureProvider<List<Exercise>>((ref) async {
+      return controller.getExerciseList();
+    });
+
+    final asyncValue = ref.watch(exercisesProvider);
+
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return Consumer(
             builder: (context, ref, _) {
-              final availableWorkouts = [
-                'Workout 1',
-                'Workout 2',
-                'Workout 3',
-                'Workout 4',
-              ]; // Replace with your actual list of available workouts
-
               return Dialog(
                 child: Container(
                   width: double.infinity,
@@ -83,31 +73,39 @@ class NewSplitView extends ConsumerWidget {
                         ],
                       ),
                       Expanded(
-                        child: FutureBuilder<void>(
-                          future: Future<void>.microtask(() {}),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              return ListView(
-                                shrinkWrap: true,
-                                children: [
-                                  for (int i = 0;
-                                      i < availableWorkouts.length;
-                                      i++)
-                                    ExerciseWidget(
-                                      name: availableWorkouts[i],
-                                      onPressed: (id) {
-                                        // Handle workout selection
-                                        controller.addWorkout(id);
-                                        // Close the dialog
-                                      },
-                                      id: i,
-                                    ),
-                                ],
-                              );
-                            } else {
-                              return const CircularProgressIndicator();
-                            }
+                        child: Consumer(
+                          builder: (context, ref, _) {
+                            final asyncValue = ref.watch(exercisesProvider);
+
+                            return asyncValue.when(
+                              data: (exercises) {
+                                if (exercises != null && exercises.isNotEmpty) {
+                                  return ListView.builder(
+                                    itemCount: exercises.length,
+                                    itemBuilder: (context, index) {
+                                      final exercise = exercises[index];
+                                      return ExerciseWidget(
+                                        name: exercise.name ?? 'No name',
+                                        onPressed: (id) {
+                                          // Handle workout selection
+                                          controller.addWorkout(
+                                              id, exercise.name ?? "No name");
+                                          // Close the dialog
+                                        },
+                                        id: index,
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  return ListTile(
+                                    title: Text('No exercises available'),
+                                  );
+                                }
+                              },
+                              loading: () => const CircularProgressIndicator(),
+                              error: (error, stackTrace) =>
+                                  Text('Error: $error'),
+                            );
                           },
                         ),
                       ),
@@ -120,6 +118,17 @@ class NewSplitView extends ConsumerWidget {
         },
       );
     }
+
+    final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
+      return SetWidget(
+        setTitle: model.workoutTitle,
+        kgValue: '1',
+        repsValue: '1',
+        onPressed: ref
+            .read(providers.newsplitControllerProvider.notifier)
+            .removeWorkout,
+      );
+    });
 
     return Scaffold(
       appBar: GymAppBar(
@@ -178,9 +187,11 @@ class NewSplitView extends ConsumerWidget {
 abstract class NewSplitController extends StateNotifier<NewSplitModel> {
   NewSplitController(NewSplitModel state) : super(state);
 
-  void addWorkout(int id);
+  void addWorkout(int id, String name);
 
   void removeWorkout(int id);
 
   void removeAllSets();
+
+  Future<List<Exercise>> getExerciseList();
 }

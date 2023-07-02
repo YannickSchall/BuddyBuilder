@@ -12,7 +12,7 @@ import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/pages/choose_split_view.dart';
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';

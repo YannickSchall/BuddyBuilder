@@ -1,5 +1,5 @@
 //import 'package:buddybuilder/db/book_model.dart';
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,21 +71,21 @@ class HomeView extends ConsumerWidget {
                 controller.switchTheme(value);
               },
             ),
-            FutureBuilder<List<Book>>(
-              future: controller.getBooks(),
+            FutureBuilder<List<Exercise>>(
+              future: controller.getExercises(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  final books = snapshot.data ?? [];
+                  final exercises = snapshot.data ?? [];
 
-                  if (books.isNotEmpty) {
-                    final book = books[0];
-                    return Text(book.title ?? "No title");
+                  if (exercises.isNotEmpty) {
+                    final exercise = exercises[0];
+                    return Text(exercise.name ?? "No name");
                   } else {
-                    return const Text('No books found');
+                    return const Text('No exercise found');
                   }
                 }
               },
@@ -122,11 +122,10 @@ class HomeView extends ConsumerWidget {
                   return FloatingActionButton(
                     onPressed: () {
                       print(newest);
-                      final book = Book()
+                      final exercise = Exercise()
                         ..id = newest + 1
-                        ..title = "Gravity's Rainbow"
-                        ..author = "Thomas Pynchon";
-                      controller.addBook(book);
+                        ..name = "Gravity's Rainbow";
+                      controller.addExercise(exercise);
                     },
                     child: const Icon(Icons.add),
                     backgroundColor:
@@ -137,7 +136,7 @@ class HomeView extends ConsumerWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                controller.clearBooks();
+                controller.clearExercises();
               },
               child: const Icon(Icons.delete),
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -153,9 +152,9 @@ abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
 
   void switchTheme(bool switchTheme);
-  Future<List<Book>> getBooks();
-  void addBook(Book book);
-  void clearBooks();
+  Future<List<Exercise>> getExercises();
+  void addExercise(Exercise exercise);
+  void clearExercises();
   Stream<int> getNewestID();
   Future<String> provideAPIresponse(String param);
 }

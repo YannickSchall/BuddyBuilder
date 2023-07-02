@@ -1,4 +1,4 @@
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:isar/isar.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +17,7 @@ class IsarDatabase {
   Future<void> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
-      [BookSchema],
+      [ExerciseSchema],
       directory: dir.path,
     );
   }

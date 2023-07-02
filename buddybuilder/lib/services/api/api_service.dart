@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:isar/isar.dart';
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:http/http.dart' as http;
 
 class APIService {

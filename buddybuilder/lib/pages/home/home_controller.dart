@@ -4,7 +4,7 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:isar/isar.dart';
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:http/http.dart' as http;
 
 class HomeControllerImplementation extends HomeController {
@@ -19,13 +19,13 @@ class HomeControllerImplementation extends HomeController {
   }) : super(model ?? HomeModel(isDarkModeEnabled: false));
 
   @override
-  Future<List<Book>> getBooks() {
-    return db.getBooks();
+  Future<List<Exercise>> getExercises() {
+    return db.getExercises();
   }
 
   @override
-  void addBook(Book book) {
-    db.addBook(book);
+  void addExercise(Exercise exercise) {
+    db.addExercise(exercise);
   }
 
   @override
@@ -34,8 +34,8 @@ class HomeControllerImplementation extends HomeController {
   }
 
   @override
-  void clearBooks() {
-    db.clearBooks();
+  void clearExercises() {
+    db.clearExercises();
   }
 
 //----------------------------------------------

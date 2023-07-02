@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:isar/isar.dart';
-import 'package:buddybuilder/services/db/book.dart';
+import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:http/http.dart' as http;
 
 class DBService {
@@ -15,19 +15,17 @@ class DBService {
     newestIdStream = _createNewestIdStream();
   }
 
-  Future<List<Book>> getBooks() async {
-    final books = await isar.books.where().findAll();
+  Future<List<Exercise>> getExercises() async {
+    final exercises = await isar.exercises.where().findAll();
 
-    return books
-        .map((book) => Book()
-          ..title = book.title ?? "no title"
-          ..author = book.author ?? "no author")
+    return exercises
+        .map((exercise) => Exercise()..name = exercise.name ?? "no name")
         .toList();
   }
 
-  void addBook(Book book) async {
+  void addExercise(Exercise exercise) async {
     await isar.writeTxn(() async {
-      isar.books.put(book);
+      isar.exercises.put(exercise);
     });
   }
 
@@ -38,19 +36,19 @@ class DBService {
   Stream<int> _createNewestIdStream() {
     return Stream.periodic(const Duration(milliseconds: 100), (_) async {
       final clientId =
-          await isar.books.where(sort: Sort.desc).anyId().findFirst();
+          await isar.exercises.where(sort: Sort.desc).anyId().findFirst();
       return clientId?.id ?? 0;
     }).asyncMap((event) async => await event);
   }
 
-  void clearBooks() async {
-    final books = isar.books.where().findAllSync();
-    final List<int?> ids = books.map((book) => book.id).toList();
+  void clearExercises() async {
+    final exercises = isar.exercises.where().findAllSync();
+    final List<int?> ids = exercises.map((exercise) => exercise.id).toList();
     final List<int> validIds = ids.whereType<int>().toList();
 
     for (final id in validIds) {
       await isar.writeTxnSync(() async {
-        isar.books.deleteSync(id!);
+        isar.exercises.deleteSync(id!);
       });
     }
   }
