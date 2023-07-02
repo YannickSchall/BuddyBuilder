@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/home',
+          initialRoute: '/rotate',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
@@ -49,15 +49,12 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/training') {
               return MaterialPageRoute(
                   builder: (context) => const TrainingView());
-            } else if (routeParams.name == '/plan') {
-              return MaterialPageRoute(
-                  builder: (context) => const RotationView());
             } else if (routeParams.name == '/rotate') {
               return MaterialPageRoute(
-                  builder: (context) => const week.WeeklyView());
+                  builder: (context) => const RotationView());
             } else if (routeParams.name == '/weekly') {
               return MaterialPageRoute(
-                  builder: (context) => const ChooseSplitView());
+                  builder: (context) => const week.WeeklyView());
             } else if (routeParams.name == '/choose') {
               return MaterialPageRoute(
                   builder: (context) => const ChooseSplitView());
