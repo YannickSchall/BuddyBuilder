@@ -90,6 +90,24 @@ class HomeView extends ConsumerWidget {
                 }
               },
             ),
+            FutureBuilder<String>(
+              future: controller.provideAPIresponse("ball"),
+              builder: (context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  final response = snapshot.data ?? "";
+                  if (response != "") {
+                    return Text(response);
+                  } else {
+                    return const Text('No data found');
+                  }
+                }
+              },
+            ),
             StreamBuilder<int>(
               stream: controller.getNewestID(),
               initialData: 0, // Provide an initial value for newest
@@ -139,4 +157,5 @@ abstract class HomeController extends StateNotifier<HomeModel> {
   void addBook(Book book);
   void clearBooks();
   Stream<int> getNewestID();
+  Future<String> provideAPIresponse(String param);
 }
