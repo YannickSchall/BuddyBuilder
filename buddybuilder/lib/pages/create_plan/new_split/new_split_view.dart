@@ -112,7 +112,7 @@ class NewSplitView extends ConsumerWidget {
                                     },
                                   );
                                 } else {
-                                  return ListTile(
+                                  return const ListTile(
                                     title: Text('No exercises available'),
                                   );
                                 }
@@ -161,7 +161,7 @@ class NewSplitView extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'week',
