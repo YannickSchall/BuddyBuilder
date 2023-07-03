@@ -1,10 +1,11 @@
 import 'package:isar/isar.dart';
 
-part 'exercise.g.dart';
+part 'list_exercise.g.dart';
 
 @Collection()
-class Exercise {
-  @Index()
+class ListExercise {
   Id? id;
+
+  @Index()
   String? name;
 }

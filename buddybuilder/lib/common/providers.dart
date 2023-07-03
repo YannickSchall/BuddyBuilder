@@ -1,7 +1,6 @@
 import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
-import 'package:buddybuilder/services/db/exercise.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_controller.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';

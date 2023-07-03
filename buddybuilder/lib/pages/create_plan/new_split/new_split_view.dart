@@ -1,4 +1,4 @@
-import 'package:buddybuilder/services/db/exercise.dart';
+import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
@@ -23,8 +23,8 @@ class NewSplitView extends ConsumerWidget {
         ref.read(providers.newsplitControllerProvider.notifier);
     final NewSplitModel model = ref.watch(providers.newsplitControllerProvider);
 
-    final exercisesProvider = FutureProvider<List<Exercise>>((ref) async {
-      return controller.getExerciseList();
+    final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
+      return controller.getListExerciseList();
     });
 
     final asyncValue = ref.watch(exercisesProvider);
@@ -208,7 +208,7 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
 
   void removeAllSets();
 
-  Future<List<Exercise>> getExerciseList();
+  Future<List<ListExercise>> getListExerciseList();
 
   void fetchToDB();
 

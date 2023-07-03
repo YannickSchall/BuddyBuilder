@@ -1,5 +1,5 @@
 //import 'package:buddybuilder/db/book_model.dart';
-import 'package:buddybuilder/services/db/exercise.dart';
+import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +71,8 @@ class HomeView extends ConsumerWidget {
                 controller.switchTheme(value);
               },
             ),
-            FutureBuilder<List<Exercise>>(
-              future: controller.getExercises(),
+            FutureBuilder<List<ListExercise>>(
+              future: controller.getListExercises(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -122,10 +122,10 @@ class HomeView extends ConsumerWidget {
                   return FloatingActionButton(
                     onPressed: () {
                       print(newest);
-                      final exercise = Exercise()
+                      final exercise = ListExercise()
                         ..id = newest + 1
                         ..name = "Gravity's Rainbow";
-                      controller.addExercise(exercise);
+                      controller.addListExercise(exercise);
                     },
                     child: const Icon(Icons.add),
                     backgroundColor:
@@ -152,8 +152,8 @@ abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
 
   void switchTheme(bool switchTheme);
-  Future<List<Exercise>> getExercises();
-  void addExercise(Exercise exercise);
+  Future<List<ListExercise>> getListExercises();
+  void addListExercise(ListExercise exercise);
   void clearExercises();
   Stream<int> getNewestID();
   Future<String> provideAPIresponse(String param);
