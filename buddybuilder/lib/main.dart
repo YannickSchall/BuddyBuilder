@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/home',
+          initialRoute: '/new',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
