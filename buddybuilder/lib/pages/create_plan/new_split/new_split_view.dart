@@ -50,12 +50,27 @@ class NewSplitView extends ConsumerWidget {
                               .updateQuery(query);
                         },
                       ),
+                      FutureBuilder<int>(
+                        future: controller.getNewest(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            int txt = snapshot.data ?? 99;
+
+                            return Text(txt.toString());
+                          }
+                        },
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           PillButtonWidget(
                             onPressed: () {
-                              // Handle button 1 press
+                              controller.fetchToDB();
                             },
                             text: 'x',
                             buttonHeight: 20.0,
@@ -194,4 +209,8 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
   void removeAllSets();
 
   Future<List<Exercise>> getExerciseList();
+
+  void fetchToDB();
+
+  Future<int> getNewest();
 }

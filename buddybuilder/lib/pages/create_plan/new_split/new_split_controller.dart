@@ -1,17 +1,20 @@
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
+import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:buddybuilder/services/db/exercise.dart';
 
 class NewSplitControllerImplementation extends NewSplitController {
   NewSplitControllerImplementation({
     required this.db,
+    required this.api,
     NewSplitModel? model,
   }) : super(model ??
             NewSplitModel(
                 workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
+  APIService api;
 /*
   @override
   void addWorkout(String name) {
@@ -64,5 +67,15 @@ class NewSplitControllerImplementation extends NewSplitController {
   void removeAllSets() {
     state.widgetList.clear();
     state = state.copyWith(); // Trigger rebuild
+  }
+
+  @override
+  void fetchToDB() async {
+    api.fillDatabase();
+  }
+
+  @override
+  Future<int> getNewest() async {
+    return await db.tryNewest();
   }
 }

@@ -29,6 +29,12 @@ class DBService {
     });
   }
 
+  Future<int> tryNewest() async {
+    final newest =
+        await isar.exercises.where(sort: Sort.desc).anyId().findFirst();
+    return newest?.id ?? 0;
+  }
+
   Stream<int> getNewestID() {
     return newestIdStream;
   }
@@ -39,6 +45,14 @@ class DBService {
           await isar.exercises.where(sort: Sort.desc).anyId().findFirst();
       return clientId?.id ?? 0;
     }).asyncMap((event) async => await event);
+  }
+
+  void receiveFromAPI(List<Exercise> ls) async {
+    for (var i = 0; i < ls.length; i++) {
+      await isar.writeTxn(() async {
+        isar.exercises.put(ls[i]);
+      });
+    }
   }
 
   void clearExercises() async {

@@ -38,7 +38,7 @@ import 'package:buddybuilder/services/db/isar_database.dart';
 final Providers providers = Providers();
 final isar = IsarDatabase.instance.isar;
 final db = DBService(isar: isar);
-final api = APIService();
+final api = APIService(db);
 
 class Providers {
   final StateNotifierProvider<HomeController, HomeModel>
@@ -84,7 +84,7 @@ class Providers {
       newsplitControllerProvider =
       StateNotifierProvider<NewSplitController, NewSplitModel>(
           (StateNotifierProviderRef ref) =>
-              NewSplitControllerImplementation(db: db));
+              NewSplitControllerImplementation(db: db, api: api));
 
   final StateNotifierProvider<RotationController, RotationModel>
       rotationControllerProvider =
