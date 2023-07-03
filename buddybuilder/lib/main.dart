@@ -1,3 +1,4 @@
+import 'package:buddybuilder/pages/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
 import 'package:buddybuilder/pages/rotation/rotation_view.dart';
@@ -9,7 +10,7 @@ import 'package:buddybuilder/pages/weekly/weekly_view.dart' as week;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
+import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/pages/choose_split_view.dart';
 import 'package:buddybuilder/services/db/collections/plan.dart';
@@ -40,17 +41,20 @@ class MyApp extends StatelessWidget {
 
     return Consumer(builder: (context, ref, _) {
       return MaterialApp(
-        theme: ref.watch(providers.homeControllerProvider).isDarkModeEnabled
+        theme: ref.watch(providers.settingsControllerProvider).isDarkModeEnabled
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/new',
+          initialRoute: '/home',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
             } else if (routeParams.name == '/calendar') {
               return MaterialPageRoute(
                   builder: (context) => const CalendarView());
+            } else if (routeParams.name == '/settings') {
+              return MaterialPageRoute(
+                  builder: (context) => const SettingsView());
             } else if (routeParams.name == '/training') {
               return MaterialPageRoute(
                   builder: (context) => const TrainingView());

@@ -1,4 +1,7 @@
 import 'package:buddybuilder/components/setwidget.dart';
+import 'package:buddybuilder/pages/settings/settings_controller.dart';
+import 'package:buddybuilder/pages/settings/settings_model.dart';
+import 'package:buddybuilder/pages/settings/settings_view.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,9 +23,9 @@ import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
 import 'package:buddybuilder/pages/create_plan/04_set/set_controller.dart';
 import 'package:buddybuilder/pages/create_plan/04_set/set_model.dart';
 import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_view.dart';
+import 'package:buddybuilder/pages/calendar/calendar_controller.dart';
+import 'package:buddybuilder/pages/calendar/calendar_model.dart';
+import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/pages/weekLY/weekly_controller.dart';
 import 'package:buddybuilder/pages/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/weekly/weekly_view.dart';
@@ -49,6 +52,12 @@ class Providers {
       trainingControllerProvider =
       StateNotifierProvider<TrainingController, TrainingModel>(
           (StateNotifierProviderRef ref) => TrainingControllerImplementation());
+
+  final StateNotifierProvider<SettingsController, SettingsModel>
+      settingsControllerProvider =
+      StateNotifierProvider<SettingsController, SettingsModel>(
+          (StateNotifierProviderRef ref) =>
+              SettingsControllerImplementation(api: api));
 
   final StateNotifierProvider<PlanController, TrainingPlan>
       planControllerProvider =

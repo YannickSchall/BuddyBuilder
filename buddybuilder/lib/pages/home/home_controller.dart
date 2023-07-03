@@ -49,10 +49,4 @@ class HomeControllerImplementation extends HomeController {
   void createPlan() {
     // Implement the createPlan method logic here
   }
-
-  @override
-  void switchTheme(bool isDarkModeEnabled) {
-    // Update the theme in the state
-    state = state.copyWith(isDarkModeEnabled: isDarkModeEnabled);
-  }
 }

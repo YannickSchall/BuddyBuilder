@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_controller.dart';
-import 'package:buddybuilder/pages/calendar/calendar/calendar_model.dart';
+import 'package:buddybuilder/pages/calendar/calendar_controller.dart';
+import 'package:buddybuilder/pages/calendar/calendar_model.dart';
 
 class CalendarView extends ConsumerWidget {
   const CalendarView({
@@ -23,7 +23,7 @@ class CalendarView extends ConsumerWidget {
       appBar: GymAppBar(
         //title: 'BUDDY\nBUILDER',
         //excerciseTitle: 'QUADS &Längerrrrweg',
-        subTitle: 'Overview',
+        subTitle: 'OVERVIEW',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: false,

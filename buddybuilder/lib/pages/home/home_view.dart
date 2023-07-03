@@ -56,91 +56,11 @@ class HomeView extends ConsumerWidget {
                 text: 'BUILD PLAN',
                 icon: Icon(CustomIcons.gymplan,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
-            /*
             PillButtonWidget(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/settings'),
                 text: 'SETTINGS',
                 icon: Icon(Icons.settings,
                     color: Theme.of(context).colorScheme.onPrimaryContainer)),
-            */
-            CupertinoSwitch(
-              value: model.isDarkModeEnabled,
-              activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
-              onChanged: (value) {
-                // Update the state when the switch is toggled
-                controller.switchTheme(value);
-              },
-            ),
-            FutureBuilder<List<ListExercise>>(
-              future: controller.getListExercises(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final exercises = snapshot.data ?? [];
-
-                  if (exercises.isNotEmpty) {
-                    final exercise = exercises[0];
-                    return Text(exercise.name ?? "No name");
-                  } else {
-                    return const Text('No exercise found');
-                  }
-                }
-              },
-            ),
-            FutureBuilder<String>(
-              future: controller.provideAPIresponse("ball"),
-              builder: (context, snapshot) {
-                print(snapshot.data);
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final response = snapshot.data ?? "";
-                  if (response != "") {
-                    return Text(response);
-                  } else {
-                    return const Text('No data found');
-                  }
-                }
-              },
-            ),
-            StreamBuilder<int>(
-              stream: controller.getNewestID(),
-              initialData: 0, // Provide an initial value for newest
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final int newest = snapshot.data ?? 0;
-
-                  return FloatingActionButton(
-                    onPressed: () {
-                      print(newest);
-                      final exercise = ListExercise()
-                        ..id = newest + 1
-                        ..name = "Gravity's Rainbow";
-                      controller.addListExercise(exercise);
-                    },
-                    child: const Icon(Icons.add),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
-                  );
-                }
-              },
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                controller.clearExercises();
-              },
-              child: const Icon(Icons.delete),
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            )
           ],
         ),
       ),
@@ -151,7 +71,6 @@ class HomeView extends ConsumerWidget {
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
 
-  void switchTheme(bool switchTheme);
   Future<List<ListExercise>> getListExercises();
   void addListExercise(ListExercise exercise);
   void clearExercises();
