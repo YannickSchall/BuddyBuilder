@@ -2,13 +2,12 @@ import 'package:buddybuilder/components/containerbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import '../../../main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+/*
 class PlanView extends StatefulWidget {
   const PlanView({Key? key}) : super(key: key);
 
@@ -167,3 +166,4 @@ class PillButtonData {
 abstract class PlanController extends StateNotifier<TrainingPlan> {
   PlanController(TrainingPlan state) : super(state);
 }
+*/

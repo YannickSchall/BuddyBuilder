@@ -11,18 +11,6 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_controller.dart';
 import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_controller.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_model.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_view.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_controller.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_model.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_controller.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_model.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_controller.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_model.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar_controller.dart';
 import 'package:buddybuilder/pages/calendar/calendar_model.dart';
 import 'package:buddybuilder/pages/calendar/calendar_view.dart';
@@ -58,25 +46,6 @@ class Providers {
       StateNotifierProvider<SettingsController, SettingsModel>(
           (StateNotifierProviderRef ref) =>
               SettingsControllerImplementation(api: api));
-
-  final StateNotifierProvider<PlanController, TrainingPlan>
-      planControllerProvider =
-      StateNotifierProvider<PlanController, TrainingPlan>(
-          (StateNotifierProviderRef ref) => PlanControllerImplementation());
-
-  final StateNotifierProvider<SplitController, TrainingSplit>
-      splitControllerProvider =
-      StateNotifierProvider<SplitController, TrainingSplit>(
-          (StateNotifierProviderRef ref) => SplitControllerImplementation());
-
-  final StateNotifierProvider<WorkoutController, Workout>
-      workoutControllerProvider =
-      StateNotifierProvider<WorkoutController, Workout>(
-          (StateNotifierProviderRef ref) => WorkoutControllerImplementation());
-
-  final StateNotifierProvider<SetController, ExerciseSet>
-      setControllerProvider = StateNotifierProvider<SetController, ExerciseSet>(
-          (StateNotifierProviderRef ref) => SetControllerImplementation());
 
   final StateNotifierProvider<CalendarController, CalendarModel>
       calendarControllerProvider =
