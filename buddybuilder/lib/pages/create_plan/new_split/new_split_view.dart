@@ -15,8 +15,6 @@ class NewSplitView extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  List<SetWidget> currentExercises = [];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final NewSplitController controller =
@@ -26,8 +24,6 @@ class NewSplitView extends ConsumerWidget {
     final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
       return controller.getListExerciseList();
     });
-
-    final asyncValue = ref.watch(exercisesProvider);
 
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
@@ -139,9 +135,9 @@ class NewSplitView extends ConsumerWidget {
         setTitle: model.workoutTitle,
         kgValue: '1',
         repsValue: '1',
-        onPressed: ref
-            .read(providers.newsplitControllerProvider.notifier)
-            .removeWorkout,
+        onPressed: (id) {
+          controller.removeWorkout(id);
+        },
       );
     });
 
@@ -179,14 +175,22 @@ class NewSplitView extends ConsumerWidget {
                 ),
                 Consumer(
                   builder: (context, ref, _) {
-                    final setWidgets = ref
+                    final workouts = ref
                         .read(providers.newsplitControllerProvider)
-                        .workoutList
-                        .map((id) => ref.watch(setWidgetProvider(id)))
-                        .toList();
+                        .workoutList;
 
                     return Column(
-                      children: setWidgets,
+                      children: [
+                        for (final id in workouts)
+                          SetWidget(
+                            setTitle: model.workoutTitle,
+                            kgValue: '1',
+                            repsValue: '1',
+                            onPressed: (id) {
+                              controller.removeWorkout(id);
+                            },
+                          ),
+                      ],
                     );
                   },
                 ),

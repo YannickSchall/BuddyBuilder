@@ -16,7 +16,7 @@ class SetWidget extends StatefulWidget {
   int _setId = 0;
   final String kgValue;
   final String repsValue;
-  final Function(int) onPressed;
+  void Function(int) onPressed;
 
   @override
   State<StatefulWidget> createState() => _SetWidgetState();
@@ -31,12 +31,11 @@ class _SetWidgetState extends State<SetWidget> {
   static int _lastId = 0; // Variable to store the last assigned ID
   // ID of the current instance
 
-  @override
-  void initState() {
-    super.initState();
-    _lastId++; // Increment the last ID
-    widget._setId = _lastId; // Assign the new ID to the current instance
-  }
+  //@override
+  //void initState() {
+  //  super.initState();
+  //  widget._setId = _lastId++; // Assign the new ID to the current instance
+  //}
 
   void addSet() {
     setState(() {
@@ -72,6 +71,7 @@ class _SetWidgetState extends State<SetWidget> {
               ),
               onPressed: () {
                 setState(() {
+                  nextSet -= 1;
                   additionalSets.removeLast();
                   setCompleted.removeLast();
                 });
@@ -111,27 +111,18 @@ class _SetWidgetState extends State<SetWidget> {
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: expanded
-                            ? TextButton(
-                                onPressed: toggleExpanded,
-                                child: Text(
-                                  widget.setTitle,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              )
-                            : TextButton(
-                                onPressed: toggleExpanded,
-                                child: Text(
-                                  widget.setTitle,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ),
+                        child: TextButton(
+                          onPressed: toggleExpanded,
+                          child: Text(
+                            widget.setTitle +
+                                ", id: " +
+                                widget._setId.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     IconButton(
