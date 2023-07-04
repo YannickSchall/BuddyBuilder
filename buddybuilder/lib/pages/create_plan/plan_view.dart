@@ -19,9 +19,15 @@ class PlanView extends ConsumerWidget {
         ref.read(providers.planControllerProvider.notifier);
     final PlanModel model = ref.watch(providers.planControllerProvider);
 
+    final futureplansProvider = FutureProvider<List<Plan>>((ref) async {
+      return controller.getAllPlans();
+    });
+
     final plansProvider = Provider<List<Plan>>((ref) {
       return model.plans;
     });
+
+    final asyncValue = ref.watch(futureplansProvider);
 
     List<Plan> plans = ref.watch(plansProvider);
 
@@ -32,17 +38,17 @@ class PlanView extends ConsumerWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success Dialog'),
+            title: const Text('Success Dialog'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: textFieldController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter Plan title',
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -60,13 +66,13 @@ class PlanView extends ConsumerWidget {
 
                         Navigator.of(context).pop(); // Close the dialog
                       },
-                      child: Text('Save'),
+                      child: const Text('Save'),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(); // Close the dialog
                       },
-                      child: Text('Close'),
+                      child: const Text('Close'),
                     ),
                   ],
                 ),
@@ -98,37 +104,30 @@ class PlanView extends ConsumerWidget {
                   text: 'Create New Plan',
                   containerIcon: const Icon(Icons.add),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 for (final plan in plans)
                   Dismissible(
-                    key: UniqueKey(), // Add the null-aware operator ! here
+                    key: UniqueKey(),
                     direction: DismissDirection.startToEnd,
                     onDismissed: (_) {
-                      // Remove the plan title from the list
                       controller.removePlan(plan.id!);
-                      print('HALLLEEEJULIA');
-                      print(plan.id);
-                      // Perform any other delete operation here
                     },
                     background: Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 16.0),
+                      padding: const EdgeInsets.only(left: 16.0),
                       color:
                           Colors.blue, // Customize the delete background color
-                      child: Icon(
+                      child: const Icon(
                         Icons.delete,
                         color: Colors.white, // Customize the delete icon color
                       ),
                     ),
                     child: PillButtonWidget(
-                      onPressed: () {
-                        // Handle the onPressed action for the pill button
-                        // This is where you can navigate to a specific plan or perform other actions
-                      },
+                      onPressed: () => Navigator.pushNamed(context, '/new'),
                       text: plan.name!,
                       buttonHeight: 60.0,
                       buttonWidth: 300.0,
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                     ),
                   ),
               ],
@@ -144,4 +143,5 @@ abstract class PlanController extends StateNotifier<PlanModel> {
   PlanController(PlanModel state) : super(state);
   void addPlan(Plan plan);
   void removePlan(int id);
+  Future<List<Plan>> getAllPlans();
 }
