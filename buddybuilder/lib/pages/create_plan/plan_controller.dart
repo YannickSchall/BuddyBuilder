@@ -8,7 +8,7 @@ class PlanControllerImplementation extends PlanController {
   PlanControllerImplementation({
     PlanModel? model,
     required this.db,
-  }) : super(model ?? PlanModel(plans: []));
+  }) : super(model ?? const PlanModel(id: 0,  name: "",plans: []));
 
   DBService db;
   // List of plan titles
@@ -24,11 +24,17 @@ class PlanControllerImplementation extends PlanController {
 
   @override
   void addPlan(Plan plan) async {
-    plan.id = await db.tryNewest(Plan) + 1;
+    int id = await db.tryNewest(Plan) + 1;
+    plan.id = id;
     state = state.copyWith(
       plans: [...state.plans, plan],
     );
     db.addPlan(plan); // Save the plan title to the database
+  }
+
+  @override
+  Future<int> getNewestPlanID() async {
+    return await db.tryNewest(Plan);
   }
 
   @override

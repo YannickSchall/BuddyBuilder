@@ -23,14 +23,6 @@ class PlanView extends ConsumerWidget {
       return controller.getAllPlans();
     });
 
-    final plansProvider = Provider<List<Plan>>((ref) {
-      return model.plans;
-    });
-
-    final asyncValue = ref.watch(futureplansProvider);
-
-    List<Plan> plans = ref.watch(plansProvider);
-
     void showSuccessDialog(BuildContext context) {
       final TextEditingController textFieldController = TextEditingController();
 
@@ -105,31 +97,52 @@ class PlanView extends ConsumerWidget {
                   containerIcon: const Icon(Icons.add),
                 ),
                 const SizedBox(height: 16),
-                for (final plan in plans)
-                  Dismissible(
-                    key: UniqueKey(),
-                    direction: DismissDirection.startToEnd,
-                    onDismissed: (_) {
-                      controller.removePlan(plan.id!);
-                    },
-                    background: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 16.0),
-                      color:
-                          Colors.blue, // Customize the delete background color
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.white, // Customize the delete icon color
-                      ),
-                    ),
-                    child: PillButtonWidget(
-                      onPressed: () => Navigator.pushNamed(context, '/new'),
-                      text: plan.name!,
-                      buttonHeight: 60.0,
-                      buttonWidth: 300.0,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    ),
-                  ),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final asyncValue = ref.watch(futureplansProvider);
+                    return asyncValue.when(
+                      data: (plans) {
+                        if (plans != null && plans.isNotEmpty) {
+                          return Column(
+                            children: [
+                              for (final plan in plans)
+                                Dismissible(
+                                  key: ValueKey<int>(plan.id!),
+                                  direction: DismissDirection.startToEnd,
+                                  onDismissed: (_) {
+                                    controller.removePlan(plan.id!);
+                                  },
+                                  background: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    color: Colors.blue,
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: PillButtonWidget(
+                                    onPressed: () =>
+                                        Navigator.pushNamed(context, '/new'),
+                                    text: plan.name!,
+                                    buttonHeight: 60.0,
+                                    buttonWidth: 300.0,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8.0),
+                                  ),
+                                ),
+                            ],
+                          );
+                        } else {
+                          return const Text('No plans found');
+                        }
+                      },
+                      loading: () => const CircularProgressIndicator(),
+                      error: (error, stackTrace) =>
+                          const Text('Something went wrong'),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -144,4 +157,5 @@ abstract class PlanController extends StateNotifier<PlanModel> {
   void addPlan(Plan plan);
   void removePlan(int id);
   Future<List<Plan>> getAllPlans();
+  Future<int> getNewestPlanID();
 }
