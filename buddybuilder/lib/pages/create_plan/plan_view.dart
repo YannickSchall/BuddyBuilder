@@ -52,10 +52,6 @@ class PlanView extends ConsumerWidget {
 
                         // Add the entered text to the list of plan titles
                         controller.addPlan(newPlan);
-
-                        print(enteredText);
-                        print(newPlan.id);
-
                         Navigator.of(context).pop(); // Close the dialog
                       },
                       child: const Text('Save'),
