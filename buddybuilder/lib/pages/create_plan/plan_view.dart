@@ -107,7 +107,7 @@ class PlanView extends ConsumerWidget {
                             children: [
                               for (final plan in plans)
                                 Dismissible(
-                                  key: ValueKey<int>(plan.id!),
+                                  key: UniqueKey(),
                                   direction: DismissDirection.startToEnd,
                                   onDismissed: (_) {
                                     controller.removePlan(plan.id!);
