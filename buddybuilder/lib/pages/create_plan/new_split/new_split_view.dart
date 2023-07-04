@@ -130,16 +130,7 @@ class NewSplitView extends ConsumerWidget {
       );
     }
 
-    final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-      return SetWidget(
-        setTitle: model.workoutTitle,
-        kgValue: '1',
-        repsValue: '1',
-        onPressed: (id) {
-          controller.removeWorkout(id);
-        },
-      );
-    });
+
 
     return Scaffold(
       appBar: GymAppBar(
@@ -157,16 +148,6 @@ class NewSplitView extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'week',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pink,
-                    ),
-                  ),
-                ),
                 PillButtonWidget(
                   onPressed: () {
                     showSuccessDialog(context, ref);
@@ -182,14 +163,7 @@ class NewSplitView extends ConsumerWidget {
                     return Column(
                       children: [
                         for (final id in workouts)
-                          SetWidget(
-                            setTitle: model.workoutTitle,
-                            kgValue: '1',
-                            repsValue: '1',
-                            onPressed: (id) {
-                              controller.removeWorkout(id);
-                            },
-                          ),
+                            ref.watch(providers.setWidgetProvider(id)),
                       ],
                     );
                   },
@@ -217,4 +191,6 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
   void fetchToDB();
 
   Future<int> getNewest();
+
+  String getWorkoutTitle(int id);
 }

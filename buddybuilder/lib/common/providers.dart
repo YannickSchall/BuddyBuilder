@@ -99,17 +99,19 @@ class Providers {
       StateNotifierProvider<RotationController, RotationModel>(
           (StateNotifierProviderRef ref) => RotationControllerImplementation());
 
-  final gymProvider = Provider.family<int, int>((ref, id) {
-    return id;
-  });
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-    return SetWidget(
-      setTitle: 'HALLÖ',
-      kgValue: '1',
-      repsValue: '1',
-      onPressed:
-          ref.read(providers.newsplitControllerProvider.notifier).removeWorkout,
-    );
-  });
+  final NewSplitController controller = ref.read(providers.newsplitControllerProvider.notifier);
+  final String workoutTitle = controller.getWorkoutTitle(id);
+
+  return SetWidget(
+    setTitle: workoutTitle,
+    kgValue: '1',
+    repsValue: '1',
+    onPressed: (customId) {
+      controller.removeWorkout(customId);
+    },
+    customId: id, // Pass the custom ID to SetWidget
+  );
+});
 }

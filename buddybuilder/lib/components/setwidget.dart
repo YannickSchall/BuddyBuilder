@@ -9,14 +9,15 @@ class SetWidget extends StatefulWidget {
     required this.kgValue,
     required this.repsValue,
     required this.onPressed,
+    this.customId = 0,
   }) : super(key: key);
 
   final String setTitle;
   int setNumber;
-  int _setId = 0;
   final String kgValue;
   final String repsValue;
   void Function(int) onPressed;
+  int customId;
 
   @override
   State<StatefulWidget> createState() => _SetWidgetState();
@@ -28,15 +29,6 @@ class _SetWidgetState extends State<SetWidget> {
   bool expanded = false;
   int nextSet = 1;
 
-  static int _lastId = 0; // Variable to store the last assigned ID
-  // ID of the current instance
-
-  //@override
-  //void initState() {
-  //  super.initState();
-  //  widget._setId = _lastId++; // Assign the new ID to the current instance
-  //}
-
   void addSet() {
     setState(() {
       nextSet += 1;
@@ -45,27 +37,27 @@ class _SetWidgetState extends State<SetWidget> {
         Row(
           children: [
             Text('Set $nextSet'),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: TextFormField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Reps',
                 ),
               ),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: TextFormField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Weight',
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.close,
                 color: Colors.red,
               ),
@@ -114,9 +106,7 @@ class _SetWidgetState extends State<SetWidget> {
                         child: TextButton(
                           onPressed: toggleExpanded,
                           child: Text(
-                            widget.setTitle +
-                                ", id: " +
-                                widget._setId.toString(),
+                            widget.setTitle ,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
@@ -148,27 +138,27 @@ class _SetWidgetState extends State<SetWidget> {
               Row(
                 children: [
                   Text('Set ${widget.setNumber + 1}'),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Reps',
                       ),
                     ),
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Weight',
                       ),
                     ),
                   ),
                   if (widget.setNumber > 1)
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         color: Colors.red,
                       ),
@@ -181,7 +171,7 @@ class _SetWidgetState extends State<SetWidget> {
                     )
                   else
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         color: Colors.transparent,
                       ),
@@ -189,7 +179,7 @@ class _SetWidgetState extends State<SetWidget> {
                     ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               ...additionalSets,
               Align(
                 alignment: Alignment.center,
@@ -202,10 +192,9 @@ class _SetWidgetState extends State<SetWidget> {
                       buttonHeight: 20,
                       buttonWidth: 100,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     PillButtonWidget(
-                      onPressed: () => widget.onPressed(
-                          widget._setId), // Using the provided callback
+                      onPressed: () => widget.onPressed(widget.customId), // Using the provided callback
                       text: 'Delete Exercise',
                       buttonHeight: 20,
                       buttonWidth: 200,

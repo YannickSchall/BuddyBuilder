@@ -15,6 +15,7 @@ class NewSplitControllerImplementation extends NewSplitController {
 
   DBService db;
   APIService api;
+  final Map<int, String> workoutTitles = {};
 /*
   @override
   void addWorkout(String name) {
@@ -54,13 +55,15 @@ class NewSplitControllerImplementation extends NewSplitController {
   void addWorkout(int id, String name) {
     state = state
         .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
-
+    workoutTitles[id] = name;
     // Trigger rebuild
   }
 
   @override
   void removeWorkout(int id) {
-    state = state.copyWith(workoutList: [...state.workoutList]..remove(id));
+    state = state.copyWith(
+      workoutList: [...state.workoutList]..remove(id),
+    );
   }
 
   @override
@@ -77,5 +80,10 @@ class NewSplitControllerImplementation extends NewSplitController {
   @override
   Future<int> getNewest() async {
     return await db.tryNewest();
+  }
+
+  @override
+  String getWorkoutTitle(int id) {
+    return workoutTitles[id] ?? ''; 
   }
 }
