@@ -38,7 +38,7 @@ class DBService {
       case ListExercise:
         collection = isar.collection<ListExercise>();
         final ListExercise? item =
-            await collection.where(sort: Sort.desc).anyId().findFirst();
+            await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
       case Plan:

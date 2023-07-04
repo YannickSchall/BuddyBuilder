@@ -188,7 +188,7 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
 
   void fetchToDB();
 
-  Future<int> getNewest();
+  Future<int> getNewestExerciseID();
 
   String getWorkoutTitle(int id);
 }
