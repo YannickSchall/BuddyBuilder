@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PlanModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  List<Plan> get plans => throw _privateConstructorUsedError;
   List<Split> get splits => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +31,7 @@ abstract class $PlanModelCopyWith<$Res> {
   factory $PlanModelCopyWith(PlanModel value, $Res Function(PlanModel) then) =
       _$PlanModelCopyWithImpl<$Res, PlanModel>;
   @useResult
-  $Res call({int id, String name, List<Split> splits});
+  $Res call({int id, String name, List<Plan> plans, List<Split> splits});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$PlanModelCopyWithImpl<$Res, $Val extends PlanModel>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? plans = null,
     Object? splits = null,
   }) {
     return _then(_value.copyWith(
@@ -59,6 +61,10 @@ class _$PlanModelCopyWithImpl<$Res, $Val extends PlanModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      plans: null == plans
+          ? _value.plans
+          : plans // ignore: cast_nullable_to_non_nullable
+              as List<Plan>,
       splits: null == splits
           ? _value.splits
           : splits // ignore: cast_nullable_to_non_nullable
@@ -74,7 +80,7 @@ abstract class _$$_PlanModelCopyWith<$Res> implements $PlanModelCopyWith<$Res> {
       __$$_PlanModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, List<Split> splits});
+  $Res call({int id, String name, List<Plan> plans, List<Split> splits});
 }
 
 /// @nodoc
@@ -90,6 +96,7 @@ class __$$_PlanModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? plans = null,
     Object? splits = null,
   }) {
     return _then(_$_PlanModel(
@@ -101,6 +108,10 @@ class __$$_PlanModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      plans: null == plans
+          ? _value._plans
+          : plans // ignore: cast_nullable_to_non_nullable
+              as List<Plan>,
       splits: null == splits
           ? _value._splits
           : splits // ignore: cast_nullable_to_non_nullable
@@ -113,13 +124,25 @@ class __$$_PlanModelCopyWithImpl<$Res>
 
 class _$_PlanModel implements _PlanModel {
   const _$_PlanModel(
-      {required this.id, required this.name, required final List<Split> splits})
-      : _splits = splits;
+      {required this.id,
+      required this.name,
+      required final List<Plan> plans,
+      required final List<Split> splits})
+      : _plans = plans,
+        _splits = splits;
 
   @override
   final int id;
   @override
   final String name;
+  final List<Plan> _plans;
+  @override
+  List<Plan> get plans {
+    if (_plans is EqualUnmodifiableListView) return _plans;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_plans);
+  }
+
   final List<Split> _splits;
   @override
   List<Split> get splits {
@@ -130,7 +153,7 @@ class _$_PlanModel implements _PlanModel {
 
   @override
   String toString() {
-    return 'PlanModel(id: $id, name: $name, splits: $splits)';
+    return 'PlanModel(id: $id, name: $name, plans: $plans, splits: $splits)';
   }
 
   @override
@@ -140,12 +163,17 @@ class _$_PlanModel implements _PlanModel {
             other is _$_PlanModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._plans, _plans) &&
             const DeepCollectionEquality().equals(other._splits, _splits));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(_splits));
+      runtimeType,
+      id,
+      name,
+      const DeepCollectionEquality().hash(_plans),
+      const DeepCollectionEquality().hash(_splits));
 
   @JsonKey(ignore: true)
   @override
@@ -158,12 +186,15 @@ abstract class _PlanModel implements PlanModel {
   const factory _PlanModel(
       {required final int id,
       required final String name,
+      required final List<Plan> plans,
       required final List<Split> splits}) = _$_PlanModel;
 
   @override
   int get id;
   @override
   String get name;
+  @override
+  List<Plan> get plans;
   @override
   List<Split> get splits;
   @override
