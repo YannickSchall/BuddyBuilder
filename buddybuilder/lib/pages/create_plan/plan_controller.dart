@@ -8,7 +8,7 @@ class PlanControllerImplementation extends PlanController {
   PlanControllerImplementation({
     PlanModel? model,
     required this.db,
-  }) : super(model ?? PlanModel(plans: []));
+  }) : super(model ?? const PlanModel(id: 0,  name: "",plans: [],splits: []));
 
   DBService db;
   // List of plan titles
@@ -17,38 +17,32 @@ class PlanControllerImplementation extends PlanController {
   List<Plan> get plans => _plans;
 
   @override
-  List<Plan> getPlan() {
-    return _plans;
+  Future<List<Plan>> getAllPlans() {
+    final response = db.getAllPlans();
+    return response;
   }
-  /*
-  // Add a plan title to the list
-  @override
-  void addPlanTitle(String title) {
-    _planTitles.add(title);
-    //db.addPlanTitle(title);
-
-    state = state.copyWith(planTitles: _planTitles);
-  }
-
-  @override
-  void removePlanTitle(String title) {
-    _planTitles.remove(title);
-    state = state.copyWith(planTitles: _planTitles);
-  }
-  */
 
   @override
   void addPlan(Plan plan) async {
-    plan.id = await db.tryNewest(Plan) + 1;
-    List<Plan> updatedPlans = [...state.plans, plan];
-    state = state.copyWith(plans: updatedPlans);
+    int id = await db.tryNewest(Plan) + 1;
+    plan.id = id;
+    state = state.copyWith(plans: [...state.plans, plan]);
     db.addPlan(plan); // Save the plan title to the database
   }
 
   @override
+  Future<int> getNewestPlanID() async {
+    return await db.tryNewest(Plan);
+  }
+
+  @override
   void removePlan(int id) {
-    final updatedPlans = state.plans.where((t) => t != id).toList();
-    state = state.copyWith(plans: updatedPlans);
+    state = state.copyWith(
+      plans: [
+        ...state.plans
+      ] // Create a new list using spread operator
+        ..removeWhere((item) => item.id == id),
+    );
     db.removePlan(id); // Remove the plan title from the database
   }
 }

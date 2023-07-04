@@ -116,17 +116,16 @@ class DBService {
     return await isar.plans.get(id);
   }
 
-/*
   Future<List<Plan>> getAllPlans() async {
-    return await isar.plans
-        .where()
-        .findAll()
-        .include<Split>(PlanFields.splits)
-        .include<Exercise>(SplitFields.exercises)
-        .include<ExSet>(ExerciseFields.sets)
-        .list();
-  }
-  */
+  final plans = await isar.plans.where().findAll();
+  return plans.map((plan) {
+    final newPlan = Plan()
+      ..id = plan.id ?? 0 // Set the id property based on the plan's id value
+      ..name = plan.name ?? "no name"; // Set the name property based on the plan's name value
+    return newPlan;
+  }).toList();
+}
+
 
   void removePlan(int id) async {
     await isar.writeTxn(() async {

@@ -8,6 +8,9 @@ part 'plan_model.freezed.dart';
 @freezed
 class PlanModel with _$PlanModel {
   const factory PlanModel({
+    required int id,
+    required String name,
     required List<Plan> plans,
+    required List<Split> splits,
   }) = _PlanModel;
 }
