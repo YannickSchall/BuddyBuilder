@@ -11,18 +11,6 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_controller.dart';
 import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_controller.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_model.dart';
-import 'package:buddybuilder/pages/create_plan/01_plans/plans_view.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_controller.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_model.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_controller.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_model.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_controller.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_model.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar_controller.dart';
 import 'package:buddybuilder/pages/calendar/calendar_model.dart';
 import 'package:buddybuilder/pages/calendar/calendar_view.dart';
@@ -36,6 +24,9 @@ import 'package:buddybuilder/pages/rotation/rotation_model.dart';
 import 'package:buddybuilder/pages/rotation/rotation_view.dart';
 import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
+import 'package:buddybuilder/pages/create_plan/plan_model.dart';
+import 'package:buddybuilder/pages/create_plan/plan_view.dart';
+import 'package:buddybuilder/pages/create_plan/plan_controller.dart';
 
 final Providers providers = Providers();
 final isar = IsarDatabase.instance.isar;
@@ -59,25 +50,6 @@ class Providers {
           (StateNotifierProviderRef ref) =>
               SettingsControllerImplementation(api: api));
 
-  final StateNotifierProvider<PlanController, TrainingPlan>
-      planControllerProvider =
-      StateNotifierProvider<PlanController, TrainingPlan>(
-          (StateNotifierProviderRef ref) => PlanControllerImplementation());
-
-  final StateNotifierProvider<SplitController, TrainingSplit>
-      splitControllerProvider =
-      StateNotifierProvider<SplitController, TrainingSplit>(
-          (StateNotifierProviderRef ref) => SplitControllerImplementation());
-
-  final StateNotifierProvider<WorkoutController, Workout>
-      workoutControllerProvider =
-      StateNotifierProvider<WorkoutController, Workout>(
-          (StateNotifierProviderRef ref) => WorkoutControllerImplementation());
-
-  final StateNotifierProvider<SetController, ExerciseSet>
-      setControllerProvider = StateNotifierProvider<SetController, ExerciseSet>(
-          (StateNotifierProviderRef ref) => SetControllerImplementation());
-
   final StateNotifierProvider<CalendarController, CalendarModel>
       calendarControllerProvider =
       StateNotifierProvider<CalendarController, CalendarModel>(
@@ -99,19 +71,24 @@ class Providers {
       StateNotifierProvider<RotationController, RotationModel>(
           (StateNotifierProviderRef ref) => RotationControllerImplementation());
 
+  final StateNotifierProvider<PlanController, PlanModel>
+      planControllerProvider = StateNotifierProvider<PlanController, PlanModel>(
+          (StateNotifierProviderRef ref) =>
+              PlanControllerImplementation(db: db));
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-  final NewSplitController controller = ref.read(providers.newsplitControllerProvider.notifier);
-  final String workoutTitle = controller.getWorkoutTitle(id);
+    final NewSplitController controller =
+        ref.read(providers.newsplitControllerProvider.notifier);
+    final String workoutTitle = controller.getWorkoutTitle(id);
 
-  return SetWidget(
-    setTitle: workoutTitle,
-    kgValue: '1',
-    repsValue: '1',
-    onPressed: (customId) {
-      controller.removeWorkout(customId);
-    },
-    customId: id, // Pass the custom ID to SetWidget
-  );
-});
+    return SetWidget(
+      setTitle: workoutTitle,
+      kgValue: '1',
+      repsValue: '1',
+      onPressed: (customId) {
+        controller.removeWorkout(customId);
+      },
+      customId: id, // Pass the custom ID to SetWidget
+    );
+  });
 }

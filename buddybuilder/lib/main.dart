@@ -1,9 +1,8 @@
+import 'dart:ffi';
+
 import 'package:buddybuilder/pages/settings/settings_view.dart';
 import 'package:flutter/material.dart';
-import 'package:buddybuilder/pages/create_plan/02_split/split_view.dart';
 import 'package:buddybuilder/pages/rotation/rotation_view.dart';
-import 'package:buddybuilder/pages/create_plan/03_workout/workout_view.dart';
-import 'package:buddybuilder/pages/create_plan/04_set/set_view.dart';
 import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
 import 'package:buddybuilder/pages/weekly/weekly_view.dart' as week;
@@ -13,6 +12,7 @@ import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/pages/choose_split_view.dart';
+import 'package:buddybuilder/pages/create_plan/plan_view.dart';
 import 'package:buddybuilder/services/db/collections/plan.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/new',
+          initialRoute: '/home',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
@@ -67,15 +67,10 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/choose') {
               return MaterialPageRoute(
                   builder: (context) => const ChooseSplitView());
-            } else if (routeParams.name == '/split') {
-              return MaterialPageRoute(builder: (context) => const SplitView());
-            } else if (routeParams.name == '/workout') {
-              return MaterialPageRoute(
-                  builder: (context) => const WorkoutView());
-            } else if (routeParams.name == '/set') {
-              return MaterialPageRoute(builder: (context) => const SetView());
             } else if (routeParams.name == '/new') {
               return MaterialPageRoute(builder: (context) => NewSplitView());
+            } else if (routeParams.name == '/plan') {
+              return MaterialPageRoute(builder: (context) => PlanView());
             }
           },
           onPopPage: (route, result) {

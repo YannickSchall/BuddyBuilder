@@ -78,8 +78,8 @@ class NewSplitControllerImplementation extends NewSplitController {
   }
 
   @override
-  Future<int> getNewest() async {
-    return await db.tryNewest();
+  Future<int> getNewestExerciseID() async {
+    return await db.tryNewest(ListExercise);
   }
 
   @override

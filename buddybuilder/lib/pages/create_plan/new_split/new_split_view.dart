@@ -47,7 +47,7 @@ class NewSplitView extends ConsumerWidget {
                         },
                       ),
                       FutureBuilder<int>(
-                        future: controller.getNewest(),
+                        future: controller.getNewestExerciseID(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -130,15 +130,13 @@ class NewSplitView extends ConsumerWidget {
       );
     }
 
-
-
     return Scaffold(
       appBar: GymAppBar(
         subTitle: 'New Split',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/workout'),
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
         onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
@@ -163,7 +161,7 @@ class NewSplitView extends ConsumerWidget {
                     return Column(
                       children: [
                         for (final id in workouts)
-                            ref.watch(providers.setWidgetProvider(id)),
+                          ref.watch(providers.setWidgetProvider(id)),
                       ],
                     );
                   },
