@@ -51,7 +51,7 @@ class NewSplitView extends ConsumerWidget {
                         },
                       ),
                       FutureBuilder<int>(
-                        future: controller.getNewest(),
+                        future: controller.getNewestExerciseID(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -134,24 +134,13 @@ class NewSplitView extends ConsumerWidget {
       );
     }
 
-    final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-      return SetWidget(
-        setTitle: model.workoutTitle,
-        kgValue: '1',
-        repsValue: '1',
-        onPressed: ref
-            .read(providers.newsplitControllerProvider.notifier)
-            .removeWorkout,
-      );
-    });
-
     return Scaffold(
       appBar: GymAppBar(
         subTitle: 'New Split',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/workout'),
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
         onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
@@ -182,7 +171,7 @@ class NewSplitView extends ConsumerWidget {
                     final setWidgets = ref
                         .read(providers.newsplitControllerProvider)
                         .workoutList
-                        .map((id) => ref.watch(setWidgetProvider(id)))
+                        .map((id) => ref.watch(providers.setWidgetProvider(id)))
                         .toList();
 
                     return Column(
@@ -212,5 +201,5 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
 
   void fetchToDB();
 
-  Future<int> getNewest();
+  Future<int> getNewestExerciseID();
 }

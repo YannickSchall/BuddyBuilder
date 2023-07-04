@@ -18,7 +18,7 @@ class IsarDatabase {
   Future<void> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
-      [ListExerciseSchema],
+      [ListExerciseSchema, PlanSchema],
       directory: dir.path,
     );
   }

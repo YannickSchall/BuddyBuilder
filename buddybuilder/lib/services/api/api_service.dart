@@ -46,7 +46,7 @@ class APIService {
     List<dynamic> results = jsonData['results'];
     int count = jsonData['count'];
 
-    int newestID = await db.tryNewest();
+    int newestID = await db.tryNewest(ListExercise);
     RegExp exp = RegExp(r'^[a-zA-Z0-9_. -]*$');
     bool matches(String s) {
       return exp.hasMatch(s);

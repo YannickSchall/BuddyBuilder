@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:isar/isar.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
+import 'package:buddybuilder/services/db/collections/plan.dart';
 import 'package:http/http.dart' as http;
 
 class DBService {
@@ -29,10 +30,29 @@ class DBService {
     });
   }
 
-  Future<int> tryNewest() async {
-    final newest =
-        await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
-    return newest?.id ?? 0;
+  Future<int> tryNewest(Type type) async {
+    dynamic collection;
+    int? newest;
+
+    switch (type) {
+      case ListExercise:
+        collection = isar.collection<ListExercise>();
+        final ListExercise? item =
+            await collection.where(sort: Sort.desc).anyId().findFirst();
+        newest = item?.id;
+        break;
+      case Plan:
+        collection = isar.collection<Plan>();
+
+        final Plan? item =
+            await isar.plans.where(sort: Sort.desc).anyId().findFirst();
+        newest = item?.id;
+        break;
+      default:
+        newest = 1000;
+    }
+
+    return newest ?? 0;
   }
 
   Stream<int> getNewestID() {
@@ -84,5 +104,33 @@ class DBService {
         isar.listExercises.deleteSync(id!);
       });
     }
+  }
+
+  void addPlan(Plan plan) async {
+    await isar.writeTxn(() async {
+      await isar.plans.put(plan);
+    });
+  }
+
+  Future<Plan?> getPlan(int id) async {
+    return await isar.plans.get(id);
+  }
+
+/*
+  Future<List<Plan>> getAllPlans() async {
+    return await isar.plans
+        .where()
+        .findAll()
+        .include<Split>(PlanFields.splits)
+        .include<Exercise>(SplitFields.exercises)
+        .include<ExSet>(ExerciseFields.sets)
+        .list();
+  }
+  */
+
+  void removePlan(int id) async {
+    await isar.writeTxn(() async {
+      isar.plans.delete(id);
+    });
   }
 }

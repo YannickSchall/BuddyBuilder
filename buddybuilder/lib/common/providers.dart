@@ -24,6 +24,9 @@ import 'package:buddybuilder/pages/rotation/rotation_model.dart';
 import 'package:buddybuilder/pages/rotation/rotation_view.dart';
 import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
+import 'package:buddybuilder/pages/create_plan/plan_model.dart';
+import 'package:buddybuilder/pages/create_plan/plan_view.dart';
+import 'package:buddybuilder/pages/create_plan/plan_controller.dart';
 
 final Providers providers = Providers();
 final isar = IsarDatabase.instance.isar;
@@ -68,17 +71,28 @@ class Providers {
       StateNotifierProvider<RotationController, RotationModel>(
           (StateNotifierProviderRef ref) => RotationControllerImplementation());
 
+  final StateNotifierProvider<PlanController, PlanModel>
+      planControllerProvider = StateNotifierProvider<PlanController, PlanModel>(
+          (StateNotifierProviderRef ref) =>
+              PlanControllerImplementation(db: db));
+
   final gymProvider = Provider.family<int, int>((ref, id) {
     return id;
   });
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
     return SetWidget(
-      setTitle: 'HALLÖ',
-      kgValue: '1',
+      setTitle: '',
+      kgValue: '',
       repsValue: '1',
       onPressed:
           ref.read(providers.newsplitControllerProvider.notifier).removeWorkout,
     );
   });
+
+  final myAppProvider = Provider.family<SetWidget, SetWidget>(
+    (_, id) {
+      return id;
+    },
+  );
 }
