@@ -34,10 +34,10 @@ class WeeklyView extends ConsumerWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Successfully Added'),
+            title: const Text('Successfully Added'),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -76,7 +76,7 @@ class WeeklyView extends ConsumerWidget {
                 ),
                 //const WeekSelector(),
 
-                WeekSelector(),
+                const WeekSelector(),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(

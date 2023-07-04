@@ -20,6 +20,7 @@ mixin _$NewSplitModel {
   String get workoutTitle => throw _privateConstructorUsedError;
   List<dynamic> get widgetList => throw _privateConstructorUsedError;
   int get setId => throw _privateConstructorUsedError;
+  String? get searchQuery => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NewSplitModelCopyWith<NewSplitModel> get copyWith =>
@@ -36,7 +37,8 @@ abstract class $NewSplitModelCopyWith<$Res> {
       {List<dynamic> workoutList,
       String workoutTitle,
       List<dynamic> widgetList,
-      int setId});
+      int setId,
+      String? searchQuery});
 }
 
 /// @nodoc
@@ -56,6 +58,7 @@ class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
     Object? workoutTitle = null,
     Object? widgetList = null,
     Object? setId = null,
+    Object? searchQuery = freezed,
   }) {
     return _then(_value.copyWith(
       workoutList: null == workoutList
@@ -74,6 +77,10 @@ class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
           ? _value.setId
           : setId // ignore: cast_nullable_to_non_nullable
               as int,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +97,8 @@ abstract class _$$_NewSplitModelCopyWith<$Res>
       {List<dynamic> workoutList,
       String workoutTitle,
       List<dynamic> widgetList,
-      int setId});
+      int setId,
+      String? searchQuery});
 }
 
 /// @nodoc
@@ -108,6 +116,7 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
     Object? workoutTitle = null,
     Object? widgetList = null,
     Object? setId = null,
+    Object? searchQuery = freezed,
   }) {
     return _then(_$_NewSplitModel(
       workoutList: null == workoutList
@@ -126,6 +135,10 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
           ? _value.setId
           : setId // ignore: cast_nullable_to_non_nullable
               as int,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -137,7 +150,8 @@ class _$_NewSplitModel implements _NewSplitModel {
       {required final List<dynamic> workoutList,
       required this.workoutTitle,
       required final List<dynamic> widgetList,
-      required this.setId})
+      required this.setId,
+      this.searchQuery})
       : _workoutList = workoutList,
         _widgetList = widgetList;
 
@@ -161,10 +175,12 @@ class _$_NewSplitModel implements _NewSplitModel {
 
   @override
   final int setId;
+  @override
+  final String? searchQuery;
 
   @override
   String toString() {
-    return 'NewSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle, widgetList: $widgetList, setId: $setId)';
+    return 'NewSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle, widgetList: $widgetList, setId: $setId, searchQuery: $searchQuery)';
   }
 
   @override
@@ -178,7 +194,9 @@ class _$_NewSplitModel implements _NewSplitModel {
                 other.workoutTitle == workoutTitle) &&
             const DeepCollectionEquality()
                 .equals(other._widgetList, _widgetList) &&
-            (identical(other.setId, setId) || other.setId == setId));
+            (identical(other.setId, setId) || other.setId == setId) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery));
   }
 
   @override
@@ -187,7 +205,8 @@ class _$_NewSplitModel implements _NewSplitModel {
       const DeepCollectionEquality().hash(_workoutList),
       workoutTitle,
       const DeepCollectionEquality().hash(_widgetList),
-      setId);
+      setId,
+      searchQuery);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +220,8 @@ abstract class _NewSplitModel implements NewSplitModel {
       {required final List<dynamic> workoutList,
       required final String workoutTitle,
       required final List<dynamic> widgetList,
-      required final int setId}) = _$_NewSplitModel;
+      required final int setId,
+      final String? searchQuery}) = _$_NewSplitModel;
 
   @override
   List<dynamic> get workoutList;
@@ -211,6 +231,8 @@ abstract class _NewSplitModel implements NewSplitModel {
   List<dynamic> get widgetList;
   @override
   int get setId;
+  @override
+  String? get searchQuery;
   @override
   @JsonKey(ignore: true)
   _$$_NewSplitModelCopyWith<_$_NewSplitModel> get copyWith =>

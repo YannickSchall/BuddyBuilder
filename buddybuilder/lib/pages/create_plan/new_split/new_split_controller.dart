@@ -9,9 +9,7 @@ class NewSplitControllerImplementation extends NewSplitController {
     required this.db,
     required this.api,
     NewSplitModel? model,
-  }) : super(model ??
-            NewSplitModel(
-                workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
+  }) : super(model ?? NewSplitModel(workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
   APIService api;
@@ -47,14 +45,24 @@ class NewSplitControllerImplementation extends NewSplitController {
 
   @override
   Future<List<ListExercise>> getListExerciseList() async {
-    final reponse = db.getExercises();
-    return reponse;
+    final allExercises = await db.getExercises();
+    final searchQuery = state.searchQuery;
+
+    if (searchQuery != null && searchQuery.isNotEmpty) {
+      final lowerCaseQuery = searchQuery.toLowerCase();
+      final filteredExercises = allExercises.where((exercise) {
+        final lowerCaseName = exercise.name?.toLowerCase() ?? '';
+        return lowerCaseName.contains(lowerCaseQuery);
+      }).toList();
+      return filteredExercises;
+    } else {
+      return allExercises;
+    }
   }
 
   @override
   void addWorkout(int id, String name) {
-    state = state
-        .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
+    state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
     workoutTitles[id] = name;
     // Trigger rebuild
   }
@@ -84,6 +92,11 @@ class NewSplitControllerImplementation extends NewSplitController {
 
   @override
   String getWorkoutTitle(int id) {
-    return workoutTitles[id] ?? ''; 
+    return workoutTitles[id] ?? '';
+  }
+
+  @override
+  void updateSearchQuery(String query) {
+    state = state.copyWith(searchQuery: query);
   }
 }

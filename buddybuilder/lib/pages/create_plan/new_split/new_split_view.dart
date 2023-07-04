@@ -31,6 +31,9 @@ class NewSplitView extends ConsumerWidget {
         builder: (BuildContext context) {
           return Consumer(
             builder: (context, ref, _) {
+              void reloadExercises() {
+                ref.refresh(exercisesProvider);
+              }
               return Dialog(
                 child: Container(
                   width: double.infinity,
@@ -41,37 +44,15 @@ class NewSplitView extends ConsumerWidget {
                     children: [
                       MySearchBar(
                         onChanged: (query) {
-                          ref
-                              .read(providers.weeklyControllerProvider.notifier)
-                              .updateQuery(query);
-                        },
-                      ),
-                      FutureBuilder<int>(
-                        future: controller.getNewestExerciseID(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else {
-                            int txt = snapshot.data ?? 99;
+                            ref.read(providers.newsplitControllerProvider.notifier).updateSearchQuery(query);
+                            reloadExercises();
 
-                            return Text(txt.toString());
-                          }
+                         
                         },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          PillButtonWidget(
-                            onPressed: () {
-                              controller.fetchToDB();
-                            },
-                            text: 'x',
-                            buttonHeight: 20.0,
-                            buttonWidth: 100.0,
-                          ),
                           const Spacer(),
                           PillButtonWidget(
                             onPressed: () {
@@ -191,4 +172,6 @@ abstract class NewSplitController extends StateNotifier<NewSplitModel> {
   Future<int> getNewestExerciseID();
 
   String getWorkoutTitle(int id);
+
+  void updateSearchQuery(String query);
 }

@@ -11,5 +11,6 @@ class NewSplitModel with _$NewSplitModel {
     required String workoutTitle,
     required List widgetList,
     required int setId,
+    String? searchQuery,
   }) = _NewSplitModel;
 }
