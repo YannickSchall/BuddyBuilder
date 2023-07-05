@@ -58,7 +58,8 @@ class Providers {
   final StateNotifierProvider<WeeklyController, WeeklyModel>
       weeklyControllerProvider =
       StateNotifierProvider<WeeklyController, WeeklyModel>(
-          (StateNotifierProviderRef ref) => WeeklyControllerImplementation());
+          (StateNotifierProviderRef ref) =>
+              WeeklyControllerImplementation(db: db));
 
   final StateNotifierProvider<EditSplitController, EditSplitModel>
       editSplitControllerProvider =

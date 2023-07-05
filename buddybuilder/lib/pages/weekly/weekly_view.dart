@@ -1,17 +1,12 @@
 import 'package:buddybuilder/components/pillbutton.dart';
-import 'package:buddybuilder/components/weekselector.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/weekly/weekly_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
-import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:buddybuilder/components/circle.dart';
 import 'package:buddybuilder/components/weekdayselector.dart';
-import 'package:buddybuilder/components/weekselector.dart';
 import 'package:buddybuilder/components/searchbar.dart';
-import 'package:buddybuilder/components/searchbox.dart';
-import 'package:buddybuilder/components/pillbutton.dart';
 
 class WeeklyView extends ConsumerWidget {
   const WeeklyView({
@@ -25,16 +20,21 @@ class WeeklyView extends ConsumerWidget {
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
     DateTime _selectedDay = DateTime.now();
     DateTime _2ndselectedDay = DateTime.now();
-    var x;
-    var y;
-    List<String> list = ["pull", "push", "legs"];
 
-    void showSuccessDialog() {
+    final splitsProvider = FutureProvider<List<Split>>((ref) async {
+      return controller.getSplitList();
+    });
+
+    void reloadSplits() {
+      ref.refresh(splitsProvider);
+    }
+
+    void showSuccessDialog(String name) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Successfully Added'),
+            title: Text('Successfully Added $name'),
             actions: <Widget>[
               TextButton(
                 child: const Text('OK'),
@@ -95,16 +95,52 @@ class WeeklyView extends ConsumerWidget {
                   onChanged: (query) {
                     ref
                         .read(providers.weeklyControllerProvider.notifier)
-                        .updateQuery(query);
+                        .updateSearchQuery(query);
+                    reloadSplits();
+                    print('JESUUUUUSSSS');
+                    controller.getSplitList().then((splits) {
+                      if (splits.isNotEmpty) {
+                        print(splits);
+                      } else {
+                        print('Empty');
+                      }
+                    });
                   },
                 ),
-                if (list.contains(model.query))
-                  PillButtonWidget(
-                    buttonHeight: 40,
-                    buttonWidth: 100,
-                    text: model.query,
-                    onPressed: showSuccessDialog,
-                  ),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final asyncValue = ref.watch(splitsProvider);
+                    return asyncValue.when(
+                      loading: () => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      error: (error, stackTrace) => Text('Error: $error'),
+                      data: (splits) {
+                        if (splits != null && splits.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: splits.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final split = splits[index];
+                              return PillButtonWidget(
+                                text: split.name ?? 'No name',
+                                onPressed: () {
+                                  var s = split.name ?? 'No name';
+                                  showSuccessDialog(s);
+                                },
+                              );
+                            },
+                          );
+                        } else {
+                          return const ListTile(
+                            title: Text('No splits available'),
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -116,11 +152,14 @@ class WeeklyView extends ConsumerWidget {
 
 abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   WeeklyController(WeeklyModel state) : super(state);
-  bool findMatch(String input);
-  String getInput();
-  void updateQuery(String query);
+
   void updateWeekSelector();
   void updateSelectedDay(String? selectedDay) {
     state = state.copyWith(selectedDay: selectedDay);
   }
+
+  void addSplit(DateTime day, int splitId);
+  void updateSearchQuery(String query);
+  String getSplitTitle(int id);
+  Future<List<Split>> getSplitList();
 }

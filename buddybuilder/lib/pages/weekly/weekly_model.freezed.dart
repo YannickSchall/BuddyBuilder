@@ -16,10 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$WeeklyModel {
-  List<dynamic> get splits => throw _privateConstructorUsedError;
-  String get query => throw _privateConstructorUsedError;
+  List<dynamic> get splitList => throw _privateConstructorUsedError;
+  String get splitTitle => throw _privateConstructorUsedError;
+  String get searchQuery => throw _privateConstructorUsedError;
   bool get weekselector => throw _privateConstructorUsedError;
   String? get selectedDay => throw _privateConstructorUsedError;
+  Map<dynamic, dynamic> get dateSplitMap => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WeeklyModelCopyWith<WeeklyModel> get copyWith =>
@@ -33,10 +35,12 @@ abstract class $WeeklyModelCopyWith<$Res> {
       _$WeeklyModelCopyWithImpl<$Res, WeeklyModel>;
   @useResult
   $Res call(
-      {List<dynamic> splits,
-      String query,
+      {List<dynamic> splitList,
+      String splitTitle,
+      String searchQuery,
       bool weekselector,
-      String? selectedDay});
+      String? selectedDay,
+      Map<dynamic, dynamic> dateSplitMap});
 }
 
 /// @nodoc
@@ -52,19 +56,25 @@ class _$WeeklyModelCopyWithImpl<$Res, $Val extends WeeklyModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? splits = null,
-    Object? query = null,
+    Object? splitList = null,
+    Object? splitTitle = null,
+    Object? searchQuery = null,
     Object? weekselector = null,
     Object? selectedDay = freezed,
+    Object? dateSplitMap = null,
   }) {
     return _then(_value.copyWith(
-      splits: null == splits
-          ? _value.splits
-          : splits // ignore: cast_nullable_to_non_nullable
+      splitList: null == splitList
+          ? _value.splitList
+          : splitList // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
+      splitTitle: null == splitTitle
+          ? _value.splitTitle
+          : splitTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
       weekselector: null == weekselector
           ? _value.weekselector
@@ -74,6 +84,10 @@ class _$WeeklyModelCopyWithImpl<$Res, $Val extends WeeklyModel>
           ? _value.selectedDay
           : selectedDay // ignore: cast_nullable_to_non_nullable
               as String?,
+      dateSplitMap: null == dateSplitMap
+          ? _value.dateSplitMap
+          : dateSplitMap // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ) as $Val);
   }
 }
@@ -87,10 +101,12 @@ abstract class _$$_WeeklyModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic> splits,
-      String query,
+      {List<dynamic> splitList,
+      String splitTitle,
+      String searchQuery,
       bool weekselector,
-      String? selectedDay});
+      String? selectedDay,
+      Map<dynamic, dynamic> dateSplitMap});
 }
 
 /// @nodoc
@@ -104,19 +120,25 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? splits = null,
-    Object? query = null,
+    Object? splitList = null,
+    Object? splitTitle = null,
+    Object? searchQuery = null,
     Object? weekselector = null,
     Object? selectedDay = freezed,
+    Object? dateSplitMap = null,
   }) {
     return _then(_$_WeeklyModel(
-      splits: null == splits
-          ? _value._splits
-          : splits // ignore: cast_nullable_to_non_nullable
+      splitList: null == splitList
+          ? _value._splitList
+          : splitList // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
+      splitTitle: null == splitTitle
+          ? _value.splitTitle
+          : splitTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
       weekselector: null == weekselector
           ? _value.weekselector
@@ -126,6 +148,10 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
           ? _value.selectedDay
           : selectedDay // ignore: cast_nullable_to_non_nullable
               as String?,
+      dateSplitMap: null == dateSplitMap
+          ? _value._dateSplitMap
+          : dateSplitMap // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ));
   }
 }
@@ -134,30 +160,42 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
 
 class _$_WeeklyModel implements _WeeklyModel {
   const _$_WeeklyModel(
-      {required final List<dynamic> splits,
-      required this.query,
+      {required final List<dynamic> splitList,
+      required this.splitTitle,
+      required this.searchQuery,
       required this.weekselector,
-      required this.selectedDay})
-      : _splits = splits;
+      required this.selectedDay,
+      required final Map<dynamic, dynamic> dateSplitMap})
+      : _splitList = splitList,
+        _dateSplitMap = dateSplitMap;
 
-  final List<dynamic> _splits;
+  final List<dynamic> _splitList;
   @override
-  List<dynamic> get splits {
-    if (_splits is EqualUnmodifiableListView) return _splits;
+  List<dynamic> get splitList {
+    if (_splitList is EqualUnmodifiableListView) return _splitList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_splits);
+    return EqualUnmodifiableListView(_splitList);
   }
 
   @override
-  final String query;
+  final String splitTitle;
+  @override
+  final String searchQuery;
   @override
   final bool weekselector;
   @override
   final String? selectedDay;
+  final Map<dynamic, dynamic> _dateSplitMap;
+  @override
+  Map<dynamic, dynamic> get dateSplitMap {
+    if (_dateSplitMap is EqualUnmodifiableMapView) return _dateSplitMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_dateSplitMap);
+  }
 
   @override
   String toString() {
-    return 'WeeklyModel(splits: $splits, query: $query, weekselector: $weekselector, selectedDay: $selectedDay)';
+    return 'WeeklyModel(splitList: $splitList, splitTitle: $splitTitle, searchQuery: $searchQuery, weekselector: $weekselector, selectedDay: $selectedDay, dateSplitMap: $dateSplitMap)';
   }
 
   @override
@@ -165,21 +203,29 @@ class _$_WeeklyModel implements _WeeklyModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WeeklyModel &&
-            const DeepCollectionEquality().equals(other._splits, _splits) &&
-            (identical(other.query, query) || other.query == query) &&
+            const DeepCollectionEquality()
+                .equals(other._splitList, _splitList) &&
+            (identical(other.splitTitle, splitTitle) ||
+                other.splitTitle == splitTitle) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery) &&
             (identical(other.weekselector, weekselector) ||
                 other.weekselector == weekselector) &&
             (identical(other.selectedDay, selectedDay) ||
-                other.selectedDay == selectedDay));
+                other.selectedDay == selectedDay) &&
+            const DeepCollectionEquality()
+                .equals(other._dateSplitMap, _dateSplitMap));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_splits),
-      query,
+      const DeepCollectionEquality().hash(_splitList),
+      splitTitle,
+      searchQuery,
       weekselector,
-      selectedDay);
+      selectedDay,
+      const DeepCollectionEquality().hash(_dateSplitMap));
 
   @JsonKey(ignore: true)
   @override
@@ -190,19 +236,25 @@ class _$_WeeklyModel implements _WeeklyModel {
 
 abstract class _WeeklyModel implements WeeklyModel {
   const factory _WeeklyModel(
-      {required final List<dynamic> splits,
-      required final String query,
+      {required final List<dynamic> splitList,
+      required final String splitTitle,
+      required final String searchQuery,
       required final bool weekselector,
-      required final String? selectedDay}) = _$_WeeklyModel;
+      required final String? selectedDay,
+      required final Map<dynamic, dynamic> dateSplitMap}) = _$_WeeklyModel;
 
   @override
-  List<dynamic> get splits;
+  List<dynamic> get splitList;
   @override
-  String get query;
+  String get splitTitle;
+  @override
+  String get searchQuery;
   @override
   bool get weekselector;
   @override
   String? get selectedDay;
+  @override
+  Map<dynamic, dynamic> get dateSplitMap;
   @override
   @JsonKey(ignore: true)
   _$$_WeeklyModelCopyWith<_$_WeeklyModel> get copyWith =>
