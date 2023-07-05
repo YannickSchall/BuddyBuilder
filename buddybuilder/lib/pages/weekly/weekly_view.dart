@@ -77,25 +77,34 @@ class WeeklyView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const WeekDaySelector(),
-
+                WeekDaySelector(
+                  onDaySelected: (selectedDay) {
+                    ref
+                        .read(providers.weeklyControllerProvider.notifier)
+                        .updateSelectedDay(selectedDay);
+                  },
+                ),
+                Text(
+                  'Selected Day: ${model.selectedDay ?? 'None'}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 MySearchBar(
                   onChanged: (query) {
                     ref
                         .read(providers.weeklyControllerProvider.notifier)
-                        .updateQuery(
-                            query); // Update the query in the controller
+                        .updateQuery(query);
                   },
                 ),
-                if (list.contains(model
-                    .query)) // Condition to check if model.query is in the list
+                if (list.contains(model.query))
                   PillButtonWidget(
                     buttonHeight: 40,
                     buttonWidth: 100,
                     text: model.query,
                     onPressed: showSuccessDialog,
                   ),
-                // Rest of the widgets
               ],
             ),
           ),
@@ -111,4 +120,7 @@ abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   String getInput();
   void updateQuery(String query);
   void updateWeekSelector();
+  void updateSelectedDay(String? selectedDay) {
+    state = state.copyWith(selectedDay: selectedDay);
+  }
 }

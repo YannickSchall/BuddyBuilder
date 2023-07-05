@@ -3,7 +3,12 @@ import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/circle.dart';
 
 class WeekDaySelector extends StatefulWidget {
-  const WeekDaySelector({Key? key}) : super(key: key);
+  final void Function(String?) onDaySelected;
+
+  const WeekDaySelector({
+    Key? key,
+    required this.onDaySelected,
+  }) : super(key: key);
 
   @override
   _WeekDaySelectorState createState() => _WeekDaySelectorState();
@@ -86,5 +91,8 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
         _selectedDay = day; // Press the newly selected day
       }
     });
+
+    widget.onDaySelected(
+        _selectedDay); // Call the callback function with the selected day
   }
 }

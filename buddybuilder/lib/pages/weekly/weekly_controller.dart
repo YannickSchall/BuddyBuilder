@@ -6,7 +6,10 @@ class WeeklyControllerImplementation extends WeeklyController {
     WeeklyModel? model,
   }) : super(model ??
             const WeeklyModel(
-                splits: ["pull"], query: "", weekselector: false));
+                splits: ["pull"],
+                query: "",
+                weekselector: false,
+                selectedDay: ""));
 
   @override
   bool findMatch(String input) {
