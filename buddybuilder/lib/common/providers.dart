@@ -87,9 +87,10 @@ class Providers {
       kgValue: '1',
       repsValue: '1',
       onPressed: (customId) {
-        controller.removeWorkout(customId);
+        controller.removeWorkout(customId, id);
       },
       customId: id, // Pass the custom ID to SetWidget
     );
   });
+
 }

@@ -9,22 +9,29 @@ import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/components/searchbar.dart';
 import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/components/draggable.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 
 class EditSplitView extends ConsumerWidget {
-  EditSplitView({
-    Key? key,
+  final int splitId;
+
+  const EditSplitView({
+    Key? key, required this.splitId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final EditSplitController controller =
-        ref.read(providers.editSplitControllerProvider.notifier);
-    final EditSplitModel model =
-        ref.watch(providers.editSplitControllerProvider);
+    final EditSplitController controller = ref.read(providers.editSplitControllerProvider.notifier);
+    final EditSplitModel model = ref.watch(providers.editSplitControllerProvider);
 
     final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
       return controller.getListExerciseList();
     });
+
+    final futureexerciseProvider = FutureProvider<List<Exercise>>((ref) async {
+      return controller.getAllExercisesList(splitId);
+    });
+
+    
 
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
@@ -46,10 +53,7 @@ class EditSplitView extends ConsumerWidget {
                     children: [
                       MySearchBar(
                         onChanged: (query) {
-                          ref
-                              .read(providers
-                                  .editSplitControllerProvider.notifier)
-                              .updateSearchQuery(query);
+                          ref.read(providers.editSplitControllerProvider.notifier).updateSearchQuery(query);
                           reloadExercises();
                         },
                       ),
@@ -83,8 +87,7 @@ class EditSplitView extends ConsumerWidget {
                                         name: exercise.name ?? 'No name',
                                         onPressed: (id) {
                                           // Handle workout selection
-                                          controller.addWorkout(
-                                              id, exercise.name ?? "No name");
+                                          controller.addWorkout(id, exercise.name ?? "No name", splitId);
                                           // Close the dialog
                                         },
                                         id: index,
@@ -98,8 +101,7 @@ class EditSplitView extends ConsumerWidget {
                                 }
                               },
                               loading: () => const CircularProgressIndicator(),
-                              error: (error, stackTrace) =>
-                                  Text('Error: $error'),
+                              error: (error, stackTrace) => Text('Error: $error'),
                             );
                           },
                         ),
@@ -115,56 +117,75 @@ class EditSplitView extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: GymAppBar(
-        subTitle: 'EDIT SPLIT',
-        titleAlignment: Alignment.centerRight,
-        showBackButton: true,
-        showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
-        onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                PillButtonWidget(
-                  onPressed: () {
-                    showSuccessDialog(context, ref);
-                  },
-                  text: 'Add Workout',
-                ),
-                Consumer(
-                  builder: (context, ref, _) {
-                    final workouts = ref
-                        .read(providers.editSplitControllerProvider)
-                        .workoutList;
-
-                    return Column(
-                      children: [
-                        for (final id in workouts)
-                          ref.watch(providers.setWidgetProvider(id)),
-                      ],
-                    );
-                  },
-                ),
-              ],
+  appBar: GymAppBar(
+    subTitle: 'EDIT SPLIT',
+    titleAlignment: Alignment.centerRight,
+    showBackButton: true,
+    showOkButton: true,
+    onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
+    onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
+  ),
+  body: SingleChildScrollView(
+    child: Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            PillButtonWidget(
+              onPressed: () {
+                showSuccessDialog(context, ref);
+              },
+              text: 'Add Workout',
             ),
-          ),
+            Consumer(
+              builder: (context, ref, _) {
+                final asyncValue = ref.watch(futureexerciseProvider);
+                return asyncValue.when(
+                  data: (exercises) {
+                    if (exercises != null && exercises.isNotEmpty) {
+                      return Column(
+                        children: exercises.map((exercise) {
+                          return SetWidget(
+                            setTitle: exercise.name ?? 'No name',
+                            kgValue: '0', // Provide the kgValue argument here
+                            repsValue: '', // Provide the repsValue argument here
+                            onPressed: (id) {
+                              // Handle workout selection
+                              controller.removeWorkout(id, splitId);
+                              // Close the dialog
+                            },
+                            customId: exercise.id ?? 0,
+                          );
+                        }).toList(),
+                      );
+                    } else {
+                      return const ListTile(
+                        title: Text('No exercises available'),
+                      );
+                    }
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stackTrace) => Text('Error: $error'),
+                );
+              },
+            ),
+          ],
         ),
       ),
-    );
+    ),
+  ),
+);
+
   }
 }
 
 abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   EditSplitController(EditSplitModel state) : super(state);
 
-  void addWorkout(int id, String name);
+  void addWorkout(int id, String name, int splitId);
 
-  void removeWorkout(int id);
+  void removeWorkout(int id, int splitId);
 
   void removeAllSets();
 
@@ -177,4 +198,6 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   String getWorkoutTitle(int id);
 
   void updateSearchQuery(String query);
+
+  Future<List<Exercise>> getAllExercisesList(int splitId);
 }

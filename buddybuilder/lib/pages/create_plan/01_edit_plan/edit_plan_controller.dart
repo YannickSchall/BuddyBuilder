@@ -43,4 +43,9 @@ class EditPlanControllerImplementation extends EditPlanController {
     );
     db.removeSplit(id); // Remove the plan title from the database
   }
+
+  @override
+  int? getSelectedId(int id) {
+    return state.splits[id].id;
+  }
 }
