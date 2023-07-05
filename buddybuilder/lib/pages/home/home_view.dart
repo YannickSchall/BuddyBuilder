@@ -42,7 +42,7 @@ class HomeView extends ConsumerWidget {
               onPressed: () => Navigator.pushNamed(context, '/calendar'),
               text: 'CALENDAR',
               dateWidget: const DayMonthWidget(),
-              buttonHeight: 120.0,
+              buttonHeight: 100.0,
             ),
             ContainerButtonWidget(
               onPressed: () => Navigator.pushNamed(context, '/training'),

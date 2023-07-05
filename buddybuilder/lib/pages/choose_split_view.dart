@@ -47,14 +47,14 @@ class ChooseSplitView extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
+            const Column(
               children: [
                 Text('SPLIT',
-                    style: const TextStyle(
-                        fontSize: 34, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
                 Text('STYLE',
-                    style: const TextStyle(
-                        fontSize: 34, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 20),
@@ -68,7 +68,7 @@ class ChooseSplitView extends ConsumerWidget {
               text: 'WEEKLY',
             ),
             IconButton(
-              icon: Icon(Icons.info),
+              icon: const Icon(Icons.info),
               color: Theme.of(context).colorScheme.onSecondaryContainer,
               onPressed: () {
                 _showInfoDialog(context);

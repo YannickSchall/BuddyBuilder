@@ -41,9 +41,9 @@ class PillButtonWidget extends StatelessWidget {
         },
         background: Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0),
           color: Colors.red, // Customize the delete background color
-          child: Icon(
+          child: const Icon(
             Icons.delete,
             color: Colors.white, // Customize the delete icon color
           ),

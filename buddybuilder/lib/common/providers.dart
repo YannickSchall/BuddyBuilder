@@ -53,7 +53,8 @@ class Providers {
   final StateNotifierProvider<CalendarController, CalendarModel>
       calendarControllerProvider =
       StateNotifierProvider<CalendarController, CalendarModel>(
-          (StateNotifierProviderRef ref) => CalendarControllerImplementation());
+          (StateNotifierProviderRef ref) =>
+              CalendarControllerImplementation(db: db));
 
   final StateNotifierProvider<WeeklyController, WeeklyModel>
       weeklyControllerProvider =

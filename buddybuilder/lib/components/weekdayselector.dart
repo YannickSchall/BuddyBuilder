@@ -15,7 +15,7 @@ class WeekDaySelector extends StatefulWidget {
 }
 
 class _WeekDaySelectorState extends State<WeekDaySelector> {
-  String? _selectedDay;
+  String? _selectedDay = 'MON';
 
   @override
   Widget build(BuildContext context) {

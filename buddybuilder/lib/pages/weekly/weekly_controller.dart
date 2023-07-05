@@ -9,12 +9,12 @@ class WeeklyControllerImplementation extends WeeklyController {
     required this.db,
     WeeklyModel? model,
   }) : super(model ??
-            WeeklyModel(
+            const WeeklyModel(
                 splitList: [],
                 splitTitle: "",
                 searchQuery: "",
                 weekselector: false,
-                selectedDay: "",
+                selectedDay: "MON",
                 dateSplitMap: {}));
 
   DBService db;

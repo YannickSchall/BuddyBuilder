@@ -12,7 +12,7 @@ const lightColorScheme = ColorScheme(
   secondary: Color(0xFF506352),
   onSecondary: Color(0xFFFFFFFF),
   secondaryContainer: Color(0xFFB7CEB7), // containerbutton
-  onSecondaryContainer: Color(0xFF0E1F12),
+  onSecondaryContainer: Color(0xFF191C19), //old: 0xFF0E1F12
   tertiary: Color(0xFF3A656E),
   onTertiary: Color(0xFFFFFFFF),
   tertiaryContainer: Color(0xFFBDEAF5),
@@ -44,6 +44,7 @@ const darkColorScheme = ColorScheme(
   onPrimary: Color(0xFFFCFDF7), //
   primaryContainer: Color(0xFFB7CEB7), // pillbutton
   onPrimaryContainer: Color(0xFF191C19), // pillbuttonschrift
+
   secondary: Color(0xFFB7CCB7), // überschrift
   onSecondary: Color(0xFF233426),
   secondaryContainer: Color(0xFF394B3B), // containerbutton, appbarhintergrund
@@ -59,7 +60,7 @@ const darkColorScheme = ColorScheme(
   background: Color(0xFF191C19), // background
   onBackground: Color(0xFFE2E3DE),
   surface: Color(0xFF191C19),
-  onSurface: Color(0xFFFCFDF7), // color for calander pop up
+  onSurface: Color(0xFFFCFDF7), // color for calendar pop up
   surfaceVariant: Color(0xFF414941),
   onSurfaceVariant: Color(0xFFC1C9BF),
   outline: Color(0xFF8B938A),

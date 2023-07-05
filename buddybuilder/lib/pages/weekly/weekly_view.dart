@@ -32,10 +32,29 @@ class WeeklyView extends ConsumerWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Successfully Added $name $id'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
+            title: Text(
+                'Do you want to add exercise "$name" to ${mapDay(model.selectedDay ?? "")}?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    color: Theme.of(context).colorScheme.onSecondaryContainer)),
+            actions: [
+              MaterialButton(
+                child: const Text('Cancel', textAlign: TextAlign.left),
+                color: Theme.of(context).colorScheme.primary,
+                textColor: Theme.of(context).colorScheme.secondaryContainer,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              MaterialButton(
+                child: const Text('OK', textAlign: TextAlign.left),
+                color: Theme.of(context).colorScheme.primary,
+                textColor: Theme.of(context).colorScheme.secondaryContainer,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 onPressed: () {
                   Navigator.of(context).pop();
                   ref
@@ -44,6 +63,7 @@ class WeeklyView extends ConsumerWidget {
                 },
               ),
             ],
+            actionsAlignment: MainAxisAlignment.spaceBetween,
           );
         },
       );
@@ -60,7 +80,7 @@ class WeeklyView extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +107,7 @@ class WeeklyView extends ConsumerWidget {
                 ),
                 Text(
                   'Selected Day: ${model.selectedDay ?? 'None'}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -112,7 +132,7 @@ class WeeklyView extends ConsumerWidget {
                   builder: (context, ref, _) {
                     final asyncValue = ref.watch(splitsProvider);
                     return asyncValue.when(
-                      loading: () => Center(
+                      loading: () => const Center(
                         child: CircularProgressIndicator(),
                       ),
                       error: (error, stackTrace) => Text('Error: $error'),
@@ -121,7 +141,7 @@ class WeeklyView extends ConsumerWidget {
                           return ListView.builder(
                             itemCount: splits.length,
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final split = splits[index];
                               return PillButtonWidget(
@@ -150,6 +170,26 @@ class WeeklyView extends ConsumerWidget {
       ),
     );
   }
+}
+
+String mapDay(String day) {
+  switch (day) {
+    case 'MON':
+      return "Monday";
+    case 'TUE':
+      return 'Tuesday';
+    case 'WED':
+      return 'Wednesday';
+    case 'THU':
+      return 'Thursday';
+    case 'FRI':
+      return 'Friday';
+    case 'SAT':
+      return 'Saturday';
+    case 'SUN':
+      return 'Sunday';
+  }
+  return day;
 }
 
 abstract class WeeklyController extends StateNotifier<WeeklyModel> {

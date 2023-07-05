@@ -28,6 +28,7 @@ class DayMonthWidget extends StatelessWidget {
       width: 60,
       height: 60,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             child: Text(
