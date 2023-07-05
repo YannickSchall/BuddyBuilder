@@ -18,12 +18,6 @@ class WeekSelector extends StatelessWidget {
               },
               text: '1',
             ),
-            CircleWidget(
-              onPressed: () {
-                // Action for Tuesday button
-              },
-              text: '2',
-            ),
           ],
         ),
       ],

@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/circle.dart';
 
-class WeekDaySelector extends StatelessWidget {
+class WeekDaySelector extends StatefulWidget {
   const WeekDaySelector({Key? key}) : super(key: key);
+
+  @override
+  _WeekDaySelectorState createState() => _WeekDaySelectorState();
+}
+
+class _WeekDaySelectorState extends State<WeekDaySelector> {
+  String? _selectedDay;
 
   @override
   Widget build(BuildContext context) {
@@ -14,27 +21,31 @@ class WeekDaySelector extends StatelessWidget {
           children: [
             CircleWidget(
               onPressed: () {
-                // Action for Monday button
+                _updateSelectedDay('MON');
               },
               text: 'MON',
+              isPressed: _selectedDay == 'MON',
             ),
             CircleWidget(
               onPressed: () {
-                // Action for Tuesday button
+                _updateSelectedDay('TUE');
               },
               text: 'TUE',
+              isPressed: _selectedDay == 'TUE',
             ),
             CircleWidget(
               onPressed: () {
-                // Action for Wednesday button
+                _updateSelectedDay('WED');
               },
               text: 'WED',
+              isPressed: _selectedDay == 'WED',
             ),
             CircleWidget(
               onPressed: () {
-                // Action for Thursday button
+                _updateSelectedDay('THU');
               },
               text: 'THU',
+              isPressed: _selectedDay == 'THU',
             ),
           ],
         ),
@@ -42,25 +53,38 @@ class WeekDaySelector extends StatelessWidget {
           children: [
             CircleWidget(
               onPressed: () {
-                // Action for Friday button
+                _updateSelectedDay('FRI');
               },
               text: 'FRI',
+              isPressed: _selectedDay == 'FRI',
             ),
             CircleWidget(
               onPressed: () {
-                // Action for Saturday button
+                _updateSelectedDay('SAT');
               },
               text: 'SAT',
+              isPressed: _selectedDay == 'SAT',
             ),
             CircleWidget(
               onPressed: () {
-                // Action for Sunday button
+                _updateSelectedDay('SUN');
               },
               text: 'SUN',
+              isPressed: _selectedDay == 'SUN',
             ),
           ],
         ),
       ],
     );
+  }
+
+  void _updateSelectedDay(String day) {
+    setState(() {
+      if (_selectedDay == day) {
+        _selectedDay = null; // Unpress the currently selected day
+      } else {
+        _selectedDay = day; // Press the newly selected day
+      }
+    });
   }
 }

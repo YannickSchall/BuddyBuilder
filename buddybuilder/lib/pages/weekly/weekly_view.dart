@@ -50,7 +50,7 @@ class WeeklyView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'Weekly Split',
+        subTitle: 'WEEKLY SPLIT',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -66,23 +66,10 @@ class WeeklyView extends ConsumerWidget {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    'week',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                    ),
-                  ),
-                ),
-                //const WeekSelector(),
-
-                const WeekSelector(),
-                Align(
-                  alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
-                      'days',
+                      'DAYS',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.primaryContainer,

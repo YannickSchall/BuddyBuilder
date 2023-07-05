@@ -11,6 +11,7 @@ class CircleWidget extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
     this.width = 60,
     this.height = 60,
+    this.isPressed = false,
   }) : super(key: key);
 
   final VoidCallback onPressed;
@@ -19,14 +20,13 @@ class CircleWidget extends StatefulWidget {
   final double width;
   final double height;
   final EdgeInsets padding;
+  final bool isPressed;
 
   @override
   _CircleWidgetState createState() => _CircleWidgetState();
 }
 
 class _CircleWidgetState extends State<CircleWidget> {
-  bool _isPressed = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,21 +35,16 @@ class _CircleWidgetState extends State<CircleWidget> {
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          color: _isPressed
+          color: widget.isPressed
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.secondaryContainer,
           shape: BoxShape.circle,
         ),
         child: TextButton(
           onPressed: () {
-            setState(() {
-              _isPressed = !_isPressed;
-            });
-            widget.onPressed();
-            if (_isPressed) {
-              // Call a function to display 7 circle buttons
-              // Function implementation goes here
-              print('Display 7 circle buttons');
+            if (!widget.isPressed) {
+              // Only trigger onPressed if the button is not already pressed
+              widget.onPressed();
             }
           },
           child: Column(
@@ -59,7 +54,7 @@ class _CircleWidgetState extends State<CircleWidget> {
               Text(
                 widget.text,
                 style: TextStyle(
-                  color: _isPressed
+                  color: widget.isPressed
                       ? Colors.white
                       : Theme.of(context).colorScheme.primary,
                   fontFamily: 'Roboto',
