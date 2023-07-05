@@ -35,7 +35,7 @@ class DBService {
     return exercises;
   }
 
-  Future<int> tryNewest(Type type, [int? splitId]) async {
+  Future<int> tryNewest(Type type, [int? splitId,int? exerciseId] ) async {
     dynamic collection;
     int? newest;
 
@@ -56,6 +56,16 @@ class DBService {
       final split = await isar.splits.get(splitId!);
       if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
         newest = split.exercises!.map((exercise) => exercise.id).reduce(max);
+      }
+      break;
+
+      case ExSet: 
+      final split = await isar.splits.get(splitId!);
+      if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
+        final exercise = split.exercises!.firstWhere((element) => element.id == exerciseId);
+        if (exercise != null && exercise.sets != null && exercise.sets!.isNotEmpty) {
+          newest = exercise.sets!.map((set) => set.id).reduce(max);
+        }
       }
       break;
 

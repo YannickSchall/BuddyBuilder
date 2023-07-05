@@ -200,4 +200,6 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   void updateSearchQuery(String query);
 
   Future<List<Exercise>> getAllExercisesList(int splitId);
+  
+  void addSet(int id, int splitId, int excerciseId);
 }
