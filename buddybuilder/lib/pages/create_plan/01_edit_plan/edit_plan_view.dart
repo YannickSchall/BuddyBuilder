@@ -1,26 +1,26 @@
 import 'package:buddybuilder/components/containerbutton.dart';
-import 'package:buddybuilder/services/db/collections/plan.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:buddybuilder/pages/create_plan/plan_model.dart';
+import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_model.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 
-class PlanView extends ConsumerWidget {
-  const PlanView({
+class EditPlanView extends ConsumerWidget {
+  const EditPlanView({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PlanController controller =
-        ref.read(providers.planControllerProvider.notifier);
-    final PlanModel model = ref.watch(providers.planControllerProvider);
+    final EditPlanController controller =
+        ref.read(providers.editPlanControllerProvider.notifier);
+    final EditPlanModel model = ref.watch(providers.editPlanControllerProvider);
 
-    final futureplansProvider = FutureProvider<List<Plan>>((ref) async {
-      return controller.getAllPlans();
+    final futureSplitsProvider = FutureProvider<List<Split>>((ref) async {
+      return controller.getAllSplits();
     });
 
     void showSuccessDialog(BuildContext context) {
@@ -30,14 +30,14 @@ class PlanView extends ConsumerWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Success Dialog'),
+            title: const Text('Create new split'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: textFieldController,
                   decoration: const InputDecoration(
-                    hintText: 'Enter Plan title',
+                    hintText: 'Enter split title',
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -47,11 +47,11 @@ class PlanView extends ConsumerWidget {
                     TextButton(
                       onPressed: () {
                         String enteredText = textFieldController.text;
-                        Plan newPlan = Plan();
-                        newPlan.name = enteredText;
+                        Split newSplit = Split();
+                        newSplit.name = enteredText;
 
-                        // Add the entered text to the list of plan titles
-                        controller.addPlan(newPlan);
+                        // Add the entered text to the list of split titles
+                        controller.addSplit(newSplit);
                         Navigator.of(context).pop(); // Close the dialog
                       },
                       child: const Text('Save'),
@@ -73,7 +73,7 @@ class PlanView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'Create Plan',
+        subTitle: 'EDIT PLAN',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -89,24 +89,24 @@ class PlanView extends ConsumerWidget {
               children: [
                 ContainerButtonWidget(
                   onPressed: () => showSuccessDialog(context),
-                  text: 'Create New Plan',
+                  text: 'Create New Split',
                   containerIcon: const Icon(Icons.add),
                 ),
                 const SizedBox(height: 16),
                 Consumer(
                   builder: (context, ref, _) {
-                    final asyncValue = ref.watch(futureplansProvider);
+                    final asyncValue = ref.watch(futureSplitsProvider);
                     return asyncValue.when(
-                      data: (plans) {
-                        if (plans != null && plans.isNotEmpty) {
+                      data: (splits) {
+                        if (splits != null && splits.isNotEmpty) {
                           return Column(
                             children: [
-                              for (final plan in plans)
+                              for (final split in splits)
                                 Dismissible(
                                   key: UniqueKey(),
                                   direction: DismissDirection.startToEnd,
                                   onDismissed: (_) {
-                                    controller.removePlan(plan.id!);
+                                    controller.removeSplit(split.id!);
                                   },
                                   background: Container(
                                     alignment: Alignment.centerLeft,
@@ -120,17 +120,17 @@ class PlanView extends ConsumerWidget {
                                   child: PillButtonWidget(
                                     onPressed: () =>
                                         Navigator.pushNamed(context, '/new'),
-                                    text: plan.name!,
+                                    text: split.name!,
                                     buttonHeight: 60.0,
                                     buttonWidth: 300.0,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
                                   ),
                                 ),
                             ],
                           );
                         } else {
-                          return const Text('No plans found');
+                          return const Text('No splits found');
                         }
                       },
                       loading: () => const CircularProgressIndicator(),
@@ -148,10 +148,10 @@ class PlanView extends ConsumerWidget {
   }
 }
 
-abstract class PlanController extends StateNotifier<PlanModel> {
-  PlanController(PlanModel state) : super(state);
-  void addPlan(Plan plan);
-  void removePlan(int id);
-  Future<List<Plan>> getAllPlans();
-  Future<int> getNewestPlanID();
+abstract class EditPlanController extends StateNotifier<EditPlanModel> {
+  EditPlanController(EditPlanModel state) : super(state);
+  void addSplit(Split split);
+  void removeSplit(int id);
+  Future<List<Split>> getAllSplits();
+  Future<int> getNewestSplitID();
 }

@@ -1,4 +1,4 @@
-import 'package:buddybuilder/services/db/collections/plan.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:isar/isar.dart';
 
 part 'training.g.dart';
@@ -12,5 +12,13 @@ class Training {
   late int day;
   late int month;
   late int year;
-  late Split split;
+  late TrainingSplit split;
+}
+
+@embedded
+class TrainingSplit {
+  late int id;
+
+  String? name;
+  late List<Exercise>? exercises;
 }

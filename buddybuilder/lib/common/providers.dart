@@ -17,16 +17,16 @@ import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/pages/weekLY/weekly_controller.dart';
 import 'package:buddybuilder/pages/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/weekly/weekly_view.dart';
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_controller.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_view.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_model.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_controller.dart';
 import 'package:buddybuilder/pages/rotation/rotation_model.dart';
 import 'package:buddybuilder/pages/rotation/rotation_view.dart';
 import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
-import 'package:buddybuilder/pages/create_plan/plan_model.dart';
-import 'package:buddybuilder/pages/create_plan/plan_view.dart';
-import 'package:buddybuilder/pages/create_plan/plan_controller.dart';
+import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_model.dart';
+import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_view.dart';
+import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_controller.dart';
 
 final Providers providers = Providers();
 final isar = IsarDatabase.instance.isar;
@@ -60,25 +60,26 @@ class Providers {
       StateNotifierProvider<WeeklyController, WeeklyModel>(
           (StateNotifierProviderRef ref) => WeeklyControllerImplementation());
 
-  final StateNotifierProvider<NewSplitController, NewSplitModel>
-      newsplitControllerProvider =
-      StateNotifierProvider<NewSplitController, NewSplitModel>(
+  final StateNotifierProvider<EditSplitController, EditSplitModel>
+      editSplitControllerProvider =
+      StateNotifierProvider<EditSplitController, EditSplitModel>(
           (StateNotifierProviderRef ref) =>
-              NewSplitControllerImplementation(db: db, api: api));
+              EditSplitControllerImplementation(db: db, api: api));
 
   final StateNotifierProvider<RotationController, RotationModel>
       rotationControllerProvider =
       StateNotifierProvider<RotationController, RotationModel>(
           (StateNotifierProviderRef ref) => RotationControllerImplementation());
 
-  final StateNotifierProvider<PlanController, PlanModel>
-      planControllerProvider = StateNotifierProvider<PlanController, PlanModel>(
+  final StateNotifierProvider<EditPlanController, EditPlanModel>
+      editPlanControllerProvider =
+      StateNotifierProvider<EditPlanController, EditPlanModel>(
           (StateNotifierProviderRef ref) =>
-              PlanControllerImplementation(db: db));
+              EditPlanControllerImplementation(db: db));
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-    final NewSplitController controller =
-        ref.read(providers.newsplitControllerProvider.notifier);
+    final EditSplitController controller =
+        ref.read(providers.editSplitControllerProvider.notifier);
     final String workoutTitle = controller.getWorkoutTitle(id);
 
     return SetWidget(

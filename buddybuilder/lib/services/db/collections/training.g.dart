@@ -36,7 +36,7 @@ const TrainingSchema = CollectionSchema(
       id: 3,
       name: r'split',
       type: IsarType.object,
-      target: r'Split',
+      target: r'TrainingSplit',
     ),
     r'year': PropertySchema(
       id: 4,
@@ -66,7 +66,7 @@ const TrainingSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {
-    r'Split': SplitSchema,
+    r'TrainingSplit': TrainingSplitSchema,
     r'Exercise': ExerciseSchema,
     r'ExSet': ExSetSchema
   },
@@ -89,7 +89,8 @@ int _trainingEstimateSize(
     }
   }
   bytesCount += 3 +
-      SplitSchema.estimateSize(object.split, allOffsets[Split]!, allOffsets);
+      TrainingSplitSchema.estimateSize(
+          object.split, allOffsets[TrainingSplit]!, allOffsets);
   return bytesCount;
 }
 
@@ -102,10 +103,10 @@ void _trainingSerialize(
   writer.writeLong(offsets[0], object.day);
   writer.writeLong(offsets[1], object.month);
   writer.writeString(offsets[2], object.name);
-  writer.writeObject<Split>(
+  writer.writeObject<TrainingSplit>(
     offsets[3],
     allOffsets,
-    SplitSchema.serialize,
+    TrainingSplitSchema.serialize,
     object.split,
   );
   writer.writeLong(offsets[4], object.year);
@@ -122,12 +123,12 @@ Training _trainingDeserialize(
   object.id = id;
   object.month = reader.readLong(offsets[1]);
   object.name = reader.readStringOrNull(offsets[2]);
-  object.split = reader.readObjectOrNull<Split>(
+  object.split = reader.readObjectOrNull<TrainingSplit>(
         offsets[3],
-        SplitSchema.deserialize,
+        TrainingSplitSchema.deserialize,
         allOffsets,
       ) ??
-      Split();
+      TrainingSplit();
   object.year = reader.readLong(offsets[4]);
   return object;
 }
@@ -146,12 +147,12 @@ P _trainingDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readObjectOrNull<Split>(
+      return (reader.readObjectOrNull<TrainingSplit>(
             offset,
-            SplitSchema.deserialize,
+            TrainingSplitSchema.deserialize,
             allOffsets,
           ) ??
-          Split()) as P;
+          TrainingSplit()) as P;
     case 4:
       return (reader.readLong(offset)) as P;
     default:
@@ -690,7 +691,7 @@ extension TrainingQueryFilter
 extension TrainingQueryObject
     on QueryBuilder<Training, Training, QFilterCondition> {
   QueryBuilder<Training, Training, QAfterFilterCondition> split(
-      FilterQuery<Split> q) {
+      FilterQuery<TrainingSplit> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'split');
     });
@@ -867,7 +868,7 @@ extension TrainingQueryProperty
     });
   }
 
-  QueryBuilder<Training, Split, QQueryOperations> splitProperty() {
+  QueryBuilder<Training, TrainingSplit, QQueryOperations> splitProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'split');
     });
@@ -876,6 +877,452 @@ extension TrainingQueryProperty
   QueryBuilder<Training, int, QQueryOperations> yearProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'year');
+    });
+  }
+}
+
+// **************************************************************************
+// IsarEmbeddedGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const TrainingSplitSchema = Schema(
+  name: r'TrainingSplit',
+  id: -2884867788728675659,
+  properties: {
+    r'exercises': PropertySchema(
+      id: 0,
+      name: r'exercises',
+      type: IsarType.objectList,
+      target: r'Exercise',
+    ),
+    r'id': PropertySchema(
+      id: 1,
+      name: r'id',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 2,
+      name: r'name',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _trainingSplitEstimateSize,
+  serialize: _trainingSplitSerialize,
+  deserialize: _trainingSplitDeserialize,
+  deserializeProp: _trainingSplitDeserializeProp,
+);
+
+int _trainingSplitEstimateSize(
+  TrainingSplit object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  {
+    final list = object.exercises;
+    if (list != null) {
+      bytesCount += 3 + list.length * 3;
+      {
+        final offsets = allOffsets[Exercise]!;
+        for (var i = 0; i < list.length; i++) {
+          final value = list[i];
+          bytesCount += ExerciseSchema.estimateSize(value, offsets, allOffsets);
+        }
+      }
+    }
+  }
+  {
+    final value = object.name;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  return bytesCount;
+}
+
+void _trainingSplitSerialize(
+  TrainingSplit object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeObjectList<Exercise>(
+    offsets[0],
+    allOffsets,
+    ExerciseSchema.serialize,
+    object.exercises,
+  );
+  writer.writeLong(offsets[1], object.id);
+  writer.writeString(offsets[2], object.name);
+}
+
+TrainingSplit _trainingSplitDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = TrainingSplit();
+  object.exercises = reader.readObjectList<Exercise>(
+    offsets[0],
+    ExerciseSchema.deserialize,
+    allOffsets,
+    Exercise(),
+  );
+  object.id = reader.readLong(offsets[1]);
+  object.name = reader.readStringOrNull(offsets[2]);
+  return object;
+}
+
+P _trainingSplitDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readObjectList<Exercise>(
+        offset,
+        ExerciseSchema.deserialize,
+        allOffsets,
+        Exercise(),
+      )) as P;
+    case 1:
+      return (reader.readLong(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension TrainingSplitQueryFilter
+    on QueryBuilder<TrainingSplit, TrainingSplit, QFilterCondition> {
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'exercises',
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'exercises',
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'exercises',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> idEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      idGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> idLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> idBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'name',
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'name',
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> nameEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> nameBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition> nameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension TrainingSplitQueryObject
+    on QueryBuilder<TrainingSplit, TrainingSplit, QFilterCondition> {
+  QueryBuilder<TrainingSplit, TrainingSplit, QAfterFilterCondition>
+      exercisesElement(FilterQuery<Exercise> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'exercises');
     });
   }
 }

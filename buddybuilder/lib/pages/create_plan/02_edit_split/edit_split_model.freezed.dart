@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'new_split_model.dart';
+part of 'edit_split_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$NewSplitModel {
+mixin _$EditSplitModel {
   List<dynamic> get workoutList => throw _privateConstructorUsedError;
   String get workoutTitle => throw _privateConstructorUsedError;
   List<dynamic> get widgetList => throw _privateConstructorUsedError;
@@ -23,15 +23,15 @@ mixin _$NewSplitModel {
   String? get searchQuery => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $NewSplitModelCopyWith<NewSplitModel> get copyWith =>
+  $EditSplitModelCopyWith<EditSplitModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NewSplitModelCopyWith<$Res> {
-  factory $NewSplitModelCopyWith(
-          NewSplitModel value, $Res Function(NewSplitModel) then) =
-      _$NewSplitModelCopyWithImpl<$Res, NewSplitModel>;
+abstract class $EditSplitModelCopyWith<$Res> {
+  factory $EditSplitModelCopyWith(
+          EditSplitModel value, $Res Function(EditSplitModel) then) =
+      _$EditSplitModelCopyWithImpl<$Res, EditSplitModel>;
   @useResult
   $Res call(
       {List<dynamic> workoutList,
@@ -42,9 +42,9 @@ abstract class $NewSplitModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
-    implements $NewSplitModelCopyWith<$Res> {
-  _$NewSplitModelCopyWithImpl(this._value, this._then);
+class _$EditSplitModelCopyWithImpl<$Res, $Val extends EditSplitModel>
+    implements $EditSplitModelCopyWith<$Res> {
+  _$EditSplitModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -86,11 +86,11 @@ class _$NewSplitModelCopyWithImpl<$Res, $Val extends NewSplitModel>
 }
 
 /// @nodoc
-abstract class _$$_NewSplitModelCopyWith<$Res>
-    implements $NewSplitModelCopyWith<$Res> {
-  factory _$$_NewSplitModelCopyWith(
-          _$_NewSplitModel value, $Res Function(_$_NewSplitModel) then) =
-      __$$_NewSplitModelCopyWithImpl<$Res>;
+abstract class _$$_EditSplitModelCopyWith<$Res>
+    implements $EditSplitModelCopyWith<$Res> {
+  factory _$$_EditSplitModelCopyWith(
+          _$_EditSplitModel value, $Res Function(_$_EditSplitModel) then) =
+      __$$_EditSplitModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -102,11 +102,11 @@ abstract class _$$_NewSplitModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NewSplitModelCopyWithImpl<$Res>
-    extends _$NewSplitModelCopyWithImpl<$Res, _$_NewSplitModel>
-    implements _$$_NewSplitModelCopyWith<$Res> {
-  __$$_NewSplitModelCopyWithImpl(
-      _$_NewSplitModel _value, $Res Function(_$_NewSplitModel) _then)
+class __$$_EditSplitModelCopyWithImpl<$Res>
+    extends _$EditSplitModelCopyWithImpl<$Res, _$_EditSplitModel>
+    implements _$$_EditSplitModelCopyWith<$Res> {
+  __$$_EditSplitModelCopyWithImpl(
+      _$_EditSplitModel _value, $Res Function(_$_EditSplitModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -118,7 +118,7 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
     Object? setId = null,
     Object? searchQuery = freezed,
   }) {
-    return _then(_$_NewSplitModel(
+    return _then(_$_EditSplitModel(
       workoutList: null == workoutList
           ? _value._workoutList
           : workoutList // ignore: cast_nullable_to_non_nullable
@@ -145,8 +145,8 @@ class __$$_NewSplitModelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NewSplitModel implements _NewSplitModel {
-  const _$_NewSplitModel(
+class _$_EditSplitModel implements _EditSplitModel {
+  const _$_EditSplitModel(
       {required final List<dynamic> workoutList,
       required this.workoutTitle,
       required final List<dynamic> widgetList,
@@ -180,14 +180,14 @@ class _$_NewSplitModel implements _NewSplitModel {
 
   @override
   String toString() {
-    return 'NewSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle, widgetList: $widgetList, setId: $setId, searchQuery: $searchQuery)';
+    return 'EditSplitModel(workoutList: $workoutList, workoutTitle: $workoutTitle, widgetList: $widgetList, setId: $setId, searchQuery: $searchQuery)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NewSplitModel &&
+            other is _$_EditSplitModel &&
             const DeepCollectionEquality()
                 .equals(other._workoutList, _workoutList) &&
             (identical(other.workoutTitle, workoutTitle) ||
@@ -211,17 +211,17 @@ class _$_NewSplitModel implements _NewSplitModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NewSplitModelCopyWith<_$_NewSplitModel> get copyWith =>
-      __$$_NewSplitModelCopyWithImpl<_$_NewSplitModel>(this, _$identity);
+  _$$_EditSplitModelCopyWith<_$_EditSplitModel> get copyWith =>
+      __$$_EditSplitModelCopyWithImpl<_$_EditSplitModel>(this, _$identity);
 }
 
-abstract class _NewSplitModel implements NewSplitModel {
-  const factory _NewSplitModel(
+abstract class _EditSplitModel implements EditSplitModel {
+  const factory _EditSplitModel(
       {required final List<dynamic> workoutList,
       required final String workoutTitle,
       required final List<dynamic> widgetList,
       required final int setId,
-      final String? searchQuery}) = _$_NewSplitModel;
+      final String? searchQuery}) = _$_EditSplitModel;
 
   @override
   List<dynamic> get workoutList;
@@ -235,6 +235,6 @@ abstract class _NewSplitModel implements NewSplitModel {
   String? get searchQuery;
   @override
   @JsonKey(ignore: true)
-  _$$_NewSplitModelCopyWith<_$_NewSplitModel> get copyWith =>
+  _$$_EditSplitModelCopyWith<_$_EditSplitModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

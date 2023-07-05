@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:isar/isar.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
-import 'package:buddybuilder/services/db/collections/plan.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:http/http.dart' as http;
 
 class DBService {
@@ -41,11 +41,11 @@ class DBService {
             await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
-      case Plan:
-        collection = isar.collection<Plan>();
+      case Split:
+        collection = isar.collection<Split>();
 
-        final Plan? item =
-            await isar.plans.where(sort: Sort.desc).anyId().findFirst();
+        final Split? item =
+            await isar.splits.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
       default:
@@ -106,30 +106,30 @@ class DBService {
     }
   }
 
-  void addPlan(Plan plan) async {
+  void addSplit(Split split) async {
     await isar.writeTxn(() async {
-      await isar.plans.put(plan);
+      await isar.splits.put(split);
     });
   }
 
-  Future<Plan?> getPlan(int id) async {
-    return await isar.plans.get(id);
+  Future<Split?> getSplit(int id) async {
+    return await isar.splits.get(id);
   }
 
-  Future<List<Plan>> getAllPlans() async {
-  final plans = await isar.plans.where().findAll();
-  return plans.map((plan) {
-    final newPlan = Plan()
-      ..id = plan.id ?? 0 // Set the id property based on the plan's id value
-      ..name = plan.name ?? "no name"; // Set the name property based on the plan's name value
-    return newPlan;
-  }).toList();
-}
+  Future<List<Split>> getAllSplits() async {
+    final splits = await isar.splits.where().findAll();
+    return splits.map((split) {
+      final newSplit = Split()
+        ..id = split.id ?? 0 // Set the id property based on the plan's id value
+        ..name = split.name ??
+            "no name"; // Set the name property based on the plan's name value
+      return newSplit;
+    }).toList();
+  }
 
-
-  void removePlan(int id) async {
+  void removeSplit(int id) async {
     await isar.writeTxn(() async {
-      isar.plans.delete(id);
+      isar.splits.delete(id);
     });
   }
 }

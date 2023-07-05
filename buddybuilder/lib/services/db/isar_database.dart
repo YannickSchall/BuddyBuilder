@@ -1,5 +1,5 @@
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
-import 'package:buddybuilder/services/db/collections/plan.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:isar/isar.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -18,7 +18,7 @@ class IsarDatabase {
   Future<void> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
-      [ListExerciseSchema, PlanSchema],
+      [ListExerciseSchema, SplitSchema],
       directory: dir.path,
     );
   }

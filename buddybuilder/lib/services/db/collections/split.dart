@@ -1,22 +1,14 @@
 import 'package:isar/isar.dart';
 
-part 'plan.g.dart';
+part 'split.g.dart';
 
 @Collection()
-class Plan {
+class Split {
   Id? id;
 
   @Index()
   String? name;
-  List<Split>? splits;
-}
-
-@embedded
-class Split {
-  late int id;
-
-  late String name;
-  late List<Exercise> exercises;
+  List<Exercise>? exercises;
 }
 
 @embedded

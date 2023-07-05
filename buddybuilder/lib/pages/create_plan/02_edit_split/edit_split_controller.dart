@@ -1,47 +1,21 @@
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_view.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_model.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_view.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 
-class NewSplitControllerImplementation extends NewSplitController {
-  NewSplitControllerImplementation({
+class EditSplitControllerImplementation extends EditSplitController {
+  EditSplitControllerImplementation({
     required this.db,
     required this.api,
-    NewSplitModel? model,
-  }) : super(model ?? NewSplitModel(workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
+    EditSplitModel? model,
+  }) : super(model ??
+            EditSplitModel(
+                workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
   APIService api;
   final Map<int, String> workoutTitles = {};
-/*
-  @override
-  void addWorkout(String name) {
-    print('clicked');
-    Future.delayed(Duration(seconds: 10), () {
-      state = state.copyWith(workoutList: [...state.workoutList, name]);
-    });
-  }
-
-  @override
-  void removeAllSets() {
-    Future.delayed(Duration(seconds: 10), () {
-      state = state.copyWith(workoutList: []);
-    });
-  }
-
-  @override
-  void removeWorkout(int id) {
-    Future.delayed(Duration(seconds: 10), () {
-      state = state.copyWith(
-        widgetList: [
-          ...state.widgetList
-        ] // Create a new list using spread operator
-          ..removeWhere((item) => item.setid == id),
-      );
-    });
-    
-  }*/
 
   @override
   Future<List<ListExercise>> getListExerciseList() async {
@@ -62,7 +36,8 @@ class NewSplitControllerImplementation extends NewSplitController {
 
   @override
   void addWorkout(int id, String name) {
-    state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
+    state = state
+        .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
     workoutTitles[id] = name;
     // Trigger rebuild
   }

@@ -2,7 +2,7 @@ import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
-import 'package:buddybuilder/pages/create_plan/new_split/new_split_model.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/exercise_list.dart';
@@ -10,16 +10,17 @@ import 'package:buddybuilder/components/searchbar.dart';
 import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/components/draggable.dart';
 
-class NewSplitView extends ConsumerWidget {
-  NewSplitView({
+class EditSplitView extends ConsumerWidget {
+  EditSplitView({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final NewSplitController controller =
-        ref.read(providers.newsplitControllerProvider.notifier);
-    final NewSplitModel model = ref.watch(providers.newsplitControllerProvider);
+    final EditSplitController controller =
+        ref.read(providers.editSplitControllerProvider.notifier);
+    final EditSplitModel model =
+        ref.watch(providers.editSplitControllerProvider);
 
     final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
       return controller.getListExerciseList();
@@ -34,6 +35,7 @@ class NewSplitView extends ConsumerWidget {
               void reloadExercises() {
                 ref.refresh(exercisesProvider);
               }
+
               return Dialog(
                 child: Container(
                   width: double.infinity,
@@ -44,10 +46,11 @@ class NewSplitView extends ConsumerWidget {
                     children: [
                       MySearchBar(
                         onChanged: (query) {
-                            ref.read(providers.newsplitControllerProvider.notifier).updateSearchQuery(query);
-                            reloadExercises();
-
-                         
+                          ref
+                              .read(providers
+                                  .editSplitControllerProvider.notifier)
+                              .updateSearchQuery(query);
+                          reloadExercises();
                         },
                       ),
                       Row(
@@ -113,7 +116,7 @@ class NewSplitView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'New Split',
+        subTitle: 'EDIT SPLIT',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -136,7 +139,7 @@ class NewSplitView extends ConsumerWidget {
                 Consumer(
                   builder: (context, ref, _) {
                     final workouts = ref
-                        .read(providers.newsplitControllerProvider)
+                        .read(providers.editSplitControllerProvider)
                         .workoutList;
 
                     return Column(
@@ -156,8 +159,8 @@ class NewSplitView extends ConsumerWidget {
   }
 }
 
-abstract class NewSplitController extends StateNotifier<NewSplitModel> {
-  NewSplitController(NewSplitModel state) : super(state);
+abstract class EditSplitController extends StateNotifier<EditSplitModel> {
+  EditSplitController(EditSplitModel state) : super(state);
 
   void addWorkout(int id, String name);
 
