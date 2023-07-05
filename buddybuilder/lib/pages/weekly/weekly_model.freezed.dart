@@ -21,7 +21,7 @@ mixin _$WeeklyModel {
   String get searchQuery => throw _privateConstructorUsedError;
   bool get weekselector => throw _privateConstructorUsedError;
   String? get selectedDay => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic> get dateSplitMap => throw _privateConstructorUsedError;
+  Map<String, int> get dateSplitMap => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WeeklyModelCopyWith<WeeklyModel> get copyWith =>
@@ -40,7 +40,7 @@ abstract class $WeeklyModelCopyWith<$Res> {
       String searchQuery,
       bool weekselector,
       String? selectedDay,
-      Map<dynamic, dynamic> dateSplitMap});
+      Map<String, int> dateSplitMap});
 }
 
 /// @nodoc
@@ -87,7 +87,7 @@ class _$WeeklyModelCopyWithImpl<$Res, $Val extends WeeklyModel>
       dateSplitMap: null == dateSplitMap
           ? _value.dateSplitMap
           : dateSplitMap // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>,
+              as Map<String, int>,
     ) as $Val);
   }
 }
@@ -106,7 +106,7 @@ abstract class _$$_WeeklyModelCopyWith<$Res>
       String searchQuery,
       bool weekselector,
       String? selectedDay,
-      Map<dynamic, dynamic> dateSplitMap});
+      Map<String, int> dateSplitMap});
 }
 
 /// @nodoc
@@ -151,7 +151,7 @@ class __$$_WeeklyModelCopyWithImpl<$Res>
       dateSplitMap: null == dateSplitMap
           ? _value._dateSplitMap
           : dateSplitMap // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>,
+              as Map<String, int>,
     ));
   }
 }
@@ -165,7 +165,7 @@ class _$_WeeklyModel implements _WeeklyModel {
       required this.searchQuery,
       required this.weekselector,
       required this.selectedDay,
-      required final Map<dynamic, dynamic> dateSplitMap})
+      required final Map<String, int> dateSplitMap})
       : _splitList = splitList,
         _dateSplitMap = dateSplitMap;
 
@@ -185,9 +185,9 @@ class _$_WeeklyModel implements _WeeklyModel {
   final bool weekselector;
   @override
   final String? selectedDay;
-  final Map<dynamic, dynamic> _dateSplitMap;
+  final Map<String, int> _dateSplitMap;
   @override
-  Map<dynamic, dynamic> get dateSplitMap {
+  Map<String, int> get dateSplitMap {
     if (_dateSplitMap is EqualUnmodifiableMapView) return _dateSplitMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_dateSplitMap);
@@ -241,7 +241,7 @@ abstract class _WeeklyModel implements WeeklyModel {
       required final String searchQuery,
       required final bool weekselector,
       required final String? selectedDay,
-      required final Map<dynamic, dynamic> dateSplitMap}) = _$_WeeklyModel;
+      required final Map<String, int> dateSplitMap}) = _$_WeeklyModel;
 
   @override
   List<dynamic> get splitList;
@@ -254,7 +254,7 @@ abstract class _WeeklyModel implements WeeklyModel {
   @override
   String? get selectedDay;
   @override
-  Map<dynamic, dynamic> get dateSplitMap;
+  Map<String, int> get dateSplitMap;
   @override
   @JsonKey(ignore: true)
   _$$_WeeklyModelCopyWith<_$_WeeklyModel> get copyWith =>

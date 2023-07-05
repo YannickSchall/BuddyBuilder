@@ -18,8 +18,6 @@ class WeeklyView extends ConsumerWidget {
     final WeeklyController controller =
         ref.read(providers.weeklyControllerProvider.notifier);
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
-    DateTime _selectedDay = DateTime.now();
-    DateTime _2ndselectedDay = DateTime.now();
 
     final splitsProvider = FutureProvider<List<Split>>((ref) async {
       return controller.getSplitList();
@@ -29,17 +27,20 @@ class WeeklyView extends ConsumerWidget {
       ref.refresh(splitsProvider);
     }
 
-    void showSuccessDialog(String name) {
+    void showSuccessDialog(String name, int id) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Successfully Added $name'),
+            title: Text('Successfully Added $name $id'),
             actions: <Widget>[
               TextButton(
                 child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  ref
+                      .read(providers.weeklyControllerProvider.notifier)
+                      .addSplit(model.selectedDay!, id, name);
                 },
               ),
             ],
@@ -127,7 +128,8 @@ class WeeklyView extends ConsumerWidget {
                                 text: split.name ?? 'No name',
                                 onPressed: () {
                                   var s = split.name ?? 'No name';
-                                  showSuccessDialog(s);
+                                  var id = split.id!;
+                                  showSuccessDialog(s, id);
                                 },
                               );
                             },
@@ -158,7 +160,7 @@ abstract class WeeklyController extends StateNotifier<WeeklyModel> {
     state = state.copyWith(selectedDay: selectedDay);
   }
 
-  void addSplit(DateTime day, int splitId);
+  void addSplit(String weekday, int id, String name);
   void updateSearchQuery(String query);
   String getSplitTitle(int id);
   Future<List<Split>> getSplitList();

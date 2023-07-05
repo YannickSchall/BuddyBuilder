@@ -10,7 +10,7 @@ class WeeklyModel with _$WeeklyModel {
     required String searchQuery,
     required bool weekselector,
     required String? selectedDay,
-    required Map dateSplitMap,
+    required Map<String, int> dateSplitMap,
     // New property for the selected day
   }) = _WeeklyModel;
 }

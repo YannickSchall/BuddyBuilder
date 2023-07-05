@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:isar/isar.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
+import 'package:buddybuilder/services/db/collections/split_to_day.dart';
+
 import 'package:http/http.dart' as http;
 
 class DBService {
@@ -43,9 +45,14 @@ class DBService {
         break;
       case Split:
         collection = isar.collection<Split>();
-
         final Split? item =
             await isar.splits.where(sort: Sort.desc).anyId().findFirst();
+        newest = item?.id;
+        break;
+      case SplitToDay:
+        collection = isar.collection<SplitToDay>();
+        final SplitToDay? item =
+            await isar.splitToDays.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
       default:
@@ -85,15 +92,6 @@ class DBService {
     });
   }
 
-/*
-  void receiveFromAPI(List<Exercise> ls) async {
-    for (var excercise in ls) {
-      await isar.writeTxn(() async {
-        isar.exercises.put(excercise);
-      });
-    }
-  }
-*/
   void clearExercises() async {
     final exercises = isar.listExercises.where().findAllSync();
     final List<int?> ids = exercises.map((exercise) => exercise.id).toList();
@@ -130,6 +128,12 @@ class DBService {
   void removeSplit(int id) async {
     await isar.writeTxn(() async {
       isar.splits.delete(id);
+    });
+  }
+
+  void addSplitToDay(SplitToDay split) async {
+    await isar.writeTxn(() async {
+      isar.splitToDays.put(split);
     });
   }
 }

@@ -2,6 +2,7 @@ import 'package:buddybuilder/pages/weekly/weekly_model.dart';
 import 'package:buddybuilder/pages/weekly/weekly_view.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
+import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 
 class WeeklyControllerImplementation extends WeeklyController {
   WeeklyControllerImplementation({
@@ -19,6 +20,7 @@ class WeeklyControllerImplementation extends WeeklyController {
   DBService db;
 
   final Map<int, String> splitTitles = {};
+  final Map<String, int> xs = {};
 
   @override
   Future<List<Split>> getSplitList() async {
@@ -43,8 +45,25 @@ class WeeklyControllerImplementation extends WeeklyController {
   }
 
   @override
-  void addSplit(DateTime day, int splitId) {
-    //state = state.copyWith(dateSplitMap: state.dateSpliMap[day] = splitId);
+  Future<int> getNewestSplitToDayID() async {
+    return await db.tryNewest(SplitToDay);
+  }
+
+  @override
+  void addSplit(String weekday, int id, String splitname) async {
+    int newestid = await getNewestSplitToDayID() + 1;
+
+    final splitToDay = SplitToDay()
+      ..id = newestid
+      ..splitID = id
+      ..weekday = weekday
+      ..name = splitname;
+
+    db.addSplitToDay(splitToDay);
+
+    final updatedDateSplitMap = {...state.dateSplitMap, weekday: id};
+
+    state = state.copyWith(dateSplitMap: updatedDateSplitMap);
   }
 
   @override
