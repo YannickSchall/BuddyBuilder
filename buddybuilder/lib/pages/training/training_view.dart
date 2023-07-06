@@ -1,3 +1,4 @@
+import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
@@ -51,8 +52,13 @@ class TrainingView extends ConsumerWidget {
                           children: exercises.map((exercise) {
                             return SetWidget(
                               setTitle: exercise.name ?? 'No name',
-                              kgValue: '0',
-                              repsValue: '',
+                              kgValues: {},
+                              repsValues: {},
+                              exSets: {},
+                              db: controller.getDB(),
+                              splitID: split?.id ?? 0,
+                              exerciseID: exercise.id,
+
                               onPressed:
                                   (id) {}, // controller.removeWorkout(id, splitId)
                               customId: exercise.id ?? 0,
@@ -87,5 +93,6 @@ abstract class TrainingController extends StateNotifier<TrainingModel> {
   void removeWorkout(int id, int splitId);
   void removeAllSets();
   String getWorkoutTitle(int id);
+  DBService getDB();
   Future<Split?> todaysSplit();
 }

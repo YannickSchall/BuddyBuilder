@@ -13,6 +13,7 @@ class TrainingControllerImplementation extends TrainingController {
                 workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
+
   final Map<int, String> workoutTitles = {};
 
   @override
@@ -23,6 +24,11 @@ class TrainingControllerImplementation extends TrainingController {
   @override
   Future<Split?> todaysSplit() async {
     return await db.getSplitToDayByWeekday();
+  }
+
+  @override
+  DBService getDB() {
+    return db;
   }
 
   @override

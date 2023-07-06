@@ -175,6 +175,16 @@ class DBService {
   }
 
   void addSplitToDay(SplitToDay split) async {
+    final existing = await isar.splitToDays
+        .filter()
+        .weekdayEqualTo(split.weekday)
+        .findFirst();
+
+    if (existing != null) {
+      int oldID = existing.id!;
+      split.id = oldID;
+    }
+
     await isar.writeTxn(() async {
       isar.splitToDays.put(split);
     });
@@ -241,10 +251,13 @@ class DBService {
 
     if (split != null) {
       var exercises = split.exercises ?? [];
-      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseID);
+      final exercise =
+          exercises.firstWhere((exercise) => exercise.id == exerciseID);
       var exSets = exercise.sets ?? [];
-      final exSetIndex = exSets.indexWhere((element) => element.id == newExSet.id);
-      final exerciseIndex = exercises.indexWhere((element) => element.id == exerciseID);
+      final exSetIndex =
+          exSets.indexWhere((element) => element.id == newExSet.id);
+      final exerciseIndex =
+          exercises.indexWhere((element) => element.id == exerciseID);
 
       exSets[exSetIndex] = newExSet;
       exercise.sets = exSets;
