@@ -20,10 +20,8 @@ class EditSplitView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final EditSplitController controller =
-        ref.read(providers.editSplitControllerProvider.notifier);
-    final EditSplitModel model =
-        ref.watch(providers.editSplitControllerProvider);
+    final EditSplitController controller = ref.read(providers.editSplitControllerProvider.notifier);
+    final EditSplitModel model = ref.watch(providers.editSplitControllerProvider);
 
     final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
       return controller.getListExerciseList();
@@ -53,10 +51,7 @@ class EditSplitView extends ConsumerWidget {
                     children: [
                       MySearchBar(
                         onChanged: (query) {
-                          ref
-                              .read(providers
-                                  .editSplitControllerProvider.notifier)
-                              .updateSearchQuery(query);
+                          ref.read(providers.editSplitControllerProvider.notifier).updateSearchQuery(query);
                           reloadExercises();
                         },
                       ),
@@ -85,7 +80,6 @@ class EditSplitView extends ConsumerWidget {
                                 );
                               }
                             },
-
                           ),
                         ],
                       ),
@@ -104,10 +98,7 @@ class EditSplitView extends ConsumerWidget {
                                       return ExerciseWidget(
                                         name: exercise.name ?? 'No name',
                                         onPressed: (id) {
-                                          controller.addWorkout(
-                                              id,
-                                              exercise.name ?? "No name",
-                                              splitId);
+                                          controller.addWorkout(id, exercise.name ?? "No name", splitId);
                                         },
                                         id: index,
                                       );
@@ -120,8 +111,7 @@ class EditSplitView extends ConsumerWidget {
                                 }
                               },
                               loading: () => const CircularProgressIndicator(),
-                              error: (error, stackTrace) =>
-                                  Text('Error: $error'),
+                              error: (error, stackTrace) => Text('Error: $error'),
                             );
                           },
                         ),

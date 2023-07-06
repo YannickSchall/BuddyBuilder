@@ -112,7 +112,7 @@ class EditPlanView extends ConsumerWidget {
                                   background: Container(
                                     alignment: Alignment.centerLeft,
                                     padding: const EdgeInsets.only(left: 16.0),
-                                    color: Colors.blue,
+                                    color: Colors.red,
                                     child: const Icon(
                                       Icons.delete,
                                       color: Colors.white,
