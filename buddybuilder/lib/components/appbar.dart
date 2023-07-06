@@ -1,8 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/datewidget.dart';
+
+/* This is the Gymbar-Component fit to our needs
+-  to display the title different title options of excerciseTitle and subtitle as they have different placement
+-  tp display the option of having navigation (ok and back) buttons 
+*/
 
 class GymAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GymAppBar({

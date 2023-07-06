@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* This is the ExerciseList-Component fit to our needs
+-  to create encapsulate a PillButtonWidget in a Container
+*/
+
 class ExerciseWidget extends StatefulWidget {
   ExerciseWidget({
     Key? key,

@@ -94,11 +94,6 @@ class _SetWidgetState extends State<SetWidget> {
                       updateSetReps(reps, index);
                     });
                   },
-                  //onEditingComplete: () {
-                  //  int index = setNr - 1;
-                  //  int reps = int.parse(widget.repsValues[index]);
-                  //  updateSetReps(reps, index);
-                  //},
                   controller:
                       TextEditingController(text: widget.repsValues[setNr - 1]),
                   keyboardType: TextInputType.number,
@@ -119,11 +114,6 @@ class _SetWidgetState extends State<SetWidget> {
                       updateSetKG(kg, index);
                     });
                   },
-                  //onEditingComplete: () {
-                  //  int index = setNr - 1;
-                  //  double kg = double.parse(widget.kgValues[index]);
-                  //  updateSetKG(kg, index);
-                  //},
                   controller:
                       TextEditingController(text: widget.kgValues[setNr - 1]),
                   keyboardType: TextInputType.number,

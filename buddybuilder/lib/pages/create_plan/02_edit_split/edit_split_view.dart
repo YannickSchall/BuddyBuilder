@@ -67,16 +67,21 @@ class EditSplitView extends ConsumerWidget {
                           FutureBuilder<int>(
                             future: controller.getNewestExerciseID(),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return const CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 return PillButtonWidget(
                                   onPressed: () {
-                                    final query = ref.read(providers.editSplitControllerProvider).searchQuery!;
+                                    final query = ref
+                                        .read(providers
+                                            .editSplitControllerProvider)
+                                        .searchQuery!;
                                     if (query.isNotEmpty) {
-                                      controller.createListExercise(snapshot.data! + 1, query);
+                                      controller.createListExercise(
+                                          snapshot.data! + 1, query);
                                     }
                                   },
                                   text: 'create',
@@ -85,7 +90,6 @@ class EditSplitView extends ConsumerWidget {
                                 );
                               }
                             },
-
                           ),
                         ],
                       ),
@@ -176,7 +180,8 @@ class EditSplitView extends ConsumerWidget {
                                 exSets: {},
                                 onPressed: (id) {
                                   // Handle workout selection
-                                  controller.removeWorkout(exercise.id, splitId);
+                                  controller.removeWorkout(
+                                      exercise.id, splitId);
                                   // Close the dialog
                                 },
                                 splitID: splitId,

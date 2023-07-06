@@ -84,60 +84,86 @@ class CalendarView extends ConsumerWidget {
     },
   ];
 
-  void showSuccessDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Consumer(
-          builder: (context, ref, _) {
-            void reloadExercises() {
-              //ref.refresh(exercisesProvider);
-            }
-
-            return SingleChildScrollView(
-              child: Dialog(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CalendarListWidget(name: 'name', id: 1, setData: setData),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData1),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                      CalendarListWidget(
-                          name: 'name', id: 1, setData: setData2),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final CalendarController controller =
         ref.read(providers.calendarControllerProvider.notifier);
     final CalendarModel model = ref.watch(providers.calendarControllerProvider);
+
+    final trainingOfDayProvider =
+        FutureProvider<List<Map<String, List<Map<String, String>>>>>(
+            (ref) async {
+      final overkill = await controller.getOverkill();
+      final parsedOverkill = overkill.map((item) {
+        final exercises = item['exercises'] ?? [];
+        final parsedExercises = exercises.map((exercise) {
+          return {
+            'name': exercise['name']?.toString() ?? '',
+            'set': exercise['sets']?.toString() ?? '',
+            'id': exercise['id']?.toString() ?? '',
+          };
+        }).toList();
+        return {
+          'exercises': parsedExercises,
+        };
+      }).toList();
+      return parsedOverkill;
+    });
+
+    List<Widget> popUpList = [];
+
+    void showSuccessDialog(BuildContext context, WidgetRef ref) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Consumer(
+            builder: (context, ref, _) {
+              void reloadExercises() {
+                //ref.refresh(exercisesProvider);
+              }
+
+              return SingleChildScrollView(
+                child: Dialog(
+                  child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FutureBuilder<
+                          List<Map<String, List<Map<String, String>>>>>(
+                        future: controller.getOverkill(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<
+                                    List<
+                                        Map<String, List<Map<String, String>>>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return const Text("Calendar couldn't be created");
+                          } else {
+                            var l = snapshot.data!;
+                            for (var i = 0; i < l.length; i++) {
+                              var name = l[i].keys.toList()[0];
+                              print("name: " + name);
+                              var setData = l[i].values.toList()[0];
+                              //print("setData: " + setData[0].entries.toList()[0].toString());
+                              popUpList.add(CalendarListWidget(
+                                  name: name, id: i, setData: setData));
+                            }
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: popUpList,
+                            );
+                          }
+                        },
+                      )),
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
 
     var _eventList;
 
@@ -206,4 +232,5 @@ String exampleSplitName(List<Training> trainings) {
 abstract class CalendarController extends StateNotifier<CalendarModel> {
   CalendarController(CalendarModel state) : super(state);
   void updateSelectedDate(DateTime selectedDate);
+  Future<List<Map<String, List<Map<String, String>>>>> getOverkill();
 }

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/datewidget.dart';
 
+/* This is the Circle-Component fit to our needs
+-  to create instancable circle Buttons for the WeeklyView
+*/
+
 class CircleWidget extends StatefulWidget {
   const CircleWidget({
     Key? key,

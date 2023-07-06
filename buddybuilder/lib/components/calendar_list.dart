@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* This is the CalendarList-Component fit to our needs
+-  to display finished trainings of each day in a list lay out
+*/
+
 class CalendarListWidget extends StatefulWidget {
   CalendarListWidget({
     Key? key,
