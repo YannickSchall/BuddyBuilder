@@ -73,4 +73,9 @@ class TrainingControllerImplementation extends TrainingController {
   String getWorkoutTitle(int id) {
     return workoutTitles[id] ?? '';
   }
+
+  @override
+  Future<List<ExSet>> getAllSetsFromExercise(int splitId, int exerciseId) async {
+    return await db.getSetsFromExercise(splitId, exerciseId);
+  }
 }

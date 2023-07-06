@@ -48,8 +48,6 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/settings') {
               return MaterialPageRoute(
                   builder: (context) => const SettingsView());
-            } else if (routeParams.name == '/training') {
-              return MaterialPageRoute(builder: (context) => TrainingView());
             } else if (routeParams.name == '/weekly') {
               return MaterialPageRoute(
                   builder: (context) => const WeeklyView());

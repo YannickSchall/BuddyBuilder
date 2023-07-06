@@ -11,7 +11,12 @@ import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 import 'package:buddybuilder/components/setwidget.dart';
 
 class TrainingView extends ConsumerWidget {
+  final int splitID;
+  final String splitName;
+
   TrainingView({
+    required this.splitID,
+    required this.splitName,
     Key? key,
   }) : super(key: key);
 
@@ -50,13 +55,12 @@ class TrainingView extends ConsumerWidget {
     final TrainingModel model = ref.watch(providers.trainingControllerProvider);
 
     final trainingsProvider = FutureProvider<Split?>((ref) async {
-      final setId = 2;
       return controller.todaysSplit();
     });
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: trainingsProvider.name ?? 'REST',
+        subTitle: splitName ?? 'REST',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -73,40 +77,58 @@ class TrainingView extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Consumer(
-                builder: (context, ref, _) {
-                  final asyncValue = ref.watch(trainingsProvider);
-                  return asyncValue.when(
-                    data: (split) {
-                      final exercises = split?.exercises ?? [];
-                      if (exercises != null && exercises.isNotEmpty) {
-                        return Column(
-                          children: exercises.map((exercise) {
-                            return SetWidget(
-                              setTitle: exercise.name ?? 'No name',
-                              kgValues: {},
-                              repsValues: {},
-                              exSets: {},
-                              db: controller.getDB(),
-                              splitID: split?.id ?? 0,
-                              exerciseID: exercise.id,
-
-                              onPressed:
-                                  (id) {}, // controller.removeWorkout(id, splitId)
-                              customId: exercise.id ?? 0,
-                            );
-                          }).toList(),
-                        );
-                      } else {
-                        return const ListTile(
-                          title: Text('No exercises available'),
-                        );
-                      }
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stackTrace) => Text('Error: $error'),
-                  );
-                },
-              ),
+                  builder: (context, ref, _) {
+                    final asyncValue = ref.watch(trainingsProvider);
+                    return asyncValue.when(
+                      data: (split) {
+                        final exercises = split?.exercises ?? [];
+                        if (exercises != null && exercises.isNotEmpty) {
+                          return Column(
+                            children: exercises.map((exercise) {
+                              return FutureBuilder<List<ExSet>>(
+                                future: controller.getAllSetsFromExercise(splitID, exercise.id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else {
+                                    final setsMap = snapshot.data!.fold<Map<int, ExSet>>(
+                                      {},
+                                      (map, set) => map..[set.id!] = set,
+                                      
+                                    );
+                                    return SetWidget(
+                                      setTitle: exercise.name ?? 'No name',
+                                      kgValues: {}, // Provide the kgValue argument here
+                                      repsValues: {}, // Provide the repsValue argument here
+                                      exSets: setsMap, // Use the sets from the snapshot data
+                                      onPressed: (id) {
+                                        // Handle workout selection
+                                        controller.removeWorkout(exercise.id, splitID);
+                                        // Close the dialog
+                                      },
+                                      splitID: splitID,
+                                      exerciseID: exercise.id ?? 0,
+                                      customId: exercise.id ?? 0,
+                                      db: db,
+                                    );
+                                  }
+                                },
+                              );
+                            }).toList(),
+                          );
+                        } else {
+                          return const ListTile(
+                            title: Text('No exercises available'),
+                          );
+                        }
+                      },
+                      loading: () => const CircularProgressIndicator(),
+                      error: (error, stackTrace) => Text('Error: $error'),
+                    );
+                  },
+                ),
             ],
           ),
         ),
@@ -126,4 +148,5 @@ abstract class TrainingController extends StateNotifier<TrainingModel> {
   String getWorkoutTitle(int id);
   DBService getDB();
   Future<Split?> todaysSplit();
+  Future<List<ExSet>> getAllSetsFromExercise(int splitId, int exerciseId);
 }

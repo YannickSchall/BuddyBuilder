@@ -47,9 +47,16 @@ class EditSplitControllerImplementation extends EditSplitController {
     state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
     workoutTitles[id] = name;
 
+    ExSet dummy = ExSet()
+    ..id=0
+    ..kg=0.0
+    ..reps=0;
+    List<ExSet> sets = [dummy];
+
     final exercise = Exercise()
     ..name = name
-    ..id = exerciseId;
+    ..id = exerciseId
+    ..sets = sets;
     db.addExerciseToSplit(splitId, exercise);
 
     // Trigger rebuild
@@ -95,5 +102,10 @@ class EditSplitControllerImplementation extends EditSplitController {
   @override
   Future<List<Exercise>> getAllExercisesList(int splitId) async {
     return await db.getExercisesListFromSplit(splitId);
+  }
+
+  @override
+  Future<List<ExSet>> getAllSetsFromExercise(int splitId, int exerciseId) async {
+    return await db.getSetsFromExercise(splitId, exerciseId);
   }
 }
