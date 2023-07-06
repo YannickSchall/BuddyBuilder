@@ -11,8 +11,6 @@ import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/containerbutton.dart';
 import 'package:buddybuilder/material_theme/customicon.dart';
 import 'package:buddybuilder/components/datewidget.dart';
-import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:buddybuilder/main.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,8 +20,6 @@ class HomeView extends ConsumerWidget {
     final HomeController controller =
         ref.read(providers.homeControllerProvider.notifier);
     final HomeModel model = ref.watch(providers.homeControllerProvider);
-
-    final isar = IsarDatabase.instance.isar;
 
     return Scaffold(
       appBar: GymAppBar(
@@ -70,10 +66,4 @@ class HomeView extends ConsumerWidget {
 
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
-
-  Future<List<ListExercise>> getListExercises();
-  void addListExercise(ListExercise exercise);
-  void clearExercises();
-  Stream<int> getNewestID();
-  Future<String> provideAPIresponse(String param);
 }

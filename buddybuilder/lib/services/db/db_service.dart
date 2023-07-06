@@ -19,26 +19,10 @@ class DBService {
     newestIdStream = _createNewestIdStream();
   }
 
-  Future<List<ListExercise>> getExercises() async {
-    final exercises = await isar.listExercises.where().findAll();
-
-    return exercises
-        .map((exercise) => ListExercise()..name = exercise.name ?? "no name")
-        .toList();
-  }
-
-  void addExercise(ListExercise exercise) async {
-    await isar.writeTxn(() async {
-      isar.listExercises.put(exercise);
-    });
-  }
-
-  Future<List<Exercise>> getExercisesList(int id) async {
-    final split = await isar.splits.get(id);
-    final exercises = split?.exercises ?? [];
-    return exercises;
-  }
-
+  /*
+  tryNewest()
+  priovide newest id of each type - could not use autincremental - id was always negative 
+  */
   Future<int> tryNewest(Type type, [int? splitId, int? exerciseId]) async {
     dynamic collection;
     int? newest;
@@ -98,6 +82,44 @@ class DBService {
     return newestIdStream;
   }
 
+  /**************************************ListExercise**********************/
+
+  /*
+  getExercises()
+  getAll Exercises from db
+  */
+  Future<List<ListExercise>> getExercises() async {
+    final exercises = await isar.listExercises.where().findAll();
+
+    return exercises
+        .map((exercise) => ListExercise()..name = exercise.name ?? "no name")
+        .toList();
+  }
+
+  /*
+  addExercise()
+  add Exercises to db
+  */
+  void addExercise(ListExercise exercise) async {
+    await isar.writeTxn(() async {
+      isar.listExercises.put(exercise);
+    });
+  }
+
+  /*
+  getExercisesList()
+  get my exercise list from a split
+  */
+  Future<List<Exercise>> getExercisesList(int id) async {
+    final split = await isar.splits.get(id);
+    final exercises = split?.exercises ?? [];
+    return exercises;
+  }
+
+  /*
+  getExercisesList()
+  get my exercise list from a split
+  */
   Stream<int> _createNewestIdStream() {
     return Stream.periodic(const Duration(milliseconds: 100), (_) async {
       final clientId =
@@ -106,6 +128,10 @@ class DBService {
     }).asyncMap((event) async => await event);
   }
 
+  /*
+  receiveFromAPI()
+  fetch all exercises from api and store in db 
+  */
   void receiveFromAPI(List<ListExercise> ls) async {
     List<String> newNames = ls.map((e) => e.name!).toList();
 
@@ -124,6 +150,10 @@ class DBService {
     });
   }
 
+  /*
+  clearExercises()
+  delete exercise by id
+  */
   void clearExercises() async {
     final exercises = isar.listExercises.where().findAllSync();
     final List<int?> ids = exercises.map((exercise) => exercise.id).toList();
@@ -136,44 +166,68 @@ class DBService {
     }
   }
 
+  /*
+  clearExercises()
+  delete exercise by id
+  */
   void addSplit(Split split) async {
     await isar.writeTxn(() async {
       await isar.splits.put(split);
     });
   }
 
+  /**************************************Split**************************/
+
+  /*
+  getSplit()
+  get Split by id
+  */
   Future<Split?> getSplit(int id) async {
     return await isar.splits.get(id);
   }
 
+  /*
+  getSplitNoNull()
+  get Split by id - with null safety
+  */
   Future<Split> getSplitNoNull(int id) async {
     try {
       final split = await isar.splits.get(id);
-      return split ??
-          Split(); // Return the split if it's not null, otherwise return a default Split object
+      return split ?? Split();
     } catch (e) {
       print('Error retrieving split: $e');
-      return Split(); // Return a default Split object in case of any exceptions
+      return Split();
     }
   }
 
+  /*
+  getAllSplits()
+  get all available splits from db
+  */
   Future<List<Split>> getAllSplits() async {
     final splits = await isar.splits.where().findAll();
     return splits.map((split) {
       final newSplit = Split()
-        ..id = split.id ?? 0 // Set the id property based on the plan's id value
-        ..name = split.name ??
-            "no name"; // Set the name property based on the plan's name value
+        ..id = split.id ?? 0
+        ..name = split.name ?? "no name";
       return newSplit;
     }).toList();
   }
 
+  /*
+  removeSplit()
+  remove split from db
+  */
   void removeSplit(int id) async {
     await isar.writeTxn(() async {
       isar.splits.delete(id);
     });
   }
 
+  /*
+  removeSplit()
+  remove split from db
+  */
   void addSplitToDay(SplitToDay split) async {
     final existing = await isar.splitToDays
         .filter()
@@ -190,6 +244,10 @@ class DBService {
     });
   }
 
+  /*
+  addExerciseToSplit()
+  map split id to exercise
+  */
   void addExerciseToSplit(int splitId, Exercise exercise) async {
     final split = await isar.splits.get(splitId);
 
@@ -206,6 +264,10 @@ class DBService {
     }
   }
 
+  /*
+  removeExerciseToSplit()
+  remove mapping from split id to exercise
+  */
   void removeExerciseToSplit(int splitId, int exerciseId) async {
     final split = await isar.splits.get(splitId);
 
@@ -220,11 +282,19 @@ class DBService {
     }
   }
 
+  /*
+  getExercisesListFromSplit()
+  get all exercises mapped to a splitID
+  */
   Future<List<Exercise>> getExercisesListFromSplit(int splitId) async {
     final split = await isar.splits.get(splitId);
     return split?.exercises ?? [];
   }
 
+  /*
+  addSetToExercise()
+  add sets to exercise
+  */
   void addSetToExercise(int splitId, int exerciseId, ExSet exSet) async {
     var split = await isar.splits.get(splitId);
 
@@ -246,6 +316,10 @@ class DBService {
     }
   }
 
+  /*
+  updateSetinExercise()
+  update value in sets of an exercise
+  */
   void updateSetinExercise(int splitID, int exerciseID, ExSet newExSet) async {
     var split = await isar.splits.get(splitID);
 
@@ -270,6 +344,10 @@ class DBService {
     }
   }
 
+  /*
+  removeSetFromExercise()
+  remove sets of an exercise
+  */
   void removeSetFromExercise(int splitId, int exerciseId, int setId) async {
     final split = await isar.splits.get(splitId);
 
@@ -288,6 +366,12 @@ class DBService {
     }
   }
 
+  /**************************************SplitToDay**************************/
+
+  /*
+  getAllSplitToDays()
+  fetch all splits mapped to a day
+  */
   Future<List<SplitToDay>> getAllSplitToDays() async {
     final splits = await isar.splitToDays.where().findAll();
     return splits.map((splitToDay) {
@@ -299,6 +383,10 @@ class DBService {
     }).toList();
   }
 
+  /*
+  getSplitNameFromDay()
+  return splitname mapped to TODAY - helper function because it has parameters
+  */
   Future<String> getSplitNameFromDay(String weekday) async {
     final split2ds = await isar.splitToDays.where().findAll();
     final splits = await isar.splits.where().findAll();
@@ -315,6 +403,10 @@ class DBService {
     return split.name ?? notFound;
   }
 
+  /*
+  getSplitToDayByWeekday() - can be called easily 
+  return right split of TODAY
+  */
   Future<Split?> getSplitToDayByWeekday() async {
     final split2ds = await getAllSplitToDays();
 
@@ -336,17 +428,24 @@ class DBService {
       return null;
     }
 
-    final splitOfCurrentDay = await getSplitNoNull(result
-        .splitID!); // Assuming you have a function to get the Split object by id
+    final splitOfCurrentDay = await getSplitNoNull(result.splitID!);
 
     return splitOfCurrentDay;
   }
 
+  /*
+  getSetOfDay()  
+  get todays sets
+  */
   Future<List<Exercise>> getSetOfDay() async {
     final todaysSets = await getSplitToDayByWeekday();
     return todaysSets?.exercises ?? [];
   }
 
+  /*
+  setToMap()  
+  parse data for frontendusage
+  */
   Future<List<Map<String, List<Map<String, String>>>>> setToMap() async {
     final exerciseList = await getSetOfDay();
     List<Map<String, String>> innerList = [];

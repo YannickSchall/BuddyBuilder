@@ -12,11 +12,18 @@ class CalendarControllerImplementation extends CalendarController {
 
   DBService db;
 
+  /*
+  updateSelectedDate() updates the selected date watched by the provider
+  */
   @override
   void updateSelectedDate(DateTime selectedDate) {
     state = state.copyWith(selectedDate: selectedDate);
   }
 
+  /*
+  getOverkill() provides the stored sets
+   - this function is called overkill because of its type :)
+  */
   @override
   Future<List<Map<String, List<Map<String, String>>>>> getOverkill() async {
     List<Map<String, String>> emptyList = [];

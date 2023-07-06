@@ -32,8 +32,7 @@ final api = APIService(db);
 class Providers {
   final StateNotifierProvider<HomeController, HomeModel>
       homeControllerProvider = StateNotifierProvider<HomeController, HomeModel>(
-          (StateNotifierProviderRef ref) =>
-              HomeControllerImplementation(db: db, api: api));
+          (StateNotifierProviderRef ref) => HomeControllerImplementation());
 
   final StateNotifierProvider<TrainingController, TrainingModel>
       trainingControllerProvider =

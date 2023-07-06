@@ -50,7 +50,6 @@ class TrainingView extends ConsumerWidget {
     final TrainingModel model = ref.watch(providers.trainingControllerProvider);
 
     final trainingsProvider = FutureProvider<Split?>((ref) async {
-      final setId = 2;
       return controller.todaysSplit();
     });
 
@@ -124,6 +123,6 @@ abstract class TrainingController extends StateNotifier<TrainingModel> {
   void removeWorkout(int id, int splitId);
   void removeAllSets();
   String getWorkoutTitle(int id);
-  DBService getDB();
-  Future<Split?> todaysSplit();
+  DBService getDB(); // needed
+  Future<Split?> todaysSplit(); // needed
 }

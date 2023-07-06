@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/weekly') {
               return MaterialPageRoute(
                   builder: (context) => const WeeklyView());
-            } else if (routeParams.name == '/new') {
             } else if (routeParams.name == '/plan') {
               return MaterialPageRoute(
                   builder: (context) => const EditPlanView());

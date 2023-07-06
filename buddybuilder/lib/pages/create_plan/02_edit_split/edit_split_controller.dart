@@ -10,12 +10,18 @@ class EditSplitControllerImplementation extends EditSplitController {
     required this.db,
     required this.api,
     EditSplitModel? model,
-  }) : super(model ?? EditSplitModel(workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
+  }) : super(model ??
+            EditSplitModel(
+                workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
   APIService api;
   final Map<int, String> workoutTitles = {};
 
+  /*
+  getListExerciseList()
+  Here the available exercises are fetched from db - either all or matching char in searchquery
+  */
   @override
   Future<List<ListExercise>> getListExerciseList() async {
     final allExercises = await db.getExercises();
@@ -33,6 +39,10 @@ class EditSplitControllerImplementation extends EditSplitController {
     }
   }
 
+  /*
+  createListExercise()
+  add exercise to db and watched widget List to display all sets in view
+  */
   @override
   void createListExercise(int id, String name) async {
     final listExercise = ListExercise()
@@ -41,67 +51,69 @@ class EditSplitControllerImplementation extends EditSplitController {
     db.addExercise(listExercise);
   }
 
+  /*
+  addWorkout()
+  add exercise to split into db and watched widget List to display all sets in view
+  */
   @override
-  void addWorkout(int id, String name, int splitId) async{
+  void addWorkout(int id, String name, int splitId) async {
     int exerciseId = await db.tryNewest(Exercise, splitId) + 1;
-    state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
+    state = state
+        .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
     workoutTitles[id] = name;
 
     final exercise = Exercise()
-    ..name = name
-    ..id = exerciseId;
+      ..name = name
+      ..id = exerciseId;
     db.addExerciseToSplit(splitId, exercise);
 
     // Trigger rebuild
   }
 
-  @override
-  void addSet(int id, int splitId, int excerciseId) async{
-    int setId = await db.tryNewest(ExSet, splitId, excerciseId) + 1;
-    state = state.copyWith(setId: setId, widgetList: [...state.widgetList, id]);
-
-    final exset = ExSet()
-    ..id = setId;
-    db.addSetToExercise(splitId, excerciseId, exset);
-    // Trigger rebuild
-  }
-
+  /*
+  removeWorkout()
+  remove workout from db and watched widget List to display all sets in view
+  */
   @override
   void removeWorkout(int id, int splitId) {
     state = state.copyWith(
       workoutList: [...state.workoutList]..remove(id),
     );
-  db.removeExerciseToSplit(splitId, id);
+    db.removeExerciseToSplit(splitId, id);
     // Trigger rebuild
-  
   }
 
-  @override
-  void removeAllSets() {
-    state.widgetList.clear();
-    state = state.copyWith(); // Trigger rebuild
-  }
-
+  /*
+  fetchToDB()
+  fill database with api data
+  */
   @override
   void fetchToDB() async {
     api.fillDatabase();
   }
 
+  /*
+  getNewestExerciseID()
+  returns next available id for Listexercise Type
+  */
   @override
   Future<int> getNewestExerciseID() async {
     return await db.tryNewest(ListExercise);
   }
 
-  @override
-  String getWorkoutTitle(int id) {
-    return workoutTitles[id] ?? '';
-  }
-
+  /*
+  updateSearchQuery()
+  updates provider watched query to match input search
+  */
   @override
   void updateSearchQuery(String query) {
     state = state.copyWith(searchQuery: query);
   }
 
+  /*
+  updateSearchQuery()
+  fetches all stored Exercises from a split from db 
+  */
   @override
   Future<List<Exercise>> getAllExercisesList(int splitId) async {
     return await db.getExercisesListFromSplit(splitId);

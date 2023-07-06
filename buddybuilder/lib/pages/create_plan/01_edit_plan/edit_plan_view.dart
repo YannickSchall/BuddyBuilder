@@ -24,6 +24,10 @@ class EditPlanView extends ConsumerWidget {
       return controller.getAllSplits();
     });
 
+    /*
+    showSucessDialog will open a pop up to enter the name of a split
+    - controller.addSPlit will handle the string of the name to db and providers watched list
+    */
     void showSuccessDialog(BuildContext context) {
       final TextEditingController textFieldController = TextEditingController();
 
@@ -51,7 +55,7 @@ class EditPlanView extends ConsumerWidget {
                         Split newSplit = Split();
                         newSplit.name = enteredText;
 
-                        // Add the entered text to the list of split titles
+                        // Add the entered text to the list of split titles into db and watched list
                         controller.addSplit(newSplit);
                         Navigator.of(context).pop(); // Close the dialog
                       },
@@ -95,7 +99,8 @@ class EditPlanView extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Consumer(
                   builder: (context, ref, _) {
-                    final asyncValue = ref.watch(futureSplitsProvider);
+                    final asyncValue = ref.watch(
+                        futureSplitsProvider); // here the fetched data fromm futureSplitsProvider is build
                     return asyncValue.when(
                       data: (splits) {
                         if (splits != null && splits.isNotEmpty) {
@@ -161,6 +166,4 @@ abstract class EditPlanController extends StateNotifier<EditPlanModel> {
   void addSplit(Split split);
   void removeSplit(int id);
   Future<List<Split>> getAllSplits();
-  Future<int> getNewestSplitID();
-  int? getSelectedId(int id);
 }

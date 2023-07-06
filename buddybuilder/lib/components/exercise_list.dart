@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 /* This is the ExerciseList-Component fit to our needs
--  to create encapsulate a PillButtonWidget in a Container
+-  to display a list of available exersises from API or self-created ones
+-  one Widget displays one Item of the list ist the PopUp of the create button 
+-  the onPressed returntype is needed for provider later to pass the id of the 
+   exercise to the layout below
 */
 
 class ExerciseWidget extends StatefulWidget {

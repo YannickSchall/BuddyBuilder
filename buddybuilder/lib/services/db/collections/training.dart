@@ -3,6 +3,8 @@ import 'package:isar/isar.dart';
 
 part 'training.g.dart';
 
+/* Stores all finsished trainings with  used weights on that day */
+
 @Collection()
 class Training {
   Id? id;

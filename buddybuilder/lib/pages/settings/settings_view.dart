@@ -30,17 +30,17 @@ class SettingsView extends ConsumerWidget {
             child: Column(
           children: [
             PillButtonWidget(
-              onPressed: () => controller.fetchToDB(),
+              onPressed: () => controller.fetchToDB(), // fetch from api
               text: 'Fetch from API',
               buttonHeight: 60.0,
             ),
             CupertinoSwitch(
-              value: model.isDarkModeEnabled,
+              value: model.isDarkModeEnabled, // tracking value of darkmode
               thumbColor: Theme.of(context).colorScheme.secondaryContainer,
               trackColor: Theme.of(context).colorScheme.primaryContainer,
               activeColor: Theme.of(context).colorScheme.primaryContainer,
               onChanged: (value) {
-                controller.switchTheme(value);
+                controller.switchTheme(value); // pass to controller function
               },
             ),
           ],
@@ -52,6 +52,5 @@ abstract class SettingsController extends StateNotifier<SettingsModel> {
   SettingsController(SettingsModel state) : super(state);
 
   void switchTheme(bool isDarkModeEnabled);
-
   void fetchToDB();
 }

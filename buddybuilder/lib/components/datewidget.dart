@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class DayMonthWidget extends StatelessWidget {
   const DayMonthWidget({Key? key}) : super(key: key);
 
+/* getDayName returns the current day in the desired design */
   String getDayName(int day) {
     final weekdayNames = [
       '', // Index 0 is left empty since months start from 1
@@ -23,9 +24,7 @@ class DayMonthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
     final currentDay = DateTime.now().day.toString();
-    //final currentMonth = getMonthName(now.month); // Format month as name
     final currentWeekday = getDayName(DateTime.now().weekday);
 
     return SizedBox(
