@@ -19,9 +19,6 @@ import 'package:buddybuilder/pages/weekly/weekly_view.dart';
 import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_view.dart';
 import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_model.dart';
 import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_controller.dart';
-import 'package:buddybuilder/pages/rotation/rotation_model.dart';
-import 'package:buddybuilder/pages/rotation/rotation_view.dart';
-import 'package:buddybuilder/pages/rotation/rotation_controller.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_model.dart';
 import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_view.dart';
@@ -68,11 +65,9 @@ class Providers {
           (StateNotifierProviderRef ref) =>
               EditSplitControllerImplementation(db: db, api: api));
 
-  final StateNotifierProvider<RotationController, RotationModel>
-      rotationControllerProvider =
-      StateNotifierProvider<RotationController, RotationModel>(
-          (StateNotifierProviderRef ref) => RotationControllerImplementation());
-
-  final StateNotifierProvider<EditPlanController, EditPlanModel> editPlanControllerProvider =
-      StateNotifierProvider<EditPlanController, EditPlanModel>((StateNotifierProviderRef ref) => EditPlanControllerImplementation(db: db));
+  final StateNotifierProvider<EditPlanController, EditPlanModel>
+      editPlanControllerProvider =
+      StateNotifierProvider<EditPlanController, EditPlanModel>(
+          (StateNotifierProviderRef ref) =>
+              EditPlanControllerImplementation(db: db));
 }

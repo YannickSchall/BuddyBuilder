@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:buddybuilder/common/providers.dart';
 import 'package:buddybuilder/pages/settings/settings_model.dart';
 import 'package:buddybuilder/components/appbar.dart';
-import 'package:buddybuilder/components/exercise.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class SettingsView extends ConsumerWidget {

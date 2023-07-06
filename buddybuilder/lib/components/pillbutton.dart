@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:buddybuilder/material_theme/buddy_colors.dart';
 import 'package:buddybuilder/components/datewidget.dart';
-import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 
 class PillButtonWidget extends StatelessWidget {
   const PillButtonWidget({
@@ -42,10 +40,10 @@ class PillButtonWidget extends StatelessWidget {
         background: Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 16.0),
-          color: Colors.red, // Customize the delete background color
+          color: Colors.red,
           child: const Icon(
             Icons.delete,
-            color: Colors.white, // Customize the delete icon color
+            color: Colors.white,
           ),
         ),
         child: buildPillButton(context),
