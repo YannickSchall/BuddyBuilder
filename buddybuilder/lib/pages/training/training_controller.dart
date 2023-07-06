@@ -36,8 +36,6 @@ class TrainingControllerImplementation extends TrainingController {
       ..name = name
       ..id = exerciseId;
     db.addExerciseToSplit(splitId, exercise);
-
-    // Trigger rebuild
   }
 
   @override
@@ -69,6 +67,4 @@ class TrainingControllerImplementation extends TrainingController {
   String getWorkoutTitle(int id) {
     return workoutTitles[id] ?? '';
   }
-
- 
 }

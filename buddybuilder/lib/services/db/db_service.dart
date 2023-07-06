@@ -257,7 +257,8 @@ class DBService {
       return SplitToDay()
         ..id = splitToDay.id
         ..weekday = splitToDay.weekday
-        ..name = splitToDay.name ?? "no name";
+        ..name = splitToDay.name ?? "no name"
+        ..splitID = splitToDay.splitID;
     }).toList();
   }
 
@@ -283,7 +284,7 @@ class DBService {
     }
 
     final split = await getSplitNoNull(result
-        .id!); // Assuming you have a function to get the Split object by id
+        .splitID!); // Assuming you have a function to get the Split object by id
 
     return split;
   }
