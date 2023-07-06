@@ -50,8 +50,7 @@ class MyApp extends StatelessWidget {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
             } else if (routeParams.name == '/calendar') {
-              return MaterialPageRoute(
-                  builder: (context) => const CalendarView());
+              return MaterialPageRoute(builder: (context) => CalendarView());
             } else if (routeParams.name == '/settings') {
               return MaterialPageRoute(
                   builder: (context) => const SettingsView());
