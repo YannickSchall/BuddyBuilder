@@ -6,5 +6,10 @@ part 'training_model.freezed.dart';
 
 @freezed
 class TrainingModel with _$TrainingModel {
-  const factory TrainingModel() = _TrainingModel;
+  const factory TrainingModel({
+    required List workoutList,
+    required String workoutTitle,
+    required List widgetList,
+    required int setId,
+  }) = _TrainingModel;
 }

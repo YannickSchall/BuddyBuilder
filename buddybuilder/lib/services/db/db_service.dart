@@ -22,7 +22,9 @@ class DBService {
   Future<List<ListExercise>> getExercises() async {
     final exercises = await isar.listExercises.where().findAll();
 
-    return exercises.map((exercise) => ListExercise()..name = exercise.name ?? "no name").toList();
+    return exercises
+        .map((exercise) => ListExercise()..name = exercise.name ?? "no name")
+        .toList();
   }
 
   void addExercise(ListExercise exercise) async {
@@ -44,32 +46,42 @@ class DBService {
     switch (type) {
       case ListExercise:
         collection = isar.collection<ListExercise>();
-        final ListExercise? item = await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
+        final ListExercise? item =
+            await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
       case Split:
         collection = isar.collection<Split>();
-        final Split? item = await isar.splits.where(sort: Sort.desc).anyId().findFirst();
+        final Split? item =
+            await isar.splits.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
       case SplitToDay:
         collection = isar.collection<SplitToDay>();
-        final SplitToDay? item = await isar.splitToDays.where(sort: Sort.desc).anyId().findFirst();
+        final SplitToDay? item =
+            await isar.splitToDays.where(sort: Sort.desc).anyId().findFirst();
         newest = item?.id;
         break;
 
       case Exercise:
         final split = await isar.splits.get(splitId!);
-        if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
+        if (split != null &&
+            split.exercises != null &&
+            split.exercises!.isNotEmpty) {
           newest = split.exercises!.map((exercise) => exercise.id).reduce(max);
         }
         break;
 
       case ExSet:
         final split = await isar.splits.get(splitId!);
-        if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
-          final exercise = split.exercises!.firstWhere((element) => element.id == exerciseId);
-          if (exercise != null && exercise.sets != null && exercise.sets!.isNotEmpty) {
+        if (split != null &&
+            split.exercises != null &&
+            split.exercises!.isNotEmpty) {
+          final exercise = split.exercises!
+              .firstWhere((element) => element.id == exerciseId);
+          if (exercise != null &&
+              exercise.sets != null &&
+              exercise.sets!.isNotEmpty) {
             newest = exercise.sets!.map((set) => set.id).reduce(max);
           }
         }
@@ -88,7 +100,8 @@ class DBService {
 
   Stream<int> _createNewestIdStream() {
     return Stream.periodic(const Duration(milliseconds: 100), (_) async {
-      final clientId = await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
+      final clientId =
+          await isar.listExercises.where(sort: Sort.desc).anyId().findFirst();
       return clientId?.id ?? 0;
     }).asyncMap((event) async => await event);
   }
@@ -96,11 +109,15 @@ class DBService {
   void receiveFromAPI(List<ListExercise> ls) async {
     List<String> newNames = ls.map((e) => e.name!).toList();
 
-    final allDupes = await isar.listExercises.filter().anyOf(newNames, (q, String name) => q.nameEqualTo(name)).findAll();
+    final allDupes = await isar.listExercises
+        .filter()
+        .anyOf(newNames, (q, String name) => q.nameEqualTo(name))
+        .findAll();
 
     List<String> allDupeNames = allDupes.map((e) => e.name!).toList();
 
-    List<ListExercise> noDupes = ls.where((element) => (!allDupeNames.contains(element.name))).toList();
+    List<ListExercise> noDupes =
+        ls.where((element) => (!allDupeNames.contains(element.name))).toList();
 
     await isar.writeTxn(() async {
       isar.listExercises.putAll(noDupes);
@@ -129,12 +146,24 @@ class DBService {
     return await isar.splits.get(id);
   }
 
+  Future<Split> getSplitNoNull(int id) async {
+    try {
+      final split = await isar.splits.get(id);
+      return split ??
+          Split(); // Return the split if it's not null, otherwise return a default Split object
+    } catch (e) {
+      print('Error retrieving split: $e');
+      return Split(); // Return a default Split object in case of any exceptions
+    }
+  }
+
   Future<List<Split>> getAllSplits() async {
     final splits = await isar.splits.where().findAll();
     return splits.map((split) {
       final newSplit = Split()
         ..id = split.id ?? 0 // Set the id property based on the plan's id value
-        ..name = split.name ?? "no name"; // Set the name property based on the plan's name value
+        ..name = split.name ??
+            "no name"; // Set the name property based on the plan's name value
       return newSplit;
     }).toList();
   }
@@ -172,7 +201,8 @@ class DBService {
 
     if (split != null) {
       List<Exercise> exercises = split.exercises ?? [];
-      var updatedExercises = exercises.where((exercise) => exercise.id != exerciseId).toList();
+      var updatedExercises =
+          exercises.where((exercise) => exercise.id != exerciseId).toList();
 
       await isar.writeTxn(() async {
         split.exercises = updatedExercises;
@@ -191,7 +221,8 @@ class DBService {
 
     if (split != null) {
       var exercises = split.exercises ?? [];
-      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseId);
+      final exercise =
+          exercises.firstWhere((exercise) => exercise.id == exerciseId);
       final index = exercises.indexWhere((element) => element.id == exerciseId);
 
       if (exercise != null) {
@@ -209,7 +240,8 @@ class DBService {
 
     if (split != null) {
       final exercises = split.exercises ?? [];
-      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseId);
+      final exercise =
+          exercises.firstWhere((exercise) => exercise.id == exerciseId);
 
       if (exercise != null) {
         exercise.sets ??= [];
