@@ -35,7 +35,7 @@ class DBService {
     return exercises;
   }
 
-  Future<int> tryNewest(Type type, [int? splitId,int? exerciseId] ) async {
+  Future<int> tryNewest(Type type, [int? splitId, int? exerciseId]) async {
     dynamic collection;
     int? newest;
 
@@ -53,21 +53,21 @@ class DBService {
         break;
 
       case Exercise:
-      final split = await isar.splits.get(splitId!);
-      if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
-        newest = split.exercises!.map((exercise) => exercise.id).reduce(max);
-      }
-      break;
-
-      case ExSet: 
-      final split = await isar.splits.get(splitId!);
-      if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
-        final exercise = split.exercises!.firstWhere((element) => element.id == exerciseId);
-        if (exercise != null && exercise.sets != null && exercise.sets!.isNotEmpty) {
-          newest = exercise.sets!.map((set) => set.id).reduce(max);
+        final split = await isar.splits.get(splitId!);
+        if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
+          newest = split.exercises!.map((exercise) => exercise.id).reduce(max);
         }
-      }
-      break;
+        break;
+
+      case ExSet:
+        final split = await isar.splits.get(splitId!);
+        if (split != null && split.exercises != null && split.exercises!.isNotEmpty) {
+          final exercise = split.exercises!.firstWhere((element) => element.id == exerciseId);
+          if (exercise != null && exercise.sets != null && exercise.sets!.isNotEmpty) {
+            newest = exercise.sets!.map((set) => set.id).reduce(max);
+          }
+        }
+        break;
 
       default:
         newest = 1000;
@@ -164,27 +164,44 @@ class DBService {
     }
   }
 
-
   void removeExerciseToSplit(int splitId, int exerciseId) async {
-  final split = await isar.splits.get(splitId);
+    final split = await isar.splits.get(splitId);
 
-  if (split != null) {
-    List<Exercise> exercises = split.exercises ?? [];
-    var updatedExercises = exercises.where((exercise) => exercise.id != exerciseId).toList();
-    
-    await isar.writeTxn(() async {
-      split.exercises = updatedExercises;
-      await isar.splits.put(split);
-    });
+    if (split != null) {
+      List<Exercise> exercises = split.exercises ?? [];
+      var updatedExercises = exercises.where((exercise) => exercise.id != exerciseId).toList();
+
+      await isar.writeTxn(() async {
+        split.exercises = updatedExercises;
+        await isar.splits.put(split);
+      });
+    }
   }
-}
 
   Future<List<Exercise>> getExercisesListFromSplit(int splitId) async {
     final split = await isar.splits.get(splitId);
     return split?.exercises ?? [];
   }
-  
+
   void addSetToExercise(int splitId, int exerciseId, ExSet set) async {
+    var split = await isar.splits.get(splitId);
+
+    if (split != null) {
+      var exercises = split.exercises ?? [];
+      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseId);
+      final index = exercises.indexWhere((element) => element.id == exerciseId);
+
+      if (exercise != null) {
+        exercise.sets ??= [];
+        exercise.sets?.add(set);
+        exercises[index] = exercise;
+        split.exercises = exercises;
+        isar.splits.put(split);
+      }
+    }
+  }
+
+  void removeSetFromExercise(int splitId, int exerciseId, int setId) async {
     final split = await isar.splits.get(splitId);
 
     if (split != null) {
@@ -193,7 +210,7 @@ class DBService {
 
       if (exercise != null) {
         exercise.sets ??= [];
-        exercise.sets?.add(set);
+        exercise.sets?.removeWhere((set) => set.id == setId);
         isar.splits.put(split);
       }
     }
