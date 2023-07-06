@@ -29,7 +29,7 @@ class HomeView extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.onSecondaryContainer)),
           actions: [
             MaterialButton(
-              child: const Text('OK', textAlign: TextAlign.left),
+              child: const Text('OK', textAlign: TextAlign.right),
               color: Theme.of(context).colorScheme.primary,
               textColor: Theme.of(context).colorScheme.secondaryContainer,
               shape: RoundedRectangleBorder(
