@@ -164,6 +164,7 @@ class EditSplitView extends ConsumerWidget {
                 Consumer(
                   builder: (context, ref, _) {
                     final asyncValue = ref.watch(futureexerciseProvider);
+                    ref.refresh(futureexerciseProvider);
                     return asyncValue.when(
                       data: (exercises) {
                         if (exercises != null && exercises.isNotEmpty) {

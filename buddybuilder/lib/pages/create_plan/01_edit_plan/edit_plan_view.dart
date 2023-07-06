@@ -96,6 +96,7 @@ class EditPlanView extends ConsumerWidget {
                 Consumer(
                   builder: (context, ref, _) {
                     final asyncValue = ref.watch(futureSplitsProvider);
+                    ref.refresh(futureSplitsProvider);
                     return asyncValue.when(
                       data: (splits) {
                         if (splits != null && splits.isNotEmpty) {
@@ -103,7 +104,7 @@ class EditPlanView extends ConsumerWidget {
                             children: [
                               for (final split in splits)
                                 Dismissible(
-                                  key: UniqueKey(),
+                                  key: ValueKey(split.id),
                                   direction: DismissDirection.startToEnd,
                                   onDismissed: (_) {
                                     controller.removeSplit(split.id!);
