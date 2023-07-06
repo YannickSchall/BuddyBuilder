@@ -35,7 +35,6 @@ class TrainingView extends ConsumerWidget {
         onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
-        // Wrap the Container with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -52,14 +51,10 @@ class TrainingView extends ConsumerWidget {
                           children: exercises.map((exercise) {
                             return SetWidget(
                               setTitle: exercise.name ?? 'No name',
-                              kgValue: '0', // Provide the kgValue argument here
-                              repsValue:
-                                  '', // Provide the repssValue argument here
-                              onPressed: (id) {
-                                // Handle workout selection
-                                //controller.removeWorkout(id, splitId);
-                                // Close the dialog
-                              },
+                              kgValue: '0',
+                              repsValue: '',
+                              onPressed:
+                                  (id) {}, // controller.removeWorkout(id, splitId)
                               customId: exercise.id ?? 0,
                             );
                           }).toList(),
