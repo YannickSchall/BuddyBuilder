@@ -50,7 +50,7 @@ class TrainingControllerImplementation extends TrainingController {
     state = state.copyWith(setId: setId, widgetList: [...state.widgetList, id]);
 
     final exset = ExSet()..id = setId;
-    db.addSetToExercise(splitId, excerciseId, exset);
+    //db.addSetToExercise(splitId, excerciseId, exset);
     // Trigger rebuild
   }
 

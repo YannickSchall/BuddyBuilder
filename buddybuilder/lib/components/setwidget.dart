@@ -47,7 +47,14 @@ class _SetWidgetState extends State<SetWidget> {
     super.initState();
     //List<String> _kgValues = widget.kgValues;
     //List<String> _repsValues = widget.repsValues;
-    addSet(); // Call addSet() function once when the widget is created
+    final l = widget.exSets.length;
+    if (l == 0) {
+      addSet();
+    }
+    for (var i = 0; i < l; i++) {
+      addSet();
+    }
+    // Call addSet() function once when the widget is created
   }
 
   void addSet() {
@@ -104,6 +111,7 @@ class _SetWidgetState extends State<SetWidget> {
                 child: TextField(
                   onChanged: (textValue) {
                     setState(() {
+                      textValue = textValue.replaceAll(',', '.');
                       int index = setNr - 1;
                       widget.kgValues[index] = textValue;
                       double kg = double.parse(textValue);
@@ -212,7 +220,7 @@ class _SetWidgetState extends State<SetWidget> {
     }
   }
 
-  void updateSetInDB(ExSet exSet) {
+  void updateSetInDB(List<ExSet> exSet) {
     widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, exSet);
   }
 
@@ -259,6 +267,16 @@ class _SetWidgetState extends State<SetWidget> {
                           ),
                         ),
                       ),
+                    ),
+                    PillButtonWidget(
+                      onPressed: () {
+                        //for (var exSet in widget.exSets.values) {
+                        widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, widget.exSets.values.toList());
+                        //}
+                      },
+                      text: "Save",
+                      buttonHeight: 20,
+                      buttonWidth: 70,
                     ),
                     IconButton(
                       icon: Icon(

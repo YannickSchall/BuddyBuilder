@@ -230,7 +230,5 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
 
   Future<List<Exercise>> getAllExercisesList(int splitId);
 
-  void addSet(int id, int splitId, int excerciseId);
-
   void createListExercise(int id, String name);
 }
