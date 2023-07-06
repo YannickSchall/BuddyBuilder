@@ -13,6 +13,8 @@ import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_view.dart'
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'common/providers.dart';
 
+/* main - starts the code and defines all routings for views */
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await IsarDatabase.instance.initialize();
