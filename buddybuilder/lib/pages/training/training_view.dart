@@ -6,6 +6,7 @@ import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
+import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 import 'package:buddybuilder/components/setwidget.dart';
 
 class TrainingView extends ConsumerWidget {
@@ -19,14 +20,14 @@ class TrainingView extends ConsumerWidget {
         ref.read(providers.trainingControllerProvider.notifier);
     final TrainingModel model = ref.watch(providers.trainingControllerProvider);
 
-    final trainingsProvider = FutureProvider<Split>((ref) async {
+    final trainingsProvider = FutureProvider<Split?>((ref) async {
       final setId = 2;
-      return controller.getTraining(setId);
+      return controller.todaysSplit();
     });
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'PULL',
+        subTitle: trainingsProvider.name ?? 'REST',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
@@ -45,7 +46,7 @@ class TrainingView extends ConsumerWidget {
                   final asyncValue = ref.watch(trainingsProvider);
                   return asyncValue.when(
                     data: (split) {
-                      final exercises = split.exercises;
+                      final exercises = split?.exercises ?? [];
                       if (exercises != null && exercises.isNotEmpty) {
                         return Column(
                           children: exercises.map((exercise) {
@@ -53,7 +54,7 @@ class TrainingView extends ConsumerWidget {
                               setTitle: exercise.name ?? 'No name',
                               kgValue: '0', // Provide the kgValue argument here
                               repsValue:
-                                  '', // Provide the repsValue argument here
+                                  '', // Provide the repssValue argument here
                               onPressed: (id) {
                                 // Handle workout selection
                                 //controller.removeWorkout(id, splitId);
@@ -91,4 +92,5 @@ abstract class TrainingController extends StateNotifier<TrainingModel> {
   void removeWorkout(int id, int splitId);
   void removeAllSets();
   String getWorkoutTitle(int id);
+  Future<Split?> todaysSplit();
 }

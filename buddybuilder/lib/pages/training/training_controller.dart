@@ -2,6 +2,7 @@ import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
+import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 
 class TrainingControllerImplementation extends TrainingController {
   TrainingControllerImplementation({
@@ -17,6 +18,11 @@ class TrainingControllerImplementation extends TrainingController {
   @override
   Future<Split> getTraining(int splitId) async {
     return await db.getSplitNoNull(splitId);
+  }
+
+  @override
+  Future<Split?> todaysSplit() async {
+    return await db.getSplitToDayByWeekday();
   }
 
   @override
@@ -63,4 +69,6 @@ class TrainingControllerImplementation extends TrainingController {
   String getWorkoutTitle(int id) {
     return workoutTitles[id] ?? '';
   }
+
+ 
 }
