@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* This is the DateWidget-Component fit to our needs
+-  to create todays Date and Weekday on the HomeView as an Icon
+*/
+
 class DayMonthWidget extends StatelessWidget {
   const DayMonthWidget({Key? key}) : super(key: key);
 

@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 
+/* This is the ContainerButton-Component fit to our needs
+-  to create encapsulate a PillButtonWidget in a Container
+*/
+
 class ContainerButtonWidget extends StatelessWidget {
   const ContainerButtonWidget({
     Key? key,

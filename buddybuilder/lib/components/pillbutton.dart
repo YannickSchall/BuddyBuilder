@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/datewidget.dart';
 
+/* This is the PillButton-Component fit to our needs
+-  to display custom buttons with or without icons
+-  to dismiss them via swipe  
+*/
+
 class PillButtonWidget extends StatelessWidget {
   const PillButtonWidget({
     Key? key,

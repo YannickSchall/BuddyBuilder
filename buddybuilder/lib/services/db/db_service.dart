@@ -316,7 +316,7 @@ class DBService {
   }
 
   Future<Split?> getSplitToDayByWeekday() async {
-    final x = await getAllSplitToDays();
+    final split2ds = await getAllSplitToDays();
 
     String _getWeekday(DateTime date) {
       final weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -325,7 +325,7 @@ class DBService {
 
     final todayWeekday = _getWeekday(DateTime.now());
 
-    final result = x.firstWhere(
+    final result = split2ds.firstWhere(
       (splitToDay) => splitToDay.weekday == todayWeekday,
       orElse: () => SplitToDay()
         ..weekday = todayWeekday
@@ -336,9 +336,38 @@ class DBService {
       return null;
     }
 
-    final split = await getSplitNoNull(result
+    final splitOfCurrentDay = await getSplitNoNull(result
         .splitID!); // Assuming you have a function to get the Split object by id
 
-    return split;
+    return splitOfCurrentDay;
+  }
+
+  Future<List<Exercise>> getSetOfDay() async {
+    final todaysSets = await getSplitToDayByWeekday();
+    return todaysSets?.exercises ?? [];
+  }
+
+  Future<List<Map<String, List<Map<String, String>>>>> setToMap() async {
+    final exerciseList = await getSetOfDay();
+    List<Map<String, String>> innerList = [];
+    List<Map<String, List<Map<String, String>>>> result = [];
+
+    for (var exercise in exerciseList) {
+      String name = exercise.name!;
+      final setsOfToday = exercise.sets ?? [];
+      final setMapList = setsOfToday.map((set) {
+        return {
+          'set': set.id.toString(),
+          'reps': set.reps.toString(),
+          'kg': set.kg.toString()
+        };
+      }).toList();
+      innerList = [...innerList, ...setMapList];
+      final innerResult = {name: innerList};
+
+      result = [...result, innerResult];
+    }
+
+    return result;
   }
 }
