@@ -1,4 +1,3 @@
-import 'package:buddybuilder/components/setwidget.dart';
 import 'package:buddybuilder/pages/settings/settings_controller.dart';
 import 'package:buddybuilder/pages/settings/settings_model.dart';
 import 'package:buddybuilder/pages/settings/settings_view.dart';
@@ -57,19 +56,4 @@ class Providers {
 
   final StateNotifierProvider<EditPlanController, EditPlanModel> editPlanControllerProvider =
       StateNotifierProvider<EditPlanController, EditPlanModel>((StateNotifierProviderRef ref) => EditPlanControllerImplementation(db: db));
-
-  final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-    final EditSplitController controller = ref.read(providers.editSplitControllerProvider.notifier);
-    final String workoutTitle = controller.getWorkoutTitle(id);
-
-    return SetWidget(
-      setTitle: workoutTitle,
-      kgValue: '1',
-      repsValue: '1',
-      onPressed: (customId) {
-        controller.removeWorkout(customId, id);
-      },
-      customId: id, // Pass the custom ID to SetWidget
-    );
-  });
 }

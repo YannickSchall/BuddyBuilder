@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
+import 'package:buddybuilder/services/db/db_service.dart';
+
+import '../services/db/collections/split.dart';
 
 class SetWidget extends StatefulWidget {
-  SetWidget({
-    Key? key,
-    required this.setTitle,
-    this.setNumber = 0,
-    required this.kgValue,
-    required this.repsValue,
-    required this.onPressed,
-    this.customId = 0,
-  }) : super(key: key);
+  SetWidget(
+      {Key? key,
+      required this.setTitle,
+      this.setNumber = 0,
+      required this.kgValues,
+      required this.repsValues,
+      required this.exSets,
+      required this.onPressed,
+      this.customId = 0,
+      required this.splitID,
+      required this.exerciseID,
+      required this.db})
+      : super(key: key);
 
   final String setTitle;
   int setNumber;
-  final String kgValue;
-  final String repsValue;
+  Map<int, String> kgValues;
+  Map<int, String> repsValues;
   void Function(int) onPressed;
+  Map<int, ExSet> exSets;
   int customId;
+  int splitID;
+  int exerciseID;
+  DBService db;
 
   @override
   State<StatefulWidget> createState() => _SetWidgetState();
@@ -28,25 +39,34 @@ class _SetWidgetState extends State<SetWidget> {
   List<bool> setCompleted = []; // Track completion status of each set
   bool expanded = false;
   int nextSet = 0;
+
   bool isFirstSetGroup = true; // Track if it's the first set group
 
   @override
   void initState() {
     super.initState();
-
+    //List<String> _kgValues = widget.kgValues;
+    //List<String> _repsValues = widget.repsValues;
     addSet(); // Call addSet() function once when the widget is created
   }
 
   void addSet() {
     setState(() {
       nextSet += 1;
-      String inputReps = '';
-      String inputKG = '';
       final valueNotifier = ValueNotifier('$nextSet');
       final valueListener = ValueListenableBuilder<String>(
         valueListenable: valueNotifier,
         builder: (context, value, child) {
           int setNr = int.parse(value);
+          int index = setNr - 1;
+
+          ExSet firstSet = ExSet()
+            ..id = index
+            ..kg = 0
+            ..reps = 0;
+          widget.exSets[index] = firstSet;
+
+          //widget.db.addSetToExercise(widget.splitID, widget.exerciseID, firstSet); //?
           return Row(
             key: Key(nextSet.toString()),
             children: [
@@ -61,10 +81,18 @@ class _SetWidgetState extends State<SetWidget> {
                 child: TextField(
                   onChanged: (textValue) {
                     setState(() {
-                      inputReps = textValue;
+                      int index = setNr - 1;
+                      widget.repsValues[index] = textValue;
+                      int reps = int.parse(textValue);
+                      updateSetReps(reps, index);
                     });
                   },
-                  controller: TextEditingController(text: inputReps),
+                  //onEditingComplete: () {
+                  //  int index = setNr - 1;
+                  //  int reps = int.parse(widget.repsValues[index]);
+                  //  updateSetReps(reps, index);
+                  //},
+                  controller: TextEditingController(text: widget.repsValues[setNr - 1]),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Reps',
@@ -76,10 +104,18 @@ class _SetWidgetState extends State<SetWidget> {
                 child: TextField(
                   onChanged: (textValue) {
                     setState(() {
-                      inputKG = textValue;
+                      int index = setNr - 1;
+                      widget.kgValues[index] = textValue;
+                      double kg = double.parse(textValue);
+                      updateSetKG(kg, index);
                     });
                   },
-                  controller: TextEditingController(text: inputKG),
+                  //onEditingComplete: () {
+                  //  int index = setNr - 1;
+                  //  double kg = double.parse(widget.kgValues[index]);
+                  //  updateSetKG(kg, index);
+                  //},
+                  controller: TextEditingController(text: widget.kgValues[setNr - 1]),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Weight',
@@ -87,20 +123,21 @@ class _SetWidgetState extends State<SetWidget> {
                 ),
               ),
               const SizedBox(width: 8),
-              (nextSet != 1)
+              (setNr != 1)
                   ? IconButton(
                       icon: Icon(
                         Icons.close,
                         color: (nextSet != 1) ? Colors.red : Colors.transparent,
                       ),
                       onPressed: () {
-                        print("setNr: " + setNr.toString());
                         if (setNr != 1) {
                           setState(() {
                             nextSet -= 1;
                             additionalSets.removeAt(setNr - 1);
                             setCompleted.removeAt(setNr - 1);
                             correctSetNr(setNr - 1);
+                            widget.exSets.remove(nextSet);
+                            //widget.db.removeSetFromExercise(widget.splitID, widget.exerciseID, setNr);
                           });
                         }
                       },
@@ -119,17 +156,13 @@ class _SetWidgetState extends State<SetWidget> {
 
       additionalSets.add(valueListener);
       setCompleted.add(false);
-      isFirstSetGroup =
-          false; // After adding the first set, it's no longer the first set group
+      isFirstSetGroup = false; // After adding the first set, it's no longer the first set group
     });
   }
 
   String getSetNr(int index) {
-    if (additionalSets.isNotEmpty &&
-        index >= 0 &&
-        index < additionalSets.length) {
-      final valueNotifier =
-          additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
+      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
       return valueNotifier.value;
     }
 
@@ -137,19 +170,50 @@ class _SetWidgetState extends State<SetWidget> {
   }
 
   void updateSetValue(int index, String newValue) {
-    if (additionalSets.isNotEmpty &&
-        index >= 0 &&
-        index < additionalSets.length) {
-      final valueNotifier =
-          additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
+      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
       valueNotifier.value = newValue;
     }
+  }
+
+  void updateSetKG(double kg, int index) {
+    int id = widget.exSets[index]!.id;
+    int reps = widget.exSets[index]!.reps;
+    widget.exSets[index] = ExSet()
+      ..id = id
+      ..reps = reps
+      ..kg = kg;
+  }
+
+  ExSet createExSetforIndex(int index) {
+    double kg = double.parse(widget.kgValues[index]!);
+    int reps = int.parse(widget.repsValues[index]!);
+
+    ExSet exSet = ExSet()
+      ..id = index
+      ..kg = kg
+      ..reps = reps;
+
+    return exSet;
+  }
+
+  void updateSetReps(int reps, int index) {
+    int id = widget.exSets[index]!.id;
+    double kg = widget.exSets[index]!.kg;
+    widget.exSets[index] = ExSet()
+      ..id = id
+      ..reps = reps
+      ..kg = kg;
   }
 
   void correctSetNr(int currSet) {
     for (var i = currSet; i < additionalSets.length; i++) {
       updateSetValue(i, (i + 1).toString());
     }
+  }
+
+  void updateSetInDB(ExSet exSet) {
+    widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, exSet);
   }
 
   void toggleExpanded() {
@@ -235,6 +299,11 @@ class _SetWidgetState extends State<SetWidget> {
               ),
             ],
           ),
+        /*IconButton(
+            onPressed: () {
+              updateSetInDB(ExSet());
+            },
+            icon: const Icon(Icons.search)),*/
       ],
     );
   }

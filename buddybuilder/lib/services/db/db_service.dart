@@ -173,9 +173,8 @@ class DBService {
     if (split != null) {
       List<Exercise> exercises = split.exercises ?? [];
       var updatedExercises = exercises.where((exercise) => exercise.id != exerciseId).toList();
-
+      split.exercises = updatedExercises;
       await isar.writeTxn(() async {
-        split.exercises = updatedExercises;
         await isar.splits.put(split);
       });
     }
@@ -186,7 +185,7 @@ class DBService {
     return split?.exercises ?? [];
   }
 
-  void addSetToExercise(int splitId, int exerciseId, ExSet set) async {
+  void addSetToExercise(int splitId, int exerciseId, ExSet exSet) async {
     var split = await isar.splits.get(splitId);
 
     if (split != null) {
@@ -196,11 +195,34 @@ class DBService {
 
       if (exercise != null) {
         exercise.sets ??= [];
-        exercise.sets?.add(set);
+        exercise.sets?.add(exSet);
         exercises[index] = exercise;
         split.exercises = exercises;
-        isar.splits.put(split);
+        await isar.writeTxn(() async {
+          isar.splits.put(split);
+        });
       }
+    }
+  }
+
+  void updateSetinExercise(int splitID, int exerciseID, ExSet newExSet) async {
+    var split = await isar.splits.get(splitID);
+
+    if (split != null) {
+      var exercises = split.exercises ?? [];
+      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseID);
+      var exSets = exercise.sets ?? [];
+      final exSetIndex = exSets.indexWhere((element) => element.id == newExSet.id);
+      final exerciseIndex = exercises.indexWhere((element) => element.id == exerciseID);
+
+      exSets[exSetIndex] = newExSet;
+      exercise.sets = exSets;
+      exercises[exerciseIndex] = exercise;
+      split.exercises = exercises;
+
+      await isar.writeTxn(() async {
+        isar.splits.put(split);
+      });
     }
   }
 
@@ -214,7 +236,9 @@ class DBService {
       if (exercise != null) {
         exercise.sets ??= [];
         exercise.sets?.removeWhere((set) => set.id == setId);
-        isar.splits.put(split);
+        await isar.writeTxn(() async {
+          isar.splits.put(split);
+        });
       }
     }
   }

@@ -15,7 +15,8 @@ class EditSplitView extends ConsumerWidget {
   final int splitId;
 
   const EditSplitView({
-    Key? key, required this.splitId,
+    Key? key,
+    required this.splitId,
   }) : super(key: key);
 
   @override
@@ -30,8 +31,6 @@ class EditSplitView extends ConsumerWidget {
     final futureexerciseProvider = FutureProvider<List<Exercise>>((ref) async {
       return controller.getAllExercisesList(splitId);
     });
-
-    
 
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
@@ -117,66 +116,72 @@ class EditSplitView extends ConsumerWidget {
     }
 
     return Scaffold(
-  appBar: GymAppBar(
-    subTitle: 'EDIT SPLIT',
-    titleAlignment: Alignment.centerRight,
-    showBackButton: true,
-    showOkButton: true,
-    onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
-    onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
-  ),
-  body: SingleChildScrollView(
-    child: Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            PillButtonWidget(
-              onPressed: () {
-                showSuccessDialog(context, ref);
-              },
-              text: 'Add Workout',
-            ),
-            Consumer(
-              builder: (context, ref, _) {
-                final asyncValue = ref.watch(futureexerciseProvider);
-                return asyncValue.when(
-                  data: (exercises) {
-                    if (exercises != null && exercises.isNotEmpty) {
-                      return Column(
-                        children: exercises.map((exercise) {
-                          return SetWidget(
-                            setTitle: exercise.name ?? 'No name',
-                            kgValue: '0', // Provide the kgValue argument here
-                            repsValue: '', // Provide the repsValue argument here
-                            onPressed: (id) {
-                              // Handle workout selection
-                              controller.removeWorkout(id, splitId);
-                              // Close the dialog
-                            },
-                            customId: exercise.id ?? 0,
-                          );
-                        }).toList(),
-                      );
-                    } else {
-                      return const ListTile(
-                        title: Text('No exercises available'),
-                      );
-                    }
+      appBar: GymAppBar(
+          subTitle: 'EDIT SPLIT',
+          titleAlignment: Alignment.centerRight,
+          showBackButton: true,
+          showOkButton: true,
+          onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
+          onOkButtonPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+
+            Navigator.pushNamed(context, '/home');
+          }),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PillButtonWidget(
+                  onPressed: () {
+                    showSuccessDialog(context, ref);
                   },
-                  loading: () => const CircularProgressIndicator(),
-                  error: (error, stackTrace) => Text('Error: $error'),
-                );
-              },
+                  text: 'Add Workout',
+                ),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final asyncValue = ref.watch(futureexerciseProvider);
+                    return asyncValue.when(
+                      data: (exercises) {
+                        if (exercises != null && exercises.isNotEmpty) {
+                          return Column(
+                            children: exercises.map((exercise) {
+                              return SetWidget(
+                                setTitle: exercise.name ?? 'No name',
+                                kgValues: {}, // Provide the kgValue argument here
+                                repsValues: {}, // Provide the repsValue argument here
+                                exSets: {},
+                                onPressed: (id) {
+                                  // Handle workout selection
+                                  controller.removeWorkout(id, splitId);
+                                  // Close the dialog
+                                },
+                                splitID: splitId,
+                                exerciseID: exercise.id ?? 0,
+                                customId: exercise.id ?? 0,
+                                db: db,
+                              );
+                            }).toList(),
+                          );
+                        } else {
+                          return const ListTile(
+                            title: Text('No exercises available'),
+                          );
+                        }
+                      },
+                      loading: () => const CircularProgressIndicator(),
+                      error: (error, stackTrace) => Text('Error: $error'),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
-    ),
-  ),
-);
-
+    );
   }
 }
 
@@ -200,6 +205,6 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   void updateSearchQuery(String query);
 
   Future<List<Exercise>> getAllExercisesList(int splitId);
-  
+
   void addSet(int id, int splitId, int excerciseId);
 }
