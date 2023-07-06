@@ -66,8 +66,6 @@ class MyApp extends StatelessWidget {
             } else if (routeParams.name == '/choose') {
               return MaterialPageRoute(
                   builder: (context) => const ChooseSplitView());
-            } else if (routeParams.name == '/new') {
-              return MaterialPageRoute(builder: (context) => EditSplitView());
             } else if (routeParams.name == '/plan') {
               return MaterialPageRoute(builder: (context) => EditPlanView());
             }

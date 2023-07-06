@@ -34,53 +34,32 @@ final db = DBService(isar: isar);
 final api = APIService(db);
 
 class Providers {
-  final StateNotifierProvider<HomeController, HomeModel>
-      homeControllerProvider = StateNotifierProvider<HomeController, HomeModel>(
-          (StateNotifierProviderRef ref) =>
-              HomeControllerImplementation(db: db, api: api));
+  final StateNotifierProvider<HomeController, HomeModel> homeControllerProvider =
+      StateNotifierProvider<HomeController, HomeModel>((StateNotifierProviderRef ref) => HomeControllerImplementation(db: db, api: api));
 
-  final StateNotifierProvider<TrainingController, TrainingModel>
-      trainingControllerProvider =
-      StateNotifierProvider<TrainingController, TrainingModel>(
-          (StateNotifierProviderRef ref) => TrainingControllerImplementation());
+  final StateNotifierProvider<TrainingController, TrainingModel> trainingControllerProvider =
+      StateNotifierProvider<TrainingController, TrainingModel>((StateNotifierProviderRef ref) => TrainingControllerImplementation());
 
-  final StateNotifierProvider<SettingsController, SettingsModel>
-      settingsControllerProvider =
-      StateNotifierProvider<SettingsController, SettingsModel>(
-          (StateNotifierProviderRef ref) =>
-              SettingsControllerImplementation(api: api));
+  final StateNotifierProvider<SettingsController, SettingsModel> settingsControllerProvider =
+      StateNotifierProvider<SettingsController, SettingsModel>((StateNotifierProviderRef ref) => SettingsControllerImplementation(api: api));
 
-  final StateNotifierProvider<CalendarController, CalendarModel>
-      calendarControllerProvider =
-      StateNotifierProvider<CalendarController, CalendarModel>(
-          (StateNotifierProviderRef ref) => CalendarControllerImplementation());
+  final StateNotifierProvider<CalendarController, CalendarModel> calendarControllerProvider =
+      StateNotifierProvider<CalendarController, CalendarModel>((StateNotifierProviderRef ref) => CalendarControllerImplementation(db: db));
 
-  final StateNotifierProvider<WeeklyController, WeeklyModel>
-      weeklyControllerProvider =
-      StateNotifierProvider<WeeklyController, WeeklyModel>(
-          (StateNotifierProviderRef ref) =>
-              WeeklyControllerImplementation(db: db));
+  final StateNotifierProvider<WeeklyController, WeeklyModel> weeklyControllerProvider =
+      StateNotifierProvider<WeeklyController, WeeklyModel>((StateNotifierProviderRef ref) => WeeklyControllerImplementation(db: db));
 
-  final StateNotifierProvider<EditSplitController, EditSplitModel>
-      editSplitControllerProvider =
-      StateNotifierProvider<EditSplitController, EditSplitModel>(
-          (StateNotifierProviderRef ref) =>
-              EditSplitControllerImplementation(db: db, api: api));
+  final StateNotifierProvider<EditSplitController, EditSplitModel> editSplitControllerProvider =
+      StateNotifierProvider<EditSplitController, EditSplitModel>((StateNotifierProviderRef ref) => EditSplitControllerImplementation(db: db, api: api));
 
-  final StateNotifierProvider<RotationController, RotationModel>
-      rotationControllerProvider =
-      StateNotifierProvider<RotationController, RotationModel>(
-          (StateNotifierProviderRef ref) => RotationControllerImplementation());
+  final StateNotifierProvider<RotationController, RotationModel> rotationControllerProvider =
+      StateNotifierProvider<RotationController, RotationModel>((StateNotifierProviderRef ref) => RotationControllerImplementation());
 
-  final StateNotifierProvider<EditPlanController, EditPlanModel>
-      editPlanControllerProvider =
-      StateNotifierProvider<EditPlanController, EditPlanModel>(
-          (StateNotifierProviderRef ref) =>
-              EditPlanControllerImplementation(db: db));
+  final StateNotifierProvider<EditPlanController, EditPlanModel> editPlanControllerProvider =
+      StateNotifierProvider<EditPlanController, EditPlanModel>((StateNotifierProviderRef ref) => EditPlanControllerImplementation(db: db));
 
   final setWidgetProvider = Provider.family<SetWidget, int>((ref, id) {
-    final EditSplitController controller =
-        ref.read(providers.editSplitControllerProvider.notifier);
+    final EditSplitController controller = ref.read(providers.editSplitControllerProvider.notifier);
     final String workoutTitle = controller.getWorkoutTitle(id);
 
     return SetWidget(
@@ -88,7 +67,7 @@ class Providers {
       kgValue: '1',
       repsValue: '1',
       onPressed: (customId) {
-        controller.removeWorkout(customId);
+        controller.removeWorkout(customId, id);
       },
       customId: id, // Pass the custom ID to SetWidget
     );

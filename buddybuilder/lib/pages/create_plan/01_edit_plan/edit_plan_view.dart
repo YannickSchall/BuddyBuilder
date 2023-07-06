@@ -7,6 +7,7 @@ import 'package:buddybuilder/components/appbar.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_model.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
+import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_view.dart';
 
 class EditPlanView extends ConsumerWidget {
   const EditPlanView({
@@ -118,8 +119,10 @@ class EditPlanView extends ConsumerWidget {
                                     ),
                                   ),
                                   child: PillButtonWidget(
-                                    onPressed: () =>
-                                        Navigator.pushNamed(context, '/new'),
+                                    onPressed: () {
+                                      int splitId = split.id!;
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditSplitView(splitId: splitId,)),);
+                                    },
                                     text: split.name!,
                                     buttonHeight: 60.0,
                                     buttonWidth: 300.0,
@@ -154,4 +157,5 @@ abstract class EditPlanController extends StateNotifier<EditPlanModel> {
   void removeSplit(int id);
   Future<List<Split>> getAllSplits();
   Future<int> getNewestSplitID();
+  int? getSelectedId(int id);
 }

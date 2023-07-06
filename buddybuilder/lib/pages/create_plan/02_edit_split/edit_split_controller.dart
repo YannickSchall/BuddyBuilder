@@ -2,6 +2,7 @@ import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_model.da
 import 'package:buddybuilder/pages/create_plan/02_edit_split/edit_split_view.dart';
 import 'package:buddybuilder/services/api/api_service.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 
 class EditSplitControllerImplementation extends EditSplitController {
@@ -9,9 +10,7 @@ class EditSplitControllerImplementation extends EditSplitController {
     required this.db,
     required this.api,
     EditSplitModel? model,
-  }) : super(model ??
-            EditSplitModel(
-                workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
+  }) : super(model ?? EditSplitModel(workoutList: [], workoutTitle: '', widgetList: [], setId: 0));
 
   DBService db;
   APIService api;
@@ -35,18 +34,38 @@ class EditSplitControllerImplementation extends EditSplitController {
   }
 
   @override
-  void addWorkout(int id, String name) {
-    state = state
-        .copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
+  void addWorkout(int id, String name, int splitId) async{
+    int exerciseId = await db.tryNewest(Exercise, splitId) + 1;
+    state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
     workoutTitles[id] = name;
+
+    final exercise = Exercise()
+    ..name = name
+    ..id = exerciseId;
+    db.addExerciseToSplit(splitId, exercise);
+
     // Trigger rebuild
   }
 
   @override
-  void removeWorkout(int id) {
+  void addSet(int id, int splitId, int excerciseId) async{
+    int setId = await db.tryNewest(ExSet, splitId, excerciseId) + 1;
+    state = state.copyWith(setId: setId, widgetList: [...state.widgetList, id]);
+
+    final exset = ExSet()
+    ..id = setId;
+    db.addSetToExercise(splitId, excerciseId, exset);
+    // Trigger rebuild
+  }
+
+  @override
+  void removeWorkout(int id, int splitId) {
     state = state.copyWith(
       workoutList: [...state.workoutList]..remove(id),
     );
+  db.removeExerciseToSplit(splitId, id);
+    // Trigger rebuild
+  
   }
 
   @override
@@ -73,5 +92,10 @@ class EditSplitControllerImplementation extends EditSplitController {
   @override
   void updateSearchQuery(String query) {
     state = state.copyWith(searchQuery: query);
+  }
+
+  @override
+  Future<List<Exercise>> getAllExercisesList(int splitId) async {
+    return await db.getExercisesListFromSplit(splitId);
   }
 }
