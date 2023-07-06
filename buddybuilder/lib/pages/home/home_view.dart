@@ -39,7 +39,7 @@ class HomeView extends ConsumerWidget {
               },
             ),
           ],
-          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actionsAlignment: MainAxisAlignment.end,
         );
       },
     );
