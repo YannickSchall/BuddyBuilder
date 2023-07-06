@@ -11,7 +11,6 @@ class CircleWidget extends StatefulWidget {
     Key? key,
     required this.onPressed,
     required this.text,
-    this.icon,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
     this.width = 60,
     this.height = 60,
@@ -20,7 +19,7 @@ class CircleWidget extends StatefulWidget {
 
   final VoidCallback onPressed;
   final String text;
-  final Icon? icon;
+
   final double width;
   final double height;
   final EdgeInsets padding;
@@ -47,14 +46,12 @@ class _CircleWidgetState extends State<CircleWidget> {
         child: TextButton(
           onPressed: () {
             if (!widget.isPressed) {
-              // Only trigger onPressed if the button is not already pressed
               widget.onPressed();
             }
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (widget.icon != null) widget.icon!,
               Text(
                 widget.text,
                 style: TextStyle(

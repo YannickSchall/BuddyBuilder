@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/circle.dart';
 
+/* This is the WeekDaySelector-Component fit to our needs
+-  to display CircleButtons with the correct weekday
+*/
+
 class WeekDaySelector extends StatefulWidget {
   final void Function(String?) onDaySelected;
 
@@ -82,16 +86,19 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
     );
   }
 
+/*
+_updateSelectedDay()
+makes sure only one circle is selectable at a time (adding toggle-button functionality)
+*/
   void _updateSelectedDay(String day) {
     setState(() {
       if (_selectedDay == day) {
-        _selectedDay = null; // Unpress the currently selected day
+        _selectedDay = null;
       } else {
-        _selectedDay = day; // Press the newly selected day
+        _selectedDay = day;
       }
     });
 
-    widget.onDaySelected(
-        _selectedDay); // Call the callback function with the selected day
+    widget.onDaySelected(_selectedDay);
   }
 }

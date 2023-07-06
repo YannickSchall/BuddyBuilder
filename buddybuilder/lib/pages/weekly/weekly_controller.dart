@@ -22,6 +22,10 @@ class WeeklyControllerImplementation extends WeeklyController {
   final Map<int, String> splitTitles = {};
   final Map<String, int> xs = {};
 
+  /*
+  getSplitList()
+  remove all sets from db 
+  */
   @override
   Future<List<Split>> getSplitList() async {
     final allSplits = await db.getAllSplits();
@@ -39,16 +43,28 @@ class WeeklyControllerImplementation extends WeeklyController {
     }
   }
 
+  /*
+  updateSearchQuery()
+  searchquery to find matching splits 
+  */
   @override
   void updateSearchQuery(String query) {
     state = state.copyWith(searchQuery: query);
   }
 
+  /*
+  getNewestSplitToDayID()
+  helper functiion to get newset split id()
+  */
   @override
   Future<int> getNewestSplitToDayID() async {
     return await db.tryNewest(SplitToDay);
   }
 
+  /*
+  addSplit()
+  addSplit to Db that maps exisitng split on day
+  */
   @override
   void addSplit(String weekday, int id, String splitname) async {
     int newestid = await getNewestSplitToDayID() + 1;
@@ -66,18 +82,21 @@ class WeeklyControllerImplementation extends WeeklyController {
     state = state.copyWith(dateSplitMap: updatedDateSplitMap);
   }
 
+  /*
+  checkName()
+  find existing splits durch query search
+  */
   @override
   Future<String> checkName(String newName, String weekday) async {
     return await db.getSplitNameFromDay(weekday);
   }
 
+  /*
+  updateSelectedDay()
+  notify which day is selected to map on split
+  */
   @override
-  String getSplitTitle(int id) {
-    return splitTitles[id] ?? '';
-  }
-
-  @override
-  void updateWeekSelector() {
-    state = state.copyWith(weekselector: !state.weekselector);
+  void updateSelectedDay(String? selectedDay) {
+    state = state.copyWith(selectedDay: selectedDay);
   }
 }

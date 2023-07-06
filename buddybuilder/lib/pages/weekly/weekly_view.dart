@@ -19,6 +19,9 @@ class WeeklyView extends ConsumerWidget {
         ref.read(providers.weeklyControllerProvider.notifier);
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
 
+    /*
+    info dialog for user checking if day is already mapped to a split
+    */
     Future<String> content(String name) async {
       String day = mapDay(model.selectedDay ?? "");
       String shortDay = day.substring(0, 3).toUpperCase();
@@ -42,10 +45,18 @@ class WeeklyView extends ConsumerWidget {
       return controller.getSplitList();
     });
 
+    /*
+    reloadSplits()
+    update provider
+    */
     void reloadSplits() {
       ref.refresh(splitsProvider);
     }
 
+    /*
+    showSuccessDialog()
+    show all available splits via controller 
+    */
     void showSuccessDialog(String name, int id) {
       showDialog(
         context: context,
@@ -129,7 +140,7 @@ class WeeklyView extends ConsumerWidget {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/new'),
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/plan'),
         onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
@@ -226,6 +237,9 @@ class WeeklyView extends ConsumerWidget {
   }
 }
 
+/*
+helper function to update the selcted day value for model to store split to day 
+*/
 String mapDay(String day) {
   switch (day) {
     case 'MON':
@@ -248,15 +262,10 @@ String mapDay(String day) {
 
 abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   WeeklyController(WeeklyModel state) : super(state);
-
-  void updateWeekSelector();
-  void updateSelectedDay(String? selectedDay) {
-    state = state.copyWith(selectedDay: selectedDay);
-  }
-
+  void updateSelectedDay(String? selectedDay);
   void addSplit(String weekday, int id, String name);
   Future<String> checkName(String newName, String weekday);
   void updateSearchQuery(String query);
-  String getSplitTitle(int id);
   Future<List<Split>> getSplitList();
+  Future<int> getNewestSplitToDayID();
 }

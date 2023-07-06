@@ -11,17 +11,25 @@ class EditPlanControllerImplementation extends EditPlanController {
   }) : super(model ?? const EditPlanModel(id: 0, name: "", splits: []));
 
   DBService db;
-  // List of split titles
+  // List of split titles to display in pillbuttons
   final List<Split> _splits = [];
 
   List<Split> get splits => _splits;
 
+  /*
+  getAllSplits()
+  returns all splits from the database
+  */
   @override
   Future<List<Split>> getAllSplits() {
     final response = db.getAllSplits();
     return response;
   }
 
+  /*
+  addSplit()
+  adds split to database and updates updaetes state of splits watched by provider
+  */
   @override
   void addSplit(Split split) async {
     int id = await db.tryNewest(Split) + 1;
@@ -30,11 +38,10 @@ class EditPlanControllerImplementation extends EditPlanController {
     db.addSplit(split); // Save the plan title to the database
   }
 
-  @override
-  Future<int> getNewestSplitID() async {
-    return await db.tryNewest(Split);
-  }
-
+  /*
+  removeSplit()
+  remove split from db when button is swiped
+  */
   @override
   void removeSplit(int id) {
     state = state.copyWith(
@@ -42,10 +49,5 @@ class EditPlanControllerImplementation extends EditPlanController {
         ..removeWhere((item) => item.id == id),
     );
     db.removeSplit(id); // Remove the plan title from the database
-  }
-
-  @override
-  int? getSelectedId(int id) {
-    return state.splits[id].id;
   }
 }

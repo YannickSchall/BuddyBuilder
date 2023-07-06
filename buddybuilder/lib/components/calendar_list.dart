@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 /* This is the CalendarList-Component fit to our needs
--  to display finished trainings of each day in a list lay out
+- to display finished trainings of each day in a list lay-out
+- id represents an id
+- name represents the name of an exercise ex: bicepcurl - will be filled by db
+- setData represents all Sets of a Split ex: 3x4 10kg - will be filled by db
+-> this represents one item of the list displayed in 
+the calendar when clicking on the floating action button
 */
 
 class CalendarListWidget extends StatefulWidget {

@@ -12,78 +12,6 @@ class CalendarView extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  List<Map<String, String>> setData = [
-    {
-      'set': '1',
-      'reps': '8',
-      'kg': '10',
-    },
-    {
-      'set': '2',
-      'reps': '12',
-      'kg': '15',
-    },
-    {
-      'set': '3',
-      'reps': '10',
-      'kg': '12',
-    },
-  ];
-
-  List<Map<String, String>> setData1 = [
-    {
-      'set': '1',
-      'reps': '8',
-      'kg': '10',
-    },
-    {
-      'set': '2',
-      'reps': '12',
-      'kg': '15',
-    },
-    {
-      'set': '3',
-      'reps': '10',
-      'kg': '12',
-    },
-  ];
-
-  List<Map<String, String>> setData2 = [
-    {
-      'set': '1',
-      'reps': '8',
-      'kg': '10',
-    },
-    {
-      'set': '2',
-      'reps': '12',
-      'kg': '15',
-    },
-    {
-      'set': '3',
-      'reps': '10',
-      'kg': '12',
-    },
-  ];
-
-  List<Map<String, String>> setData3 = [
-    {
-      'set': '1',
-      'reps': '8',
-      'kg': '10',
-    },
-    {
-      'set': '2',
-      'reps': '12',
-      'kg': '15',
-    },
-    {
-      'set': '3',
-      'reps': '10',
-      'kg': '12',
-    },
-  ];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final CalendarController controller =
@@ -112,6 +40,10 @@ class CalendarView extends ConsumerWidget {
 
     List<Widget> popUpList = [];
 
+/*
+showSucessDialog will show the finished workouts of a day when clicking on the floating action button
+- data is filled by controller.getOverkill() via the controller from the db
+*/
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
         context: context,
@@ -119,7 +51,7 @@ class CalendarView extends ConsumerWidget {
           return Consumer(
             builder: (context, ref, _) {
               void reloadExercises() {
-                //ref.refresh(exercisesProvider);
+                ref.refresh(trainingOfDayProvider);
               }
 
               return SingleChildScrollView(
@@ -132,7 +64,11 @@ class CalendarView extends ConsumerWidget {
                         builder: (BuildContext context,
                             AsyncSnapshot<
                                     List<
-                                        Map<String, List<Map<String, String>>>>>
+                                        Map<
+                                            String,
+                                            List<
+                                                Map<String,
+                                                    String>>>>> // here watched sets from sets are unpacked and build
                                 snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -223,10 +159,6 @@ class CalendarView extends ConsumerWidget {
       ),
     );
   }
-}
-
-String exampleSplitName(List<Training> trainings) {
-  return trainings[0].split.name ?? 'No name';
 }
 
 abstract class CalendarController extends StateNotifier<CalendarModel> {

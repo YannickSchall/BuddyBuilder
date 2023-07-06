@@ -10,12 +10,20 @@ class SettingsControllerImplementation extends SettingsController {
 
   APIService api;
 
+  /*
+  switchTheme()
+  switch dark to light theme 
+  */
   @override
   void switchTheme(bool isDarkModeEnabled) {
     // Update the theme in the state
     state = state.copyWith(isDarkModeEnabled: isDarkModeEnabled);
   }
 
+  /*
+  fetchToDB()
+  one time action to fill exercises from API 
+  */
   @override
   void fetchToDB() async {
     api.fillDatabase();

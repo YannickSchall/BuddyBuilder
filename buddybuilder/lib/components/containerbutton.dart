@@ -4,6 +4,7 @@ import 'package:buddybuilder/components/pillbutton.dart';
 
 /* This is the ContainerButton-Component fit to our needs
 -  to create encapsulate a PillButtonWidget in a Container
+-  to have optional Icons
 */
 
 class ContainerButtonWidget extends StatelessWidget {
@@ -38,12 +39,7 @@ class ContainerButtonWidget extends StatelessWidget {
         width: outerWidth,
         height: outerHeight,
         decoration: BoxDecoration(
-          color: Theme.of(context)
-              .colorScheme
-              .secondaryContainer, // Set the background color
-          //border: Border.all(
-          //  width: 2.0,
-          //),
+          color: Theme.of(context).colorScheme.secondaryContainer,
           borderRadius: BorderRadius.circular(innerHeight / 2),
         ),
         child: Column(
@@ -62,10 +58,7 @@ class ContainerButtonWidget extends StatelessWidget {
             Expanded(
               child: Align(
                   alignment: Alignment.topCenter,
-                  child: IconButton(
-                      onPressed: onPressed,
-                      icon:
-                          containerIcon)), // Add an empty container for the lower row
+                  child: IconButton(onPressed: onPressed, icon: containerIcon)),
             ),
           ],
         ),

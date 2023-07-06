@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 
-import '../services/db/collections/split.dart';
+/* This is the SetWidget-Component fit to our needs
+-  to display custom input options to put in reps and weights used for each set 
+*/
 
 class SetWidget extends StatefulWidget {
   SetWidget(
@@ -56,6 +59,12 @@ class _SetWidgetState extends State<SetWidget> {
     }
     // Call addSet() function once when the widget is created
   }
+
+  /* 
+  addSet() 
+  will add another set with the option to delete
+  it again displayed by red cross
+  */
 
   void addSet() {
     setState(() {
@@ -161,6 +170,12 @@ class _SetWidgetState extends State<SetWidget> {
     });
   }
 
+  /* 
+  getSetNr() 
+  will add another set with the option to delete
+  it again displayed by red cross
+  */
+
   String getSetNr(int index) {
     if (additionalSets.isNotEmpty &&
         index >= 0 &&
@@ -173,6 +188,11 @@ class _SetWidgetState extends State<SetWidget> {
     return 'wrong index or empty list';
   }
 
+  /* 
+  updateSetValue() 
+  will add another set with the option to delete
+  it again displayed by red cross
+  */
   void updateSetValue(int index, String newValue) {
     if (additionalSets.isNotEmpty &&
         index >= 0 &&
@@ -183,6 +203,10 @@ class _SetWidgetState extends State<SetWidget> {
     }
   }
 
+  /* 
+  updateSetKG() 
+   will put before added weights into set above
+  */
   void updateSetKG(double kg, int index) {
     int id = widget.exSets[index]!.id;
     int reps = widget.exSets[index]!.reps;
@@ -192,6 +216,11 @@ class _SetWidgetState extends State<SetWidget> {
       ..kg = kg;
   }
 
+  /* 
+  createExSetforIndex() 
+  will add another set with the option to delete
+  it again displayed by red cross
+  */
   ExSet createExSetforIndex(int index) {
     double kg = double.parse(widget.kgValues[index]!);
     int reps = int.parse(widget.repsValues[index]!);
@@ -204,6 +233,10 @@ class _SetWidgetState extends State<SetWidget> {
     return exSet;
   }
 
+  /* 
+  updateSetReps() 
+  will put before added reps into set above
+  */
   void updateSetReps(int reps, int index) {
     int id = widget.exSets[index]!.id;
     double kg = widget.exSets[index]!.kg;
@@ -213,22 +246,38 @@ class _SetWidgetState extends State<SetWidget> {
       ..kg = kg;
   }
 
+  /* 
+  correctSetNr() 
+  will autoincrement the setnumber
+  */
   void correctSetNr(int currSet) {
     for (var i = currSet; i < additionalSets.length; i++) {
       updateSetValue(i, (i + 1).toString());
     }
   }
 
-  void updateSetInDB(List<ExSet> exSet) {
+  /* 
+  updateSetInDB() 
+  will update value in db
+  */
+  void updateSetInDB(ExSet exSet) {
     widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, exSet);
   }
 
+  /* 
+  toggleExpanded() 
+  will expand if +1 sets
+  */
   void toggleExpanded() {
     setState(() {
       expanded = !expanded;
     });
   }
 
+  /* 
+  deleteAll() 
+  will delete the whole exercise
+  */
   void deleteAll() {
     setState(() {
       additionalSets.clear();
@@ -270,7 +319,8 @@ class _SetWidgetState extends State<SetWidget> {
                     PillButtonWidget(
                       onPressed: () {
                         //for (var exSet in widget.exSets.values) {
-                        widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, widget.exSets.values.toList());
+                        widget.db.updateSetinExercise(widget.splitID,
+                            widget.exerciseID, widget.exSets.values.toList());
                         //}
                       },
                       text: "Save",

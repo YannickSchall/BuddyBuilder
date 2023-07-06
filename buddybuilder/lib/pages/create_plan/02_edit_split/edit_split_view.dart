@@ -33,6 +33,11 @@ class EditSplitView extends ConsumerWidget {
       return controller.getAllExercisesList(splitId);
     });
 
+    /*
+    showSucessDialog will open a scroallbale list of avaialable exercises 
+    - futureexerciseProvider provides the data for my personal exercises whcih i want to add to sploit
+    - exercisesProvider will provide all displayable Exercises 
+    */
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
       showDialog(
         context: context,
@@ -213,24 +218,12 @@ class EditSplitView extends ConsumerWidget {
 
 abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   EditSplitController(EditSplitModel state) : super(state);
-
   void addWorkout(int id, String name, int splitId);
-
   void removeWorkout(int id, int splitId);
-
-  void removeAllSets();
-
   Future<List<ListExercise>> getListExerciseList();
-
   void fetchToDB();
-
   Future<int> getNewestExerciseID();
-
-  String getWorkoutTitle(int id);
-
   void updateSearchQuery(String query);
-
   Future<List<Exercise>> getAllExercisesList(int splitId);
-
   void createListExercise(int id, String name);
 }

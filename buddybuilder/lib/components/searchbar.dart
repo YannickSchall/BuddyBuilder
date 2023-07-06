@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* This is the SearchBar-Component fit to our needs
+-  to display a searchbar fit to our design
+*/
+
 class MySearchBar extends StatelessWidget {
   final ValueChanged<String>? onChanged;
 
