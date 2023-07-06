@@ -81,11 +81,5 @@ class HomeView extends ConsumerWidget {
 
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
-
-  Future<List<ListExercise>> getListExercises();
-  void addListExercise(ListExercise exercise);
-  void clearExercises();
-  Stream<int> getNewestID();
-  Future<String> provideAPIresponse(String param);
   Future<Split> getTodaysSplitID();
 }

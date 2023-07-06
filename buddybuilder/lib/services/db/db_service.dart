@@ -320,15 +320,13 @@ class DBService {
   updateSetinExercise()
   update value in sets of an exercise
   */
-  void updateSetinExercise(int splitID, int exerciseID, ExSet newExSet) async {
+  void updateSetinExercise(int splitID, int exerciseID, List<ExSet> newExSetList) async {
     var split = await isar.splits.get(splitID);
 
     if (split != null) {
       var exercises = split.exercises ?? [];
-      final exercise =
-          exercises.firstWhere((exercise) => exercise.id == exerciseID);
-      final exerciseIndex =
-          exercises.indexWhere((element) => element.id == exerciseID);
+      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseID);
+      final exerciseIndex = exercises.indexWhere((element) => element.id == exerciseID);
 
       exercise.sets = newExSetList;
       exercises[exerciseIndex] = exercise;
@@ -339,6 +337,7 @@ class DBService {
       });
     }
   }
+
 
   /*
   removeSetFromExercise()

@@ -266,9 +266,10 @@ void updateSetReps(int reps, int index) {
   updateSetInDB() 
   will update value in db
   */
-  void updateSetInDB(ExSet exSet) {
+  void updateSetInDB(List<ExSet> exSet) {
     widget.db.updateSetinExercise(widget.splitID, widget.exerciseID, exSet);
   }
+
 
   /* 
   toggleExpanded() 

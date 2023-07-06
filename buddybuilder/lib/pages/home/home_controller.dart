@@ -10,6 +10,15 @@ class HomeControllerImplementation extends HomeController {
   late Stream<int> newestIdStream;
 
   HomeControllerImplementation({
+    required this.db,
     HomeModel? model,
   }) : super(model ?? HomeModel(isDarkModeEnabled: false));
+  DBService db;
+
+  @override
+  Future<Split> getTodaysSplitID() async {
+    Split? split = await db.getSplitToDayByWeekday();
+
+    return split!;
+  }
 }
