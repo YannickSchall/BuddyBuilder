@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:buddybuilder/pages/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:buddybuilder/pages/home/home_model.dart';
