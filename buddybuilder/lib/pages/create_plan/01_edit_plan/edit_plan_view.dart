@@ -99,7 +99,8 @@ class EditPlanView extends ConsumerWidget {
                 Consumer(
                   builder: (context, ref, _) {
                     final asyncValue = ref.watch(
-                        futureSplitsProvider); // here the fetched data fromm futureSplitsProvider is build
+                        futureSplitsProvider); 
+                        ref.refresh(futureSplitsProvider);// here the fetched data fromm futureSplitsProvider is build
                     return asyncValue.when(
                       data: (splits) {
                         if (splits != null && splits.isNotEmpty) {
