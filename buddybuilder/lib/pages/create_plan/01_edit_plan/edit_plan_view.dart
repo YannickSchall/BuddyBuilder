@@ -74,13 +74,12 @@ class EditPlanView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        subTitle: 'EDIT PLAN',
-        titleAlignment: Alignment.centerRight,
-        showBackButton: true,
-        showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
-        onOkButtonPressed: () => Navigator.pushNamed(context, '/new'),
-      ),
+          subTitle: 'EDIT PLAN',
+          titleAlignment: Alignment.centerRight,
+          showBackButton: true,
+          showOkButton: false,
+          onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
+          onOkButtonPressed: () {}),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0),
@@ -121,7 +120,13 @@ class EditPlanView extends ConsumerWidget {
                                   child: PillButtonWidget(
                                     onPressed: () {
                                       int splitId = split.id!;
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditSplitView(splitId: splitId,)),);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditSplitView(
+                                                  splitId: splitId,
+                                                )),
+                                      );
                                     },
                                     text: split.name!,
                                     buttonHeight: 60.0,

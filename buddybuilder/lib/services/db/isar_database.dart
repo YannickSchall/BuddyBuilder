@@ -2,7 +2,6 @@ import 'package:buddybuilder/services/db/collections/list_exercise.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 import 'package:isar/isar.dart';
-import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 class IsarDatabase {

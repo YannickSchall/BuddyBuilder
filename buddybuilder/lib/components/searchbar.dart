@@ -1,4 +1,3 @@
-import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:flutter/material.dart';
 
 class MySearchBar extends StatelessWidget {
@@ -11,7 +10,7 @@ class MySearchBar extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(8.0), // Add padding around all edges
+          padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey[200],
@@ -19,7 +18,7 @@ class MySearchBar extends StatelessWidget {
             ),
             child: TextField(
               onChanged: onChanged,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search',
                 hintStyle: TextStyle(color: Colors.grey),
@@ -29,7 +28,6 @@ class MySearchBar extends StatelessWidget {
             ),
           ),
         ),
-        // Add a conditional statement here to display search results
       ],
     );
   }
