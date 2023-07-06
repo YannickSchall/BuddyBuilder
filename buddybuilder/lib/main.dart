@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
         home: Navigator(
-          initialRoute: '/weekly',
+          initialRoute: '/home',
           onGenerateRoute: (RouteSettings routeParams) {
             if (routeParams.name == '/home') {
               return MaterialPageRoute(builder: (context) => const HomeView());
@@ -55,8 +55,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                   builder: (context) => const SettingsView());
             } else if (routeParams.name == '/training') {
-              return MaterialPageRoute(
-                  builder: (context) => const TrainingView());
+              return MaterialPageRoute(builder: (context) => TrainingView());
             } else if (routeParams.name == '/rotate') {
               return MaterialPageRoute(
                   builder: (context) => const RotationView());

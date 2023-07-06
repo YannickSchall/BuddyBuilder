@@ -94,11 +94,9 @@ class CalendarView extends ConsumerWidget {
               //ref.refresh(exercisesProvider);
             }
 
-            return Expanded(
+            return SingleChildScrollView(
               child: Dialog(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,6 +104,18 @@ class CalendarView extends ConsumerWidget {
                       CalendarListWidget(name: 'name', id: 1, setData: setData),
                       CalendarListWidget(
                           name: 'name', id: 1, setData: setData1),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
+                      CalendarListWidget(
+                          name: 'name', id: 1, setData: setData2),
                       CalendarListWidget(
                           name: 'name', id: 1, setData: setData2),
                       CalendarListWidget(
