@@ -8,7 +8,6 @@ import 'package:buddybuilder/components/pillbutton.dart';
 import 'package:buddybuilder/components/exercise_list.dart';
 import 'package:buddybuilder/components/searchbar.dart';
 import 'package:buddybuilder/components/setwidget.dart';
-import 'package:buddybuilder/components/draggable.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
 
 class EditSplitView extends ConsumerWidget {
@@ -105,12 +104,10 @@ class EditSplitView extends ConsumerWidget {
                                       return ExerciseWidget(
                                         name: exercise.name ?? 'No name',
                                         onPressed: (id) {
-                                          // Handle workout selection
                                           controller.addWorkout(
                                               id,
                                               exercise.name ?? "No name",
                                               splitId);
-                                          // Close the dialog
                                         },
                                         id: index,
                                       );
@@ -149,7 +146,7 @@ class EditSplitView extends ConsumerWidget {
           onOkButtonPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
 
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushNamed(context, '/weekly');
           }),
       body: SingleChildScrollView(
         child: Padding(

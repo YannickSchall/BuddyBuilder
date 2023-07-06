@@ -19,6 +19,25 @@ class WeeklyView extends ConsumerWidget {
         ref.read(providers.weeklyControllerProvider.notifier);
     final WeeklyModel model = ref.watch(providers.weeklyControllerProvider);
 
+    Future<String> content(String name) async {
+      String day = mapDay(model.selectedDay ?? "");
+      String shortDay = day.substring(0, 3).toUpperCase();
+      String message = '';
+      String currentName = await controller.checkName(name, shortDay);
+
+      if (name == currentName) {
+        message = 'Exercise "$name" is already selected for $day.';
+      } else {
+        message = 'Replace exercise "$currentName" with "$name" for $day?';
+      }
+
+      if (currentName == "Not found") {
+        message = 'Add exercise "$name" to $day?';
+      }
+
+      return message;
+    }
+
     final splitsProvider = FutureProvider<List<Split>>((ref) async {
       return controller.getSplitList();
     });
@@ -31,39 +50,74 @@ class WeeklyView extends ConsumerWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-                'Do you want to add exercise "$name" to ${mapDay(model.selectedDay ?? "")}?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    color: Theme.of(context).colorScheme.onSecondaryContainer)),
-            actions: [
-              MaterialButton(
-                child: const Text('Cancel', textAlign: TextAlign.left),
-                color: Theme.of(context).colorScheme.primary,
-                textColor: Theme.of(context).colorScheme.secondaryContainer,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              MaterialButton(
-                child: const Text('OK', textAlign: TextAlign.left),
-                color: Theme.of(context).colorScheme.primary,
-                textColor: Theme.of(context).colorScheme.secondaryContainer,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  ref
-                      .read(providers.weeklyControllerProvider.notifier)
-                      .addSplit(model.selectedDay!, id, name);
-                },
-              ),
-            ],
-            actionsAlignment: MainAxisAlignment.spaceBetween,
+          return FutureBuilder<String>(
+            future: content(name),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return AlertDialog(
+                  title: Text(
+                    'Loading...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return AlertDialog(
+                  title: Text(
+                    'Error: ${snapshot.error}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                );
+              } else {
+                return AlertDialog(
+                  title: Text(
+                    snapshot.data!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                  actions: [
+                    MaterialButton(
+                      child: const Text('Cancel', textAlign: TextAlign.left),
+                      color: Theme.of(context).colorScheme.primary,
+                      textColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    MaterialButton(
+                      child: const Text('OK', textAlign: TextAlign.left),
+                      color: Theme.of(context).colorScheme.primary,
+                      textColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        ref
+                            .read(providers.weeklyControllerProvider.notifier)
+                            .addSplit(model.selectedDay!, id, name);
+                      },
+                    ),
+                  ],
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                );
+              }
+            },
           );
         },
       );
@@ -75,7 +129,7 @@ class WeeklyView extends ConsumerWidget {
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
         showOkButton: true,
-        onBackButtonPressed: () => Navigator.pushNamed(context, '/workout'),
+        onBackButtonPressed: () => Navigator.pushNamed(context, '/new'),
         onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
       ),
       body: SingleChildScrollView(
@@ -201,6 +255,7 @@ abstract class WeeklyController extends StateNotifier<WeeklyModel> {
   }
 
   void addSplit(String weekday, int id, String name);
+  Future<String> checkName(String newName, String weekday);
   void updateSearchQuery(String query);
   String getSplitTitle(int id);
   Future<List<Split>> getSplitList();

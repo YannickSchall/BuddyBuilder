@@ -251,6 +251,22 @@ class DBService {
     }).toList();
   }
 
+  Future<String> getSplitNameFromDay(String weekday) async {
+    final split2ds = await isar.splitToDays.where().findAll();
+    final splits = await isar.splits.where().findAll();
+    String notFound = "Not found";
+
+    final currentSplit2d = split2ds.firstWhere(
+        (split) => split.weekday == weekday,
+        orElse: () => SplitToDay()..name = notFound);
+    if (currentSplit2d.name == notFound) return notFound;
+
+    final split =
+        splits.firstWhere((split) => split.id == currentSplit2d.splitID);
+
+    return split.name ?? notFound;
+  }
+
   Future<Split?> getSplitToDayByWeekday() async {
     final x = await getAllSplitToDays();
 

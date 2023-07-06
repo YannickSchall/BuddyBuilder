@@ -67,6 +67,11 @@ class WeeklyControllerImplementation extends WeeklyController {
   }
 
   @override
+  Future<String> checkName(String newName, String weekday) async {
+    return await db.getSplitNameFromDay(weekday);
+  }
+
+  @override
   String getSplitTitle(int id) {
     return splitTitles[id] ?? '';
   }

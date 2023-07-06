@@ -15,6 +15,34 @@ class TrainingView extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
+  void showSuccessDialog(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('You completed your training !',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Roboto',
+                  color: Theme.of(context).colorScheme.onSecondaryContainer)),
+          actions: [
+            MaterialButton(
+              child: const Text('OK', textAlign: TextAlign.left),
+              color: Theme.of(context).colorScheme.primary,
+              textColor: Theme.of(context).colorScheme.secondaryContainer,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final TrainingController controller =
@@ -33,7 +61,10 @@ class TrainingView extends ConsumerWidget {
         showBackButton: true,
         showOkButton: true,
         onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
-        onOkButtonPressed: () => Navigator.pushNamed(context, '/home'),
+        onOkButtonPressed: () {
+          showSuccessDialog(context);
+          Navigator.pushNamed(context, '/home');
+        },
       ),
       body: SingleChildScrollView(
         child: Padding(

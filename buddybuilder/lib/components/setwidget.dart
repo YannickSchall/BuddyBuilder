@@ -99,7 +99,8 @@ class _SetWidgetState extends State<SetWidget> {
                   //  int reps = int.parse(widget.repsValues[index]);
                   //  updateSetReps(reps, index);
                   //},
-                  controller: TextEditingController(text: widget.repsValues[setNr - 1]),
+                  controller:
+                      TextEditingController(text: widget.repsValues[setNr - 1]),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Reps',
@@ -123,7 +124,8 @@ class _SetWidgetState extends State<SetWidget> {
                   //  double kg = double.parse(widget.kgValues[index]);
                   //  updateSetKG(kg, index);
                   //},
-                  controller: TextEditingController(text: widget.kgValues[setNr - 1]),
+                  controller:
+                      TextEditingController(text: widget.kgValues[setNr - 1]),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Weight',
@@ -164,13 +166,17 @@ class _SetWidgetState extends State<SetWidget> {
 
       additionalSets.add(valueListener);
       setCompleted.add(false);
-      isFirstSetGroup = false; // After adding the first set, it's no longer the first set group
+      isFirstSetGroup =
+          false; // After adding the first set, it's no longer the first set group
     });
   }
 
   String getSetNr(int index) {
-    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
-      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty &&
+        index >= 0 &&
+        index < additionalSets.length) {
+      final valueNotifier =
+          additionalSets[index].valueListenable as ValueNotifier<String>;
       return valueNotifier.value;
     }
 
@@ -178,8 +184,11 @@ class _SetWidgetState extends State<SetWidget> {
   }
 
   void updateSetValue(int index, String newValue) {
-    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
-      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty &&
+        index >= 0 &&
+        index < additionalSets.length) {
+      final valueNotifier =
+          additionalSets[index].valueListenable as ValueNotifier<String>;
       valueNotifier.value = newValue;
     }
   }
@@ -246,10 +255,10 @@ class _SetWidgetState extends State<SetWidget> {
             color: Colors.transparent,
             child: Column(
               children: [
-                if (!isFirstSetGroup) // Check if it's the first set group
+                if (!isFirstSetGroup)
                   Container(
-                    color: Colors.grey, // Separator line color
-                    height: 1, // Separator line height
+                    color: Colors.grey,
+                    height: 1,
                   ),
                 Row(
                   children: [
@@ -317,11 +326,6 @@ class _SetWidgetState extends State<SetWidget> {
               ),
             ],
           ),
-        /*IconButton(
-            onPressed: () {
-              updateSetInDB(ExSet());
-            },
-            icon: const Icon(Icons.search)),*/
       ],
     );
   }
