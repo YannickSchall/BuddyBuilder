@@ -17,6 +17,34 @@ import 'package:buddybuilder/components/datewidget.dart';
 class HomeView extends ConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
 
+  void showSuccessDialog(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('No split selected for today!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Roboto',
+                  color: Theme.of(context).colorScheme.onSecondaryContainer)),
+          actions: [
+            MaterialButton(
+              child: const Text('OK', textAlign: TextAlign.left),
+              color: Theme.of(context).colorScheme.primary,
+              textColor: Theme.of(context).colorScheme.secondaryContainer,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeController controller = ref.read(providers.homeControllerProvider.notifier);
@@ -51,16 +79,25 @@ class HomeView extends ConsumerWidget {
                 } else {
                   return ContainerButtonWidget(
                     onPressed: () {
-                      int splitID = snapshot.data!.id!;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                      Split? split = snapshot.data;
+
+                      if (split?.id == null || split == null) {
+                        showSuccessDialog(context);
+                      } else {
+                        int splitID = split.id!;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => TrainingView(
-                                  splitID: splitID, splitName: snapshot.data!.name!,
+                                  splitID: splitID,
+                                  splitName: snapshot.data!.name!,
                                 )),
                       );
+                      }
+
+                      
                     },
-                    text: snapshot.data!.name!,
+                    text: snapshot.data!.name ?? 'REST',
                     containerIcon: Icon(Icons.more_horiz, color: Theme.of(context).colorScheme.primary),
                   );
                 }

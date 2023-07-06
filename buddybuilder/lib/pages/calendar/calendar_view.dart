@@ -45,61 +45,58 @@ showSucessDialog will show the finished workouts of a day when clicking on the f
 - data is filled by controller.getOverkill() via the controller from the db
 */
     void showSuccessDialog(BuildContext context, WidgetRef ref) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Consumer(
-            builder: (context, ref, _) {
-              void reloadExercises() {
-                ref.refresh(trainingOfDayProvider);
-              }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Consumer(
+        builder: (context, ref, _) {
+          void reloadExercises() {
+            ref.refresh(trainingOfDayProvider);
+          }
 
-              return SingleChildScrollView(
-                child: Dialog(
-                  child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: FutureBuilder<
-                          List<Map<String, List<Map<String, String>>>>>(
-                        future: controller.getOverkill(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<
-                                    List<
-                                        Map<
-                                            String,
-                                            List<
-                                                Map<String,
-                                                    String>>>>> // here watched sets from sets are unpacked and build
-                                snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return const Text("Calendar couldn't be created");
-                          } else {
-                            var l = snapshot.data!;
-                            for (var i = 0; i < l.length; i++) {
-                              var name = l[i].keys.toList()[0];
-                              print("name: " + name);
-                              var setData = l[i].values.toList()[0];
-                              //print("setData: " + setData[0].entries.toList()[0].toString());
-                              popUpList.add(CalendarListWidget(
-                                  name: name, id: i, setData: setData));
-                            }
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: popUpList,
-                            );
-                          }
-                        },
-                      )),
-                ),
-              );
+          return GestureDetector(
+            onTap: () {
+              // Close the dialog when tapped outside
+              Navigator.of(context).pop();
             },
+            child: SingleChildScrollView(
+              child: Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FutureBuilder<List<Map<String, List<Map<String, String>>>>>(
+                    future: controller.getOverkill(),
+                    builder: (BuildContext context, AsyncSnapshot<List<Map<String, List<Map<String, String>>>>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return const Text("Calendar couldn't be created");
+                      } else {
+                        var l = snapshot.data!;
+                        for (var i = 0; i < l.length; i++) {
+                          var name = l[i].keys.toList()[0];
+                          print("name: " + name);
+                          var setData = l[i].values.toList()[0];
+                          popUpList.add(CalendarListWidget(name: name, id: i, setData: setData));
+                        }
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: popUpList,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
           );
         },
       );
-    }
+    },
+  );
+}
+
+
 
     var _eventList;
 
