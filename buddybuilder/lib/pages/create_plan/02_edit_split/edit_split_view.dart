@@ -20,10 +20,8 @@ class EditSplitView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final EditSplitController controller =
-        ref.read(providers.editSplitControllerProvider.notifier);
-    final EditSplitModel model =
-        ref.watch(providers.editSplitControllerProvider);
+    final EditSplitController controller = ref.read(providers.editSplitControllerProvider.notifier);
+    final EditSplitModel model = ref.watch(providers.editSplitControllerProvider);
 
     final exercisesProvider = FutureProvider<List<ListExercise>>((ref) async {
       return controller.getListExerciseList();
@@ -58,10 +56,7 @@ class EditSplitView extends ConsumerWidget {
                     children: [
                       MySearchBar(
                         onChanged: (query) {
-                          ref
-                              .read(providers
-                                  .editSplitControllerProvider.notifier)
-                              .updateSearchQuery(query);
+                          ref.read(providers.editSplitControllerProvider.notifier).updateSearchQuery(query);
                           reloadExercises();
                         },
                       ),
@@ -72,21 +67,16 @@ class EditSplitView extends ConsumerWidget {
                           FutureBuilder<int>(
                             future: controller.getNewestExerciseID(),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
                                 return const CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 return PillButtonWidget(
                                   onPressed: () {
-                                    final query = ref
-                                        .read(providers
-                                            .editSplitControllerProvider)
-                                        .searchQuery!;
+                                    final query = ref.read(providers.editSplitControllerProvider).searchQuery!;
                                     if (query.isNotEmpty) {
-                                      controller.createListExercise(
-                                          snapshot.data! + 1, query);
+                                      controller.createListExercise(snapshot.data! + 1, query);
                                     }
                                   },
                                   text: 'create',
@@ -113,10 +103,7 @@ class EditSplitView extends ConsumerWidget {
                                       return ExerciseWidget(
                                         name: exercise.name ?? 'No name',
                                         onPressed: (id) {
-                                          controller.addWorkout(
-                                              id,
-                                              exercise.name ?? "No name",
-                                              splitId);
+                                          controller.addWorkout(id, exercise.name ?? "No name", splitId);
                                         },
                                         id: index,
                                       );
@@ -129,8 +116,7 @@ class EditSplitView extends ConsumerWidget {
                                 }
                               },
                               loading: () => const CircularProgressIndicator(),
-                              error: (error, stackTrace) =>
-                                  Text('Error: $error'),
+                              error: (error, stackTrace) => Text('Error: $error'),
                             );
                           },
                         ),
@@ -178,21 +164,36 @@ class EditSplitView extends ConsumerWidget {
                         if (exercises != null && exercises.isNotEmpty) {
                           return Column(
                             children: exercises.map((exercise) {
-                              return SetWidget(
-                                setTitle: exercise.name ?? 'No name',
-                                kgValues: {}, // Provide the kgValue argument here
-                                repsValues: {}, // Provide the repsValue argument here
-                                exSets: {},
-                                onPressed: (id) {
-                                  // Handle workout selection
-                                  controller.removeWorkout(
-                                      exercise.id, splitId);
-                                  // Close the dialog
+                              return FutureBuilder<List<ExSet>>(
+                                future: controller.getAllSetsFromExercise(splitId, exercise.id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else {
+                                    final setsMap = snapshot.data!.fold<Map<int, ExSet>>(
+                                      {},
+                                      (map, set) => map..[set.id!] = set,
+                                      
+                                    );
+                                    return SetWidget(
+                                      setTitle: exercise.name ?? 'No name',
+                                      kgValues: {}, // Provide the kgValue argument here
+                                      repsValues: {}, // Provide the repsValue argument here
+                                      exSets: setsMap, // Use the sets from the snapshot data
+                                      onPressed: (id) {
+                                        // Handle workout selection
+                                        controller.removeWorkout(exercise.id, splitId);
+                                        // Close the dialog
+                                      },
+                                      splitID: splitId,
+                                      exerciseID: exercise.id ?? 0,
+                                      customId: exercise.id ?? 0,
+                                      db: db,
+                                    );
+                                  }
                                 },
-                                splitID: splitId,
-                                exerciseID: exercise.id ?? 0,
-                                customId: exercise.id ?? 0,
-                                db: db,
                               );
                             }).toList(),
                           );
@@ -226,4 +227,6 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   void updateSearchQuery(String query);
   Future<List<Exercise>> getAllExercisesList(int splitId);
   void createListExercise(int id, String name);
+
+  Future<List<ExSet>> getAllSetsFromExercise(int splitId, int exerciseId);
 }

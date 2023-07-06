@@ -1,5 +1,7 @@
 //import 'package:buddybuilder/db/book_model.dart';
+import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/services/db/collections/list_exercise.dart';
+import 'package:buddybuilder/services/db/collections/split.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeController controller =
-        ref.read(providers.homeControllerProvider.notifier);
+    final HomeController controller = ref.read(providers.homeControllerProvider.notifier);
     final HomeModel model = ref.watch(providers.homeControllerProvider);
 
     return Scaffold(
@@ -40,23 +41,37 @@ class HomeView extends ConsumerWidget {
               dateWidget: const DayMonthWidget(),
               buttonHeight: 100.0,
             ),
-            ContainerButtonWidget(
-              onPressed: () => Navigator.pushNamed(context, '/training'),
-              text:
-                  'PULL', // TODO: add method to switch training according to day
-              containerIcon: Icon(Icons.more_horiz,
-                  color: Theme.of(context).colorScheme.primary),
+            FutureBuilder<Split>(
+              future: controller.getTodaysSplitID(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return ContainerButtonWidget(
+                    onPressed: () {
+                      int splitID = snapshot.data!.id!;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TrainingView(
+                                  splitID: splitID, splitName: snapshot.data!.name!,
+                                )),
+                      );
+                    },
+                    text: snapshot.data!.name!,
+                    containerIcon: Icon(Icons.more_horiz, color: Theme.of(context).colorScheme.primary),
+                  );
+                }
+              },
             ),
             PillButtonWidget(
                 onPressed: () => Navigator.pushNamed(context, '/plan'),
                 text: 'BUILD PLAN',
-                icon: Icon(CustomIcons.gymplan,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
+                icon: Icon(CustomIcons.gymplan, color: Theme.of(context).colorScheme.onPrimaryContainer)),
             PillButtonWidget(
-                onPressed: () => Navigator.pushNamed(context, '/settings'),
-                text: 'SETTINGS',
-                icon: Icon(Icons.settings,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
+                onPressed: () => Navigator.pushNamed(context, '/settings'), text: 'SETTINGS', icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onPrimaryContainer)),
           ],
         ),
       ),
@@ -66,4 +81,11 @@ class HomeView extends ConsumerWidget {
 
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
+
+  Future<List<ListExercise>> getListExercises();
+  void addListExercise(ListExercise exercise);
+  void clearExercises();
+  Stream<int> getNewestID();
+  Future<String> provideAPIresponse(String param);
+  Future<Split> getTodaysSplitID();
 }

@@ -16,8 +16,7 @@ class EditPlanView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final EditPlanController controller =
-        ref.read(providers.editPlanControllerProvider.notifier);
+    final EditPlanController controller = ref.read(providers.editPlanControllerProvider.notifier);
     final EditPlanModel model = ref.watch(providers.editPlanControllerProvider);
 
     final futureSplitsProvider = FutureProvider<List<Split>>((ref) async {
@@ -136,8 +135,7 @@ class EditPlanView extends ConsumerWidget {
                                     text: split.name!,
                                     buttonHeight: 60.0,
                                     buttonWidth: 300.0,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                                   ),
                                 ),
                             ],
@@ -147,8 +145,7 @@ class EditPlanView extends ConsumerWidget {
                         }
                       },
                       loading: () => const CircularProgressIndicator(),
-                      error: (error, stackTrace) =>
-                          const Text('Something went wrong'),
+                      error: (error, stackTrace) => const Text('Something went wrong'),
                     );
                   },
                 ),

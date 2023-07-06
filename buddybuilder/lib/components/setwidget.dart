@@ -76,11 +76,11 @@ class _SetWidgetState extends State<SetWidget> {
           int setNr = int.parse(value);
           int index = setNr - 1;
 
-          ExSet firstSet = ExSet()
-            ..id = index
-            ..kg = 0
-            ..reps = 0;
-          widget.exSets[index] = firstSet;
+          //ExSet firstSet = ExSet()
+          //  ..id = index
+          //  ..kg = 0
+          //  ..reps = 0;
+          //widget.exSets[index] = firstSet;
 
           //widget.db.addSetToExercise(widget.splitID, widget.exerciseID, firstSet); //?
           return Row(
@@ -94,37 +94,52 @@ class _SetWidgetState extends State<SetWidget> {
               Text('Set $setNr'),
               const SizedBox(width: 12),
               Expanded(
-                child: TextField(
+                child: TextFormField(
                   onChanged: (textValue) {
                     setState(() {
                       int index = setNr - 1;
                       widget.repsValues[index] = textValue;
-                      int reps = int.parse(textValue);
-                      updateSetReps(reps, index);
+
+                      if (textValue != "") {
+                        int reps = int.parse(textValue);
+                        updateSetReps(reps, index);
+                      }
                     });
                   },
-                  controller:
-                      TextEditingController(text: widget.repsValues[setNr - 1]),
+                  //onEditingComplete: () {
+                  //  int index = setNr - 1;
+                  //  int reps = int.parse(widget.repsValues[index]);
+                  //  updateSetReps(reps, index);
+                  //},
+                  controller: TextEditingController(text: widget.exSets[index]?.reps.toString() ?? "0"),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Reps',
                   ),
+                  //initialValue: widget.repsValues[index],
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: TextField(
+                child: TextFormField(
                   onChanged: (textValue) {
                     setState(() {
                       textValue = textValue.replaceAll(',', '.');
                       int index = setNr - 1;
                       widget.kgValues[index] = textValue;
-                      double kg = double.parse(textValue);
-                      updateSetKG(kg, index);
+
+                      if (textValue != "") {
+                        double kg = double.parse(textValue);
+                        updateSetKG(kg, index);
+                      }
                     });
                   },
-                  controller:
-                      TextEditingController(text: widget.kgValues[setNr - 1]),
+                  //onEditingComplete: () {
+                  //  int index = setNr - 1;
+                  //  double kg = double.parse(widget.kgValues[index]);
+                  //  updateSetKG(kg, index);
+                  //},
+                  controller: TextEditingController(text: widget.exSets[index]?.kg.toString() ?? "0.0"),
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Weight',
@@ -165,8 +180,7 @@ class _SetWidgetState extends State<SetWidget> {
 
       additionalSets.add(valueListener);
       setCompleted.add(false);
-      isFirstSetGroup =
-          false; // After adding the first set, it's no longer the first set group
+      isFirstSetGroup = false; // After adding the first set, it's no longer the first set group
     });
   }
 
@@ -177,11 +191,8 @@ class _SetWidgetState extends State<SetWidget> {
   */
 
   String getSetNr(int index) {
-    if (additionalSets.isNotEmpty &&
-        index >= 0 &&
-        index < additionalSets.length) {
-      final valueNotifier =
-          additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
+      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
       return valueNotifier.value;
     }
 
@@ -194,11 +205,8 @@ class _SetWidgetState extends State<SetWidget> {
   it again displayed by red cross
   */
   void updateSetValue(int index, String newValue) {
-    if (additionalSets.isNotEmpty &&
-        index >= 0 &&
-        index < additionalSets.length) {
-      final valueNotifier =
-          additionalSets[index].valueListenable as ValueNotifier<String>;
+    if (additionalSets.isNotEmpty && index >= 0 && index < additionalSets.length) {
+      final valueNotifier = additionalSets[index].valueListenable as ValueNotifier<String>;
       valueNotifier.value = newValue;
     }
   }
@@ -208,8 +216,17 @@ class _SetWidgetState extends State<SetWidget> {
    will put before added weights into set above
   */
   void updateSetKG(double kg, int index) {
-    int id = widget.exSets[index]!.id;
-    int reps = widget.exSets[index]!.reps;
+    int id = widget.exSets[index]?.id ?? index;
+    int reps = widget.exSets[index]?.reps ?? 0;
+    widget.exSets[index] = ExSet()
+      ..id = id
+      ..reps = reps
+      ..kg = kg;
+  }
+
+void updateSetReps(int reps, int index) {
+    int id = widget.exSets[index]?.id ?? index;
+    double kg = widget.exSets[index]?.kg ?? 0.0;
     widget.exSets[index] = ExSet()
       ..id = id
       ..reps = reps
@@ -233,18 +250,7 @@ class _SetWidgetState extends State<SetWidget> {
     return exSet;
   }
 
-  /* 
-  updateSetReps() 
-  will put before added reps into set above
-  */
-  void updateSetReps(int reps, int index) {
-    int id = widget.exSets[index]!.id;
-    double kg = widget.exSets[index]!.kg;
-    widget.exSets[index] = ExSet()
-      ..id = id
-      ..reps = reps
-      ..kg = kg;
-  }
+  
 
   /* 
   correctSetNr() 

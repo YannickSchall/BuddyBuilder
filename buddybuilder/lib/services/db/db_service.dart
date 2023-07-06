@@ -444,10 +444,11 @@ class DBService {
   */
   Future<List<Map<String, List<Map<String, String>>>>> setToMap() async {
     final exerciseList = await getSetOfDay();
-    List<Map<String, String>> innerList = [];
+    
     List<Map<String, List<Map<String, String>>>> result = [];
 
     for (var exercise in exerciseList) {
+      List<Map<String, String>> innerList = [];
       String name = exercise.name!;
       final setsOfToday = exercise.sets ?? [];
       final setMapList = setsOfToday.map((set) {
@@ -464,5 +465,15 @@ class DBService {
     }
 
     return result;
+  }
+
+  Future<List<ExSet>> getSetsFromExercise(int splitId, int exerciseId) async {
+    final split = await isar.splits.get(splitId);
+    if (split != null) {
+      final exercises = split.exercises ?? [];
+      final exercise = exercises.firstWhere((exercise) => exercise.id == exerciseId);
+      return exercise.sets ?? [];
+    }
+    return [];
   }
 }
