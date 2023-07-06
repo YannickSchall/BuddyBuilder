@@ -143,8 +143,6 @@ class CalendarView extends ConsumerWidget {
 
     return Scaffold(
       appBar: GymAppBar(
-        //title: 'BUDDY\nBUILDER',
-        //excerciseTitle: 'QUADS &Längerrrrweg',
         subTitle: 'OVERVIEW',
         titleAlignment: Alignment.centerRight,
         showBackButton: true,
@@ -158,7 +156,7 @@ class CalendarView extends ConsumerWidget {
             Expanded(
               child: Calendar(
                 startOnMonday: true,
-                weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sar', 'Sun'],
+                weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                 eventsList: _eventList,
                 isExpandable: true,
                 eventDoneColor: Color.fromARGB(255, 76, 114, 175),

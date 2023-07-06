@@ -9,7 +9,6 @@ import 'package:buddybuilder/pages/home/home_view.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/pages/calendar/calendar_view.dart';
 import 'package:buddybuilder/material_theme/color_schemes.g.dart';
-import 'package:buddybuilder/pages/choose_split_view.dart';
 import 'package:buddybuilder/pages/create_plan/01_edit_plan/edit_plan_view.dart';
 import 'package:buddybuilder/services/db/isar_database.dart';
 import 'common/providers.dart';
@@ -51,12 +50,13 @@ class MyApp extends StatelessWidget {
                   builder: (context) => const SettingsView());
             } else if (routeParams.name == '/training') {
               return MaterialPageRoute(builder: (context) => TrainingView());
-            } else if (routeParams.name == '/rotate') {
             } else if (routeParams.name == '/weekly') {
               return MaterialPageRoute(
                   builder: (context) => const WeeklyView());
+            } else if (routeParams.name == '/new') {
             } else if (routeParams.name == '/plan') {
-              return MaterialPageRoute(builder: (context) => EditPlanView());
+              return MaterialPageRoute(
+                  builder: (context) => const EditPlanView());
             }
           },
           onPopPage: (route, result) {

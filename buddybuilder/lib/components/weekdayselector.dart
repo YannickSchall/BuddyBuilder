@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:buddybuilder/material_theme/color_schemes.g.dart';
 import 'package:buddybuilder/components/circle.dart';
 
 class WeekDaySelector extends StatefulWidget {

@@ -131,7 +131,7 @@ class EditSplitView extends ConsumerWidget {
           onOkButtonPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
 
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushNamed(context, '/weekly');
           }),
       body: SingleChildScrollView(
         child: Padding(

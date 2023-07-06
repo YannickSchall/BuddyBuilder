@@ -20,13 +20,12 @@ class SettingsView extends ConsumerWidget {
 
     return Scaffold(
         appBar: GymAppBar(
-          subTitle: 'SETTINGS',
-          titleAlignment: Alignment.centerRight,
-          showBackButton: true,
-          showOkButton: false,
-          onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
-          onOkButtonPressed: () {},
-        ),
+            subTitle: 'SETTINGS',
+            titleAlignment: Alignment.centerRight,
+            showBackButton: true,
+            showOkButton: false,
+            onBackButtonPressed: () => Navigator.pushNamed(context, '/home'),
+            onOkButtonPressed: () => {}),
         body: Center(
             child: Column(
           children: [
