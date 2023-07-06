@@ -65,13 +65,28 @@ class EditSplitView extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Spacer(),
-                          PillButtonWidget(
-                            onPressed: () {
-                              // Handle button 2 press
+                          FutureBuilder<int>(
+                            future: controller.getNewestExerciseID(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return PillButtonWidget(
+                                  onPressed: () {
+                                    final query = ref.read(providers.editSplitControllerProvider).searchQuery!;
+                                    if (query.isNotEmpty) {
+                                      controller.createListExercise(snapshot.data! + 1, query);
+                                    }
+                                  },
+                                  text: 'create',
+                                  buttonHeight: 20.0,
+                                  buttonWidth: 100.0,
+                                );
+                              }
                             },
-                            text: 'create',
-                            buttonHeight: 20.0,
-                            buttonWidth: 100.0,
+
                           ),
                         ],
                       ),
@@ -164,7 +179,7 @@ class EditSplitView extends ConsumerWidget {
                                 exSets: {},
                                 onPressed: (id) {
                                   // Handle workout selection
-                                  controller.removeWorkout(id, splitId);
+                                  controller.removeWorkout(exercise.id, splitId);
                                   // Close the dialog
                                 },
                                 splitID: splitId,
@@ -216,4 +231,6 @@ abstract class EditSplitController extends StateNotifier<EditSplitModel> {
   Future<List<Exercise>> getAllExercisesList(int splitId);
 
   void addSet(int id, int splitId, int excerciseId);
+
+  void createListExercise(int id, String name);
 }

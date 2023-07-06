@@ -34,6 +34,14 @@ class EditSplitControllerImplementation extends EditSplitController {
   }
 
   @override
+  void createListExercise(int id, String name) async {
+    final listExercise = ListExercise()
+      ..id = id
+      ..name = name;
+    db.addExercise(listExercise);
+  }
+
+  @override
   void addWorkout(int id, String name, int splitId) async{
     int exerciseId = await db.tryNewest(Exercise, splitId) + 1;
     state = state.copyWith(workoutTitle: name, workoutList: [...state.workoutList, id]);
