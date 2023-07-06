@@ -2,6 +2,7 @@ import 'package:buddybuilder/pages/training/training_model.dart';
 import 'package:buddybuilder/pages/training/training_view.dart';
 import 'package:buddybuilder/services/db/db_service.dart';
 import 'package:buddybuilder/services/db/collections/split.dart';
+import 'package:buddybuilder/services/db/collections/split_to_day.dart';
 
 class TrainingControllerImplementation extends TrainingController {
   TrainingControllerImplementation({
@@ -20,6 +21,11 @@ class TrainingControllerImplementation extends TrainingController {
   }
 
   @override
+  Future<Split?> todaysSplit() async {
+    return await db.getSplitToDayByWeekday();
+  }
+
+  @override
   void addWorkout(int id, String name, int splitId) async {
     int exerciseId = await db.tryNewest(Exercise, splitId) + 1;
     state = state
@@ -30,8 +36,6 @@ class TrainingControllerImplementation extends TrainingController {
       ..name = name
       ..id = exerciseId;
     db.addExerciseToSplit(splitId, exercise);
-
-    // Trigger rebuild
   }
 
   @override

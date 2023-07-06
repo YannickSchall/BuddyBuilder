@@ -274,4 +274,42 @@ class DBService {
       }
     }
   }
+
+  Future<List<SplitToDay>> getAllSplitToDays() async {
+    final splits = await isar.splitToDays.where().findAll();
+    return splits.map((splitToDay) {
+      return SplitToDay()
+        ..id = splitToDay.id
+        ..weekday = splitToDay.weekday
+        ..name = splitToDay.name ?? "no name"
+        ..splitID = splitToDay.splitID;
+    }).toList();
+  }
+
+  Future<Split?> getSplitToDayByWeekday() async {
+    final x = await getAllSplitToDays();
+
+    String _getWeekday(DateTime date) {
+      final weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+      return weekdays[date.weekday - 1];
+    }
+
+    final todayWeekday = _getWeekday(DateTime.now());
+
+    final result = x.firstWhere(
+      (splitToDay) => splitToDay.weekday == todayWeekday,
+      orElse: () => SplitToDay()
+        ..weekday = todayWeekday
+        ..name = 'Restday',
+    );
+
+    if (result.id == null) {
+      return null;
+    }
+
+    final split = await getSplitNoNull(result
+        .splitID!); // Assuming you have a function to get the Split object by id
+
+    return split;
+  }
 }
