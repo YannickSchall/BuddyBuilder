@@ -16,9 +16,9 @@ class HomeControllerImplementation extends HomeController {
   DBService db;
 
   @override
-  Future<Split> getTodaysSplitID() async {
+  Future<Split?> getTodaysSplitID() async {
     Split? split = await db.getSplitToDayByWeekday();
 
-    return split!;
+    return split;
   }
 }

@@ -47,5 +47,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleIconFiles</key>
+	<array>
+  		<string>ic_launcher48.png</string>
+  		<string>ic_launcher72.png</string>
+  		<string>ic_launcher96.png</string>
+  		<string>ic_launcher144.png</string>
+		<string>ic_launcher192.png</string>		
+	</array>
+<key>UIPrerenderedIcon</key>
+<false/>
+
 </dict>
 </plist>

@@ -47,7 +47,8 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeController controller = ref.read(providers.homeControllerProvider.notifier);
+    final HomeController controller =
+        ref.read(providers.homeControllerProvider.notifier);
     final HomeModel model = ref.watch(providers.homeControllerProvider);
 
     return Scaffold(
@@ -69,7 +70,7 @@ class HomeView extends ConsumerWidget {
               dateWidget: const DayMonthWidget(),
               buttonHeight: 100.0,
             ),
-            FutureBuilder<Split>(
+            FutureBuilder<Split?>(
               future: controller.getTodaysSplitID(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,17 +89,16 @@ class HomeView extends ConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TrainingView(
-                                  splitID: splitID,
-                                  splitName: snapshot.data!.name!,
-                                )),
-                      );
+                              builder: (context) => TrainingView(
+                                    splitID: splitID,
+                                    splitName: snapshot.data!.name!,
+                                  )),
+                        );
                       }
-
-                      
                     },
-                    text: snapshot.data!.name ?? 'REST',
-                    containerIcon: Icon(Icons.more_horiz, color: Theme.of(context).colorScheme.primary),
+                    text: snapshot.data?.name ?? 'REST',
+                    containerIcon: Icon(Icons.more_horiz,
+                        color: Theme.of(context).colorScheme.primary),
                   );
                 }
               },
@@ -106,9 +106,13 @@ class HomeView extends ConsumerWidget {
             PillButtonWidget(
                 onPressed: () => Navigator.pushNamed(context, '/plan'),
                 text: 'BUILD PLAN',
-                icon: Icon(CustomIcons.gymplan, color: Theme.of(context).colorScheme.onPrimaryContainer)),
+                icon: Icon(CustomIcons.gymplan,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
             PillButtonWidget(
-                onPressed: () => Navigator.pushNamed(context, '/settings'), text: 'SETTINGS', icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onPrimaryContainer)),
+                onPressed: () => Navigator.pushNamed(context, '/settings'),
+                text: 'SETTINGS',
+                icon: Icon(Icons.settings,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer)),
           ],
         ),
       ),
@@ -118,5 +122,5 @@ class HomeView extends ConsumerWidget {
 
 abstract class HomeController extends StateNotifier<HomeModel> {
   HomeController(HomeModel state) : super(state);
-  Future<Split> getTodaysSplitID();
+  Future<Split?> getTodaysSplitID();
 }

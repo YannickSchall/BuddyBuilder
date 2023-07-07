@@ -59,3 +59,10 @@ dependency_overrides:
     git:
       url: https://github.com/Mayb3Nots/macos_ui.git
       ref: dev
+
+assets:
+    - resources/appicon/ic_launcher48.png
+    - resources/appicon/ic_launcher72.png
+    - resources/appicon/ic_launcher96.png
+    - resources/appicon/ic_launcher144.png
+    - resources/appicon/ic_launcher192.png
