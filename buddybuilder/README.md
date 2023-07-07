@@ -2,15 +2,28 @@
 
 A new Flutter project.
 
-## Getting Started
+## System requirements for BuddyBuilder
 
-This project is a starting point for a Flutter application.
+### iOS requirements
+This App is compatible for iOS15.6 and smaller (XCode does not provide any newer emulators)
+The advised Dart Version is 3.0.5. 
+Tested environment iOS15.6 iPhone12Max
 
-A few resources to get you started if this is your first Flutter project:
+### Android requirements
+Android64bit OS and a phones Android 12 and smaller. 
+Tested environment - Pixel5 & Pixel4 - Android12.0 64bit
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Description
+This is straight forward your new Buddy at the gym - track your personal progress easily.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## App-Flow
+**Settings** - fetch Training API from DB () - choose your preferred mode.
+**Create Plan** - Create a personalized split, add exercises from API or create custom ones, then map to a date.
+**Training** - start the training you specified for a weekday, it will automatically provide the right workouts. Add sets and enter reps and used weight.
+**Calendar** - track your finished trainings by clicking on the floating button.
+
+
+
+
+
+
