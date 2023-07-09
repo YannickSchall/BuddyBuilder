@@ -33,7 +33,7 @@ Future ideas will include:
 - rotational splits in addition to mapping splits to specific days for less strict users
 - a cheering avatar friend to congratulate you on your progress
 - a sharing function to share plans with friends
-- accounts: to provide access from different devices avoiding re-setup
+- accounts to provide access from different devices avoiding re-setup
 
 ## Authors and acknowledgment
 - Gina Kokoska
