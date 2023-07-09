@@ -7,12 +7,12 @@ Straight forward, this is your new Buddy at the gym - track your personal progre
 
 ## Installation for cross-platform usage
 
-### iOS requirements
+### iOS requirements:
 This app is compatible and tested with iOS 15.6
 - The advised Dart Version is 3.0.5 
 - Tested environment - iPhone 12 Max - iOS 15.6
 
-### Android requirements
+### Android requirements:
 64 bit Android OS, compatible and tested with Android 12 and 13, for smooth experience, use Pixel 5 and below
 - Tested environment - Pixel 5 & Pixel 4 - Android 12.0 64 bit
 
