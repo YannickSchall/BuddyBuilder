@@ -18,8 +18,11 @@ This app is compatible and tested with iOS 15.6
 
 ## App-Flow
 **Settings** - fetch Training API data to DB and toggle Dark Mode
+
 **Create Plan** - create a personalized split, add exercises from DB or create custom ones, then map to a date
+
 **Training** - start the training you specified for the current weekday, it will automatically provide the right workouts. Add sets and enter reps and used weights
+
 **Calendar** - track your finished trainings by clicking on the bottom right button
 
 ## Support
